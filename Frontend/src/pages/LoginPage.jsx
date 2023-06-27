@@ -9,25 +9,39 @@ function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
-      setEmailError('Please enter your email');
+      setEmailError('Por favor introduzca su correo electrónico');
+      return;
     } else {
       setEmailError('');
     }
 
     if (!password) {
-      setPasswordError('Please enter your password');
+      setPasswordError('Por favor introduzca su contraseña');
+      return;
     } else {
       setPasswordError('');
     }
 
-    // Additional validation rules can be added here
-
     if (email && password) {
-      // Submit the form or perform further actions
+      try {
+        const response = await fetch('http://backend-api.com/login', {//Cambiar la ruta
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (response.ok) {
+          // Handle response from server
+        } else {
+          // Handle error response from server
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -39,11 +53,11 @@ function LoginPage() {
           <h2 className='sign-in'>Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email">Dirección de correo electrónico</label>
               <input
                 type="email"
                 id="email"
-                placeholder="Enter email"
+                placeholder="Introduzca su correo electrónico"
                 className={`form-input ${emailError ? 'is-invalid' : ''}`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -52,11 +66,11 @@ function LoginPage() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Contraseña</label>
               <input
                 type="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Contraseña"
                 className={`form-input ${passwordError ? 'is-invalid' : ''}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -64,7 +78,7 @@ function LoginPage() {
               {passwordError && <div className="invalid-feedback">{passwordError}</div>}
             </div>
       
-            <button type="submit" className="submit-button">Submit</button>
+            <button type="submit" className="submit-button">Enviar</button>
           </form>
         </div>
         <div className='footer'></div>

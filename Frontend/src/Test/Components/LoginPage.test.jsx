@@ -1,30 +1,33 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import LoginPage from '../../pages/LoginPage';
 
-describe('LoginPage', () => {
-  it('renders the login page correctly', () => {
-    render(<LoginPage />);
+test('handleSubmit function', async () => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({ success: true }),
+    })
+  );
 
-    // Verifica que los elementos necesarios se encuentren en la página de inicio de sesión
-    expect(screen.getByText('Sign In')).toBeInTheDocument();
-    expect(screen.getByLabelText('Email address')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    expect(screen.getByText('Submit')).toBeInTheDocument();
-  });
+  render(<LoginPage />);
 
-  it('displays error messages for empty email and password fields', () => {
-    render(<LoginPage />);
-    const submitButton = screen.getByText('Submit');
+  const emailInput = screen.getByLabelText(/Dirección de correo electrónico/i);
+  const passwordInput = screen.getByLabelText(/Contraseña/i);
+  const submitButton = screen.getByText(/Enviar/i);
 
-    // Simula el envío del formulario sin completar los campos
-    fireEvent.click(submitButton);
+  fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+  fireEvent.change(passwordInput, { target: { value: 'password' } });
 
-    // Verifica que se muestren los mensajes de error correspondientes
-    expect(screen.getByText('Please enter your email')).toBeInTheDocument();
-    expect(screen.getByText('Please enter your password')).toBeInTheDocument();
-  });
+  fireEvent.click(submitButton);
 
-  // Agrega más pruebas según sea necesario para validar el comportamiento adicional del componente LoginPage
+  await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(global.fetch).toHaveBeenCalledWith(
+    'http://backend-api.com/login',
+    expect.objectContaining({
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@example.com', password: 'password' }),
+    })
+  ));
 });
