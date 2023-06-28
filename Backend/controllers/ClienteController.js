@@ -48,7 +48,7 @@ export const updateCliente = async (req,res) => {
    try {
       const id = req.params.id
 
-      await ClienteModel.updateOne( {_id:id}, req.body).matchedCount(res =>{
+      await ClienteModel.updateOne( {_id:id}, req.body).then(res =>{
          console.log(res)
       })
       res.status(200).json({
@@ -63,10 +63,11 @@ export const updateCliente = async (req,res) => {
 
 export const deleteCliente = async(req, res) => {
    try {
-      await ClienteModel.destroy ({
-         where: {id:req.params.id}
+      const id = req.params.id
+      await ClienteModel.deleteOne ({_id:id}).then (res =>{
+         console.log(res)
       })
-      res.json({
+      res.status(200).json({
          "message":"¡Cliente eliminado correctamente!"
       })
       
