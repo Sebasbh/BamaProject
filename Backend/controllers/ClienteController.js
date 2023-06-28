@@ -20,10 +20,12 @@ export const getAllClientes = async(req, res) =>{
 
 export const getCliente = async(req, res) =>{
    try {
-      const cliente = await ClienteModel.find({
-         where:{id:req.params.id}
-      })
-      res.json(cliente[0])
+      const id = req.params.id
+      const cliente = await ClienteModel.findById({_id}.then ((cliente)=> {
+         res.status(200).json(cliente)
+      }))
+      
+      
    }catch (error){
       res.json ({message: error.message})
    }
