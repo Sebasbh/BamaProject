@@ -23,9 +23,7 @@ export const getCliente = async(req, res) =>{
       const id = req.params.id
       await ClienteModel.findById( {_id:id}).then ( (cliente) => {
          res.status(200).json(cliente)
-      })
-      
-      
+      })  
    }catch (error){
       res.json ({message: error.message})
    }
@@ -36,8 +34,8 @@ export const getCliente = async(req, res) =>{
 export const createCliente = async (req,res) => {
    try {
       await  ClienteModel.create(req.body)
-      res.json({
-         "message":"¡Registro creado correctamente"
+      res.status(200).json({
+         "message":"¡Cliente creado correctamente"
       })
    } catch (error) {
       res.json ({message: error.message})
@@ -48,10 +46,12 @@ export const createCliente = async (req,res) => {
 
 export const updateCliente = async (req,res) => {
    try {
-      await ClienteModel.update(req.body, {
-         where:{id:req.params.id}
+      const id = req.params.id
+
+      await ClienteModel.updateOne( {_id:id}, req.body).matchedCount(res =>{
+         console.log(res)
       })
-      res.json({
+      res.status(200).json({
          "message":"¡Cliente actualizado correctamente!"
       })
    } catch (error) {
