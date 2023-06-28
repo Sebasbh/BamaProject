@@ -9,33 +9,39 @@ function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  // Usar useHistory para manejar la redirección
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email) {
       setEmailError('Por favor introduzca su correo electrónico');
       return;
     } else {
       setEmailError('');
     }
-
+  
     if (!password) {
       setPasswordError('Por favor introduzca su contraseña');
       return;
     } else {
       setPasswordError('');
     }
-
+  
     if (email && password) {
       try {
-        const response = await fetch('http://backend-api.com/login', {//Cambiar la ruta
+        const response = await fetch('http://localhost:8000/Usuarios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
-
+  
         if (response.ok) {
-          // Handle response from server
+          const user = await response.json();
+          if (user.isAdmin) {
+            window.location.href = '/admin';
+          } else {
+            window.location.href = '/home';
+          }
         } else {
           // Handle error response from server
         }
@@ -44,6 +50,7 @@ function LoginPage() {
       }
     }
   };
+  
 
   return (
     <div className="main-container">
