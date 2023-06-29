@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { link } from 'react-router-dom' 
+import { Link } from 'react-router-dom' 
 import React from 'react'
 
 
