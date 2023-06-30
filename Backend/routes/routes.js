@@ -1,18 +1,17 @@
-//routes.jsx
-import express from 'express'
-import { getAllClientes, getCliente, createCliente, updateCliente, deleteCliente } from '../controllers/ClienteController.js'
-import { loginUser } from '../controllers/UsuarioController.js'
-import { validateLogin } from '../middlewares/validationMiddleware.js'
-const router = express.Router()
+//routes.js:
+import express from 'express';
+import { iniciarSesion } from '../controllers/UserController.js';
 
-// Rutas para los clientes
-router.get('/clientes', getAllClientes)
-router.get('/clientes/:id', getCliente)
-router.post('/clientes', createCliente)
-router.put('/clientes/:id', updateCliente)
-router.delete('/clientes/:id', deleteCliente)
+const router = express.Router();
 
-// Ruta de inicio de sesión con validación
-router.post('/login', validateLogin, loginUser);
+console.log('Debug: El archivo routes.js se está ejecutando.');
+
+// Ruta para el controlador de inicio de sesión
+router.post('/user/login', iniciarSesion);
+
+router.get('/', (req, res) => {
+  console.log('Debug: La ruta GET / fue solicitada.');
+  res.status(200).json({ mensaje: '¡Bienvenido a la API!' });
+});
 
 export default router;

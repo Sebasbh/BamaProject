@@ -1,4 +1,6 @@
+//LoginPage.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/LoginPage.css';
 import logo from '../Components/assets/Images/logo.png';
 import imagen from '../Components/assets/Images/image.jpg';
@@ -8,49 +10,47 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const navigate = useNavigate();
 
-  // Usar useHistory para manejar la redirección
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!email) {
       setEmailError('Por favor introduzca su correo electrónico');
       return;
     } else {
       setEmailError('');
     }
-  
+
     if (!password) {
       setPasswordError('Por favor introduzca su contraseña');
       return;
     } else {
       setPasswordError('');
     }
-  
+
     if (email && password) {
       try {
-        const response = await fetch('http://localhost:8000/Usuarios', {
+        const response = await fetch('http://localhost:8000/user/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
-        });
-  
+        });        
+        
+        const data = await response.json();
+
         if (response.ok) {
-          const user = await response.json();
-          if (user.isAdmin) {
-            window.location.href = '/admin';
-          } else {
-            window.location.href = '/home';
-          }
+          alert('Credenciales válidas');
+          navigate('/Home');
         } else {
-          // Handle error response from server
+          alert(`Error: ${data.mensaje}`);
         }
       } catch (err) {
         console.error(err);
+        alert('Ocurrió un error al realizar la solicitud de inicio de sesión.');
       }
     }
   };
-  
 
   return (
     <div className="main-container">

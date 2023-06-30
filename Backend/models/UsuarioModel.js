@@ -1,31 +1,20 @@
-// UsuarioModel.js
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-const Schema = mongoose.Schema;
+// UserModel.js
+import mongoose from 'mongoose';
 
-const usuarioSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: true,
-      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
+// Definir el esquema del modelo
+const usuarioSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true
   },
-  { collection: "usuarios" }
-);
+  password: {
+    type: String,
+    required: true
+  }
+});
 
-// Encriptar contraseña antes de guardarla
-usuarioSchema.pre("save", async function (next) {
-    if (this.isModified("password")) {
-      this.password = await bcrypt.hash(this.password, 10);
-    }
-    next();
-  });
-  
+// Crear el modelo basado en el esquema
+const Usuario = mongoose.model('Usuario', usuarioSchema, 'usuarios');
 
-export default mongoose.model("UsuarioModel", usuarioSchema);
-
+// Exportar el modelo
+export default Usuario;// UserModel.js

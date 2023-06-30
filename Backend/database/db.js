@@ -1,18 +1,16 @@
-//db.js
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+const url = 'mongodb://localhost:27017/bama'
 
-mongoose.connect('mongodb://localhost:27017/bama', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+try {
+  mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const db = mongoose.connection;
+  db.on('open', ()=> console.log('¡Conectado a MongoDB!'));
+} catch (error) {
+  console.error('¡Error al conectar a MongoDB!', error);
+  process.exit(1);
+}
 
-const db = mongoose.connection;
-db.on('open', () => {
-  console.log('¡Conectado a MongoDB!');
-});
-db.on('error', () => {
-  console.log('¡Error al conectar a MongoDB!');
-});
-
-export default db;
- 
+export default mongoose.connection;
