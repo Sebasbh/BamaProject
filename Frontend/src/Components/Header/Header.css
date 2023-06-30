@@ -1,0 +1,72 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.navbar-logo {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin-right: auto;
+    padding: 20px;
+
+}
+
+.navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    align-items: center;
+}
+
+.navbar-menu li {
+    align-items: center;
+    display: inline-block;
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.one:hover {
+    text-decoration: underline;
+    color: #FF7300;
+}
+
+.two:hover {
+    text-decoration: underline;
+    color: #E32718;
+}
+
+.three:hover {
+    text-decoration: underline;
+    color: #114899;
+}
+
+.four:hover {
+    text-decoration: underline;
+    color: #2E2C84;
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.logoPelota {
+    display: flex;
+    width: 80px;
+    height: 60px;
+}
+
+.frase {
+    text-align: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+    font-size: 20px;
+    padding-top: 10px;
+
+}

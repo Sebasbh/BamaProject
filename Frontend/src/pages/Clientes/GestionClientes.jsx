@@ -1,8 +1,14 @@
 import React from 'react'
+import Header from '../../Components/Header/Header'
+import Footer from '../../Components/Footer/Footer'
 
 function GestionClientes() {
   return (
-    <div>GestionClientes</div>
+    <>
+      <Header />
+     
+      <Footer />
+    </>
   )
 }
 
