@@ -8,6 +8,7 @@ import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 
+
 const App = () => {
   return (
     <Router>
