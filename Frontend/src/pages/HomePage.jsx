@@ -10,10 +10,10 @@ function HomePage() {
         <img src={logo} alt='logo' className='Logo'/>
         <h1 className='home'>Home</h1>
         <div className='btns'>
-            <button className='clientes'><h1 className='clnts'>CLIENTES<img src={arrow} className='arrow'/></h1></button>
-            <button className='facturas'><h1 className='facts'>FACTURAS<img src={arrow} className='arrow'/></h1></button>
-            <button className='albaranes'><h1 className='albrns'>ALBARANES<img src={arrow} className='arrow'/></h1></button>
-            <button className='pedidos'><h1 className='pdds'>PEDIDOS<img src={arrow} className='arrow'/></h1></button>
+            <button className='clientes'><h1>CLIENTES<img src={arrow} className='arrow'/></h1></button>
+            <button className='facturas'><h1>FACTURAS<img src={arrow} className='arrow'/></h1></button>
+            <button className='albaranes'><h1>ALBARANES<img src={arrow} className='arrow'/></h1></button>
+            <button className='pedidos'><h1>PEDIDOS<img src={arrow} className='arrow'/></h1></button>
         </div>
 
         <div className='footer'>
