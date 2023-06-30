@@ -23,6 +23,7 @@
 }
 
 .clientes {
+    width: 400px;
     grid-column-start: 1; 
     grid-column-end: 2; 
     grid-row-start: 1; 
@@ -37,9 +38,11 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-top: 450px;
 }
 
 .facturas {
+    width: 400px;
     grid-column-start: 2; 
     grid-column-end: 3; 
     grid-row-start: 1; 
@@ -54,9 +57,11 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-top: 450px;
 }
 
 .albaranes {
+    width: 400px;
     grid-column-start: 3; 
     grid-column-end: 4; 
     grid-row-start: 1; 
@@ -71,9 +76,11 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-top: 450px;
 }
 
 .pedidos {
+    width: 400px;
     grid-column-start: 4; 
     grid-column-end: 5; 
     grid-row-start: 1; 
@@ -88,22 +95,10 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-top: 450px;
 }
 
 .arrow {
     width: 100px;
     padding-left: 150px;
-}
-
-.frase-footer {
-    display: flex;
-    justify-content: center;
-    font-family: inria sans;
-    color: white;
-}
-
-.logoPelota {
-    display: flex;
-    width: 100px;
-    
 }
