@@ -1,0 +1,16 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+}
+
+.frase-footer {
+    display: flex;
+    font-family: inria sans;
+    color: white;
+}
+
+.logoPelota {
+    width: 50px;
+    object-fit: cover;
+}
