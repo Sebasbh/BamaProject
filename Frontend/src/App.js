@@ -7,6 +7,7 @@ import CDcliente from './pages/Clientes/CDcliente';
 import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
+import DetallePedidos from './pages/Pedidos/DetallePedidos';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/cdcliente" element={<CDcliente/>} />
         <Route path="/DetalleCliente" element={<DetalleCliente/>} />
         <Route path="/GestionClientes" element={<GestionClientes/>}/>
+        <Route path="/DetallePedidos" element={<DetallePedidos/>}/>
         <Route element={NotFound} />
        </Routes>
     </Router>

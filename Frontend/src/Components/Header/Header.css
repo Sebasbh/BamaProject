@@ -48,25 +48,3 @@
     text-decoration: underline;
     color: #2E2C84;
 }
-
-.footer {
-    display: flex;
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-
-.logoPelota {
-    display: flex;
-    width: 80px;
-    height: 60px;
-}
-
-.frase {
-    text-align: center;
-    justify-content: center;
-    color: white;
-    width: 100%;
-    font-size: 20px;
-    padding-top: 10px;
-
-}
