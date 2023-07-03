@@ -1,0 +1,50 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.navbar-logo {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin-right: auto;
+    padding: 20px;
+
+}
+
+.navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    align-items: center;
+}
+
+.navbar-menu li {
+    align-items: center;
+    display: inline-block;
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.one:hover {
+    text-decoration: underline;
+    color: #FF7300;
+}
+
+.two:hover {
+    text-decoration: underline;
+    color: #E32718;
+}
+
+.three:hover {
+    text-decoration: underline;
+    color: #114899;
+}
+
+.four:hover {
+    text-decoration: underline;
+    color: #2E2C84;
+}

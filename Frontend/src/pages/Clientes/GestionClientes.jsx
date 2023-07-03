@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 
