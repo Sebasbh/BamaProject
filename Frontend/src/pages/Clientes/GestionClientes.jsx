@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -29,6 +32,7 @@ function GestionClientes() {
     { text: 'Cliente', link: '/categoria' },
   ];
 
+
   // procedimiento para eliminar un cliente
   //const deleteCliente = async (id) => {
 
@@ -49,17 +53,21 @@ function GestionClientes() {
             {item.text}
           </Breadcrumb.Item>
         ))}
-      </Breadcrumb>
-      <div className="container">
-      <div className="row">
-    <div className="col-md-4">
-      <div className="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="boton-buscar"/>
-        <button className="btn btn-primary" type="button" id="boton-buscar">Buscar</button>
+        </Breadcrumb>
+        <div className="container">
+        <div className="row">
+          <div className="col-md-4">
+            <div className="input-group">
+              <input type="text" className="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="boton-buscar"/>
+              <button className="btn btn-primary" type="button" id="boton-buscar">Buscar</button> 
+            </div>
+          </div>
+          <div className="col-md-8 text-right">
+            <button className="btn btn-success">Crear cliente</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-      </div>
+  
       <div className='row'>
         <div className='col'> </div>
           <table className='table  table-hover'>
