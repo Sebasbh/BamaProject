@@ -44,8 +44,8 @@ const DetalleCliente = () => {
 
         <div className="contenido">
           <div className="botonesArriba">
-            <button className="botonFacturas">Facturas</button>
-            <button className="botonPedidos">Pedidos</button>
+            <button className="botonFacturas">🧾  Facturas</button>
+            <button className="botonPedidos">📋  Pedidos</button>
           </div>
 
           <div>
@@ -134,8 +134,8 @@ const DetalleCliente = () => {
             </label>
           </div>
           <div className="botonesAbajo">
-            <button className="botonEditar">Editar Cliente</button>
-            <button className="botonEliminar">Eliminar Cliente</button>
+            <button className="botonEditar">🖊️  Editar Cliente</button>
+            <button className="botonEliminar"> 🗑️   Eliminar Cliente</button>
           </div>
         </div>
       </div>
