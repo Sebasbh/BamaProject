@@ -4,11 +4,8 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
-
-
+import Button  from 'react-bootstrap/Button';
+import Pagination from 'react-bootstrap/Pagination';
 
 
 const URI = 'http://localhost:8000/clientes/'
@@ -18,13 +15,13 @@ function GestionClientes() {
   useEffect ( ()=> {
     getCliente ()
   }, [])
+
   
   // procedimiento para mostrar todos los clientes
   const getCliente = async () => {
     
     const res = await axios.get(URI)
     setCliente(res.data)
-
   }
 
   const breadcrumbItems = [
@@ -59,11 +56,11 @@ function GestionClientes() {
           <div className="col-md-4">
             <div className="input-group">
               <input type="text" className="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="boton-buscar"/>
-              <button className="btn btn-primary" type="button" id="boton-buscar">Buscar</button> 
+              <Button variant="outline-primary">Buscar</Button>{' '}
             </div>
           </div>
-          <div className="col-md-8 text-right">
-            <button className="btn btn-success">Crear cliente</button>
+          <div className="col text-right">
+             <Button variant="outline-success">Crear cliente</Button>{' '}
           </div>
         </div>
       </div>
@@ -97,24 +94,21 @@ function GestionClientes() {
               )) }
             </tbody>
           </table>
-          <nav aria-label="Page navigation example">
-            <ul className="pagination justify-content-center">
-              <li className="page-item">
-                <a className="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li className="page-item"><a class="page-link" href="#">1</a></li>
-              <li className="page-item"><a class="page-link" href="#">2</a></li>
-              <li className="page-item"><a class="page-link" href="#">3</a></li>
-              <li className="page-item">
-                <a className="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          
       </div>
+      <div className="container">
+      <div className="row">
+      <Pagination>
+            <Pagination.Prev />
+            <Pagination.Item active>{1}</Pagination.Item>
+            <Pagination.Item>{2}</Pagination.Item>
+            <Pagination.Item>{3}</Pagination.Item>
+            <Pagination.Item>{4}</Pagination.Item>
+            <Pagination.Item>{5}</Pagination.Item>
+            <Pagination.Next />
+          </Pagination>
+        </div>
+        </div>
     </div>
   )
 }
