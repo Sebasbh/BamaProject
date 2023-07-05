@@ -5,10 +5,11 @@ const clienteSchema = new Schema (
    {
       empresa:{type:String},
       CIF_NIF:{type:String},
-      contacto:{type:String},
-      importe_pedido:{type:String},
-      fecha_pedido:{type:String},
       forma_pago:{type:String},
+      fecha_creacion:{type:String},
+      razon_spcial:{type:String},
+      direccion:{type:String},
+      
    }, 
    {collection:'clientes'}
 )
