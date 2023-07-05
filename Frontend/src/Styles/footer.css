@@ -1,3 +1,9 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+}
+
 .frase-footer {
     display: flex;
     justify-content: space-between;
@@ -7,8 +13,6 @@
 }
 
 .logoPelota {
-    display: flex;
+    width: 50px;
     object-fit: cover;
-    width: 120px;
-    padding-left: 50px;
 }
