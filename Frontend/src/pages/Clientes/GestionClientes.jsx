@@ -73,77 +73,39 @@ function GestionClientes() {
       </Container>
 
       <Table striped hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Empresa</th>
-          <th>CIF/NIF</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-  
-      <div className='row'>
-          <table className='table  table-hover'>
-            <thead>
-              <tr>
-                <th scope="col">Empresa</th>
-                <th scope="col">CIF/NIF</th>
-                <th scope="col">Forma de pago</th>
-                <th scope="col">Fecha de creación</th>
-              </tr>
-            </thead>
-            <tbody className='table-group-divider text-center'>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>CIF/NIF</th>
+            <th>Forma de pago</th>
+              <th>Fecha de creación</th>
+          </tr>
+        </thead>
+        <tbody className='table-group-divider text-center'>
               { clientes.map ( (cliente, index) => (
                 <tr key={ index }>
                   <td> { cliente.empresa }</td>
                   <td> { cliente.CIF_NIF} </td>
-                  <td> { cliente.contacto} </td>
-                  <td> { cliente.importe_pedido} </td>
-                  <td> { cliente.fecha_pedido} </td>
                   <td> { cliente.forma_pago} </td>
+                  <td> { cliente.fecha_creacion} </td>
                   <td>
                     <Link to={`/DectalleCliente/${cliente._id}`} className='btn btn-secondary'> Ver Detalles </Link>
                   </td>
                 </tr>
               )) }
-            </tbody>
-          </table>
-          
+        </tbody>
+      </Table>
+          <Pagination>
+              <Pagination.Prev />
+              <Pagination.Item active>{1}</Pagination.Item>
+              <Pagination.Item>{2}</Pagination.Item>
+              <Pagination.Item>{3}</Pagination.Item>
+              <Pagination.Item>{4}</Pagination.Item>
+              <Pagination.Item>{5}</Pagination.Item>
+              <Pagination.Next />
+            </Pagination>
+         
       </div>
-      <div className="container">
-      <div className="row">
-      <Pagination>
-            <Pagination.Prev />
-            <Pagination.Item active>{1}</Pagination.Item>
-            <Pagination.Item>{2}</Pagination.Item>
-            <Pagination.Item>{3}</Pagination.Item>
-            <Pagination.Item>{4}</Pagination.Item>
-            <Pagination.Item>{5}</Pagination.Item>
-            <Pagination.Next />
-          </Pagination>
-        </div>
-        </div>
-    </div>
   )
 }
 
