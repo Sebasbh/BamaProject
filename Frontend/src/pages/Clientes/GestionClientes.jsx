@@ -25,15 +25,12 @@ function GestionClientes() {
 
   // procedimiento para mostrar todos los clientes
   const getCliente = async () => {
-    
-    const res = await axios.get(URI)
-    setCliente(res.data)
-  }
+    const res = await axios.get(URI);
+    setCliente(res.data);
+    }
+  };
 
-  const breadcrumbItems = [
-    { text: 'Inicio', link: '/Home' },
-    { text: 'Cliente', link: '/categoria' },
-  ];
+
 
 
   // procedimiento para eliminar un cliente
@@ -45,18 +42,11 @@ function GestionClientes() {
 
   return (
     //<div>GestionClientes</div>
-    <div className='container'>
+    <Container>
       <Breadcrumb>
-        {breadcrumbItems.map((item, index) => (
-          <Breadcrumb.Item
-            key={index}
-            href={item.link}
-            active={index === breadcrumbItems.length - 1}
-          >
-          {item.text}
-          </Breadcrumb.Item>
-          ))}
-      </Breadcrumb>
+        <Breadcrumb.Item href="#">Inicio</Breadcrumb.Item>
+      <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
+    </Breadcrumb>
       <Container>
         <Row>
           <Col md lg="4">
@@ -72,8 +62,8 @@ function GestionClientes() {
         </Row>
       </Container>
 
-      <Table striped hover>
-        <thead>
+      <Table striped hover className='mt-5'>
+        <thead className='text-center'>
           <tr>
             <th>Empresa</th>
             <th>CIF/NIF</th>
@@ -105,7 +95,7 @@ function GestionClientes() {
               <Pagination.Next />
             </Pagination>
          
-      </div>
+      </Container>
   )
 }
 
