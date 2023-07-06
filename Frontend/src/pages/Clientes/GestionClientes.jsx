@@ -27,8 +27,8 @@ function GestionClientes() {
   const getCliente = async () => {
     const res = await axios.get(URI);
     setCliente(res.data);
-    }
-  };
+  }
+
 
 
 
