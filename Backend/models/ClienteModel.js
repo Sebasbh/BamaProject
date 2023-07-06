@@ -11,4 +11,4 @@ const clienteSchema = new Schema (
    {collection:'clientes'}
 )
 
-export default mongoose.model ('ClienteModel',clienteSchema )
+export default mongoose.model ('Cliente',clienteSchema )
