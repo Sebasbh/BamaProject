@@ -1,18 +1,14 @@
-.footer{
-    display: flex;
-    justify-content: center;
-}
-
 .frase-footer {
     display: flex;
     justify-content: space-between;
     font-family: inria sans;
     color: white;
+    padding-right: 450px;
 }
 
 .logoPelota {
     display: flex;
-    justify-content: space-between;
     object-fit: cover;
-    width: 60px;
+    width: 120px;
+    padding-left: 50px;
 }

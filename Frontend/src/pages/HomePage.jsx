@@ -3,7 +3,6 @@ import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
 import arrow from '../Components/assets/Images/arrow.png';
 import Footer from '../Components/footer/Footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
   return (

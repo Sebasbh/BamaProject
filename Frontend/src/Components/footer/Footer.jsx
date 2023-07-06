@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Footer() {
     return (
-      <div className='footer bg-dark footer-height'> 
+      <div className='footer'> 
         <h1 className='frase-footer'>
           <img src={logoPelota} alt="logoBama" className='logoPelota' />
           "Generamos la ventaja competitiva que necesitas."
