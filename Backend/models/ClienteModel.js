@@ -7,7 +7,7 @@ const clienteSchema = new Schema (
       CIF_NIF:{type:String},
       forma_pago:{type:String},
       fecha_creacion:{type:String},
-      razon_spcial:{type:String},
+      razon_social:{type:String},
       direccion:{type:String},
       
    }, 
