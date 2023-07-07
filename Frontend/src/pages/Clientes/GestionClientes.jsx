@@ -79,7 +79,7 @@ function GestionClientes() {
                   <td> { cliente.forma_pago} </td>
                   <td> { cliente.fecha_creacion} </td>
                   <td>
-                    <Link to={`/DectalleCliente/${cliente._id}`} className='btn btn-secondary'> Ver Detalles </Link>
+                    <Link to={`/DetalleCliente/${cliente._id}`} className='btn btn-secondary'> Ver Detalles </Link>
                   </td>
                 </tr>
               )) }
