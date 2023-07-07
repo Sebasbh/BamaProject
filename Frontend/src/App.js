@@ -8,6 +8,8 @@ import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import DetallePedidos from './pages/Pedidos/DetallePedidos';
+import GestionAlbaranes from './pages/Albaranes/GestionAlbaranes';
+import FormularioAlbaranes from './pages/Albaranes/FormularioAlbaranes';
 
 const App = () => {
   return (
@@ -20,6 +22,9 @@ const App = () => {
         <Route path="/DetalleCliente" element={<DetalleCliente/>} />
         <Route path="/GestionClientes" element={<GestionClientes/>}/>
         <Route path="/DetallePedidos" element={<DetallePedidos/>}/>
+        <Route path="/GestionAlbaranes" element={<GestionAlbaranes/>}/>
+        <Route path="/FormularioAlbaranes" element={<FormularioAlbaranes/>}/>
+
         <Route element={NotFound} />
        </Routes>
     </Router>

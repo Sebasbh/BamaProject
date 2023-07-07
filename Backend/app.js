@@ -4,6 +4,8 @@ import cors from 'cors'
 import db from "./database/db.js"
 //importamos nuestro enrutador
 import blogRoutes from './routes/routes.js'
+import albaranesRoutes from './routes/albaranRoutes.js'
+
 
 const app = express()
 
@@ -11,6 +13,10 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/clientes', blogRoutes)
+app.use('/albaranes', albaranesRoutes)
+
+
+
 
 try {
    await db.authenticate ()

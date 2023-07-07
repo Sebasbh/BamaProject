@@ -45,7 +45,7 @@ function DetallePedidos() {
 
             <div className="d-flex justify-content-center my-3">
                 <Button variant="success" className="botonCrear btn-sm" style={{ width: "150px", marginRight: "30px" }}> ➕ Crear Pedidos</Button>
-                <Button variant="warning" className="botonEditar btn-sm" style={{ width: "150px", marginRight: "30px" }}>🖊️ Eliminar Pedidos</Button>
+                <Button variant="warning" className="botonEditar btn-sm" style={{ width: "150px", marginRight: "30px" }}>🖊️ Editar Pedidos</Button>
                 <Button variant="danger" className="botonEliminar btn-sm" style={{ width: "150px" }}>🗑️ Eliminar Pedidos</Button>
             </div>
             <Container className="parent-container">
