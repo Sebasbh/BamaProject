@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const URI = 'http://localhost:8000/clientes/:id`)'
 
 function DetalleCliente() {
   const [cliente, setcliente] = useState(null);
@@ -14,7 +13,7 @@ function DetalleCliente() {
   useEffect(() => {
     const fetchCliente = async () => {
       try {
-        const res = await await axios.get(URI);
+        const res = await axios.get(`http://localhost:8000/clientes/${id}`);
         setcliente(res.data);
         setLoading(false);
         console.log(res.data.cliente)
@@ -40,7 +39,7 @@ function DetalleCliente() {
           <p>Fecha: {cliente.empresa}</p>
           <p>Nombre empresa: {cliente.CIF_NIF}</p>
           <p>Importe: {cliente.forma_pago}</p>
-          <p>Estado: {cliente.fecha_creacion}</p>
+          <p>Fecha de creación: {cliente.fecha_creacion}</p>
           <p>Razon Social: {cliente.razon_social}</p>
           <p>Direccion: {cliente.direccion}</p>
           
