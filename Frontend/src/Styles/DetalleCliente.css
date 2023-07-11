@@ -2,7 +2,6 @@
 .detalle-cliente {
     display: flex;
     gap: 20%;
-
   }
   
   .imagenes {
@@ -43,7 +42,8 @@
     height: 30px;
     cursor: pointer;
     font-size: large;
-    
+    border: none;
+
 }
 
 .botonPedidos{
@@ -54,6 +54,7 @@
     height: 30px;
     cursor: pointer;
     font-size: large;
+    border: none;
 
 }
 
@@ -66,6 +67,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     align-items: flex-start;
+
   }
   
   h2 {
@@ -120,18 +122,21 @@
     background-color: rgb(206, 170, 8);
     border-radius: 5px;
     color: white;
-    width: 150px;
+    width: 180px;
     height: 30px;
     font-size: large;
     cursor: pointer;
+    border: none;
+
   }
 
   .botonEliminar{
     background-color: rgb(218, 24, 24);
     border-radius: 5px;
     color: white;
-    width: 150px;
+    width: 180px;
     height: 30px;
     font-size: large;
     cursor: pointer;
+    border: none;
   }
