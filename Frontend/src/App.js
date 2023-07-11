@@ -7,7 +7,7 @@ import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import CrearPedido from './pages/Pedidos/CrearPedido';
-import ListaPedido from './pages/Pedidos/ListaPedido';
+import ListaPedido from './pages/Pedidos/GestionPedidos';
 import DetallePedido from './pages/Pedidos/DellatePedido';
 
 const App = () => {
