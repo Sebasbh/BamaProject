@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const clienteSchema = new Schema (
    {
-      empresa:{type:String},
-      CIF_NIF:{type:String},
+      empresa:{ type: String},
+      direccion_social:{type:String},
+      CIF:{type:String},
       forma_pago:{type:String},
-      fecha_creacion:{type:String},
-      razon_social:{type:String},
-      direccion:{type:String},
-      
+      activo: { type: Boolean, default: true },
+      pedidos_id: { type: mongoose.Schema.Types.ObjectId, ref: 'PedidosModel' }
+
    }, 
    {collection:'clientes'}
 )
