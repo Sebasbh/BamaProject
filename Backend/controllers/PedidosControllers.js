@@ -7,6 +7,7 @@ export const getAllPedidos = async (req, res) => {
    try {
       const pedido = await Pedido.find();
       res.status(200).json(pedido);
+      console.log(pedido)
    } catch (error) {
       res.json({ message: error.message });
    }

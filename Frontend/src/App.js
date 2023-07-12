@@ -7,7 +7,7 @@ import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import CrearPedido from './pages/Pedidos/CrearPedido';
-import ListaPedido from './pages/Pedidos/GestionPedidos';
+import GestionPedidos from './pages/Pedidos/GestionPedidos';
 import DetallePedido from './pages/Pedidos/DellatePedido';
 
 const App = () => {
@@ -20,8 +20,9 @@ const App = () => {
         <Route path="/DetalleCliente" element={<DetalleCliente/>} />
         <Route path="/GestionClientes" element={<GestionClientes/>}/>
         <Route path="/CrearPedido" element={<CrearPedido/>}/>
-        <Route path="/ListaPedido" element={<ListaPedido/>}/>
-        <Route path="/detallePedido/:id" element={<DetallePedido />} />        <Route element={NotFound} />
+        <Route path="/GestionPedidos" element={<GestionPedidos/>}/>
+        <Route path="/DetallePedido/:id" element={<DetallePedido />} />        
+        <Route element={NotFound} />
        </Routes>
     </Router>
   );
