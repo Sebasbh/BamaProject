@@ -9,7 +9,7 @@ function HomePage() {
         <header>
           <img src={logo} alt='logo' className='Logo'/>
         </header>
-        <h1 className='title'>Home</h1>
+        
         <div className='btns'>
             <button className='clientes'><h1>CLIENTES <h2>^</h2></h1></button>
             <button className='facturas'><h1>FACTURAS <h2>^</h2></h1></button>

@@ -24,6 +24,7 @@ function CDcliente() {
               <img src={personita} alt='icono-cliente' className='personita' />
               <span className="larger-text">Cliente:</span>
               <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
               </div>
             </Col>
 
@@ -32,6 +33,7 @@ function CDcliente() {
               <img src={tarjetas} alt="tarjetas" className='tarjetas' />
               <span className="larger-text">Forma de Pago:</span>
               <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
               </div>
             </Col>
           </Row>
@@ -42,6 +44,7 @@ function CDcliente() {
               <img src={direccion} alt='direccion' className='direccion' />
               <span className="larger-text">Dirección Social:</span>
               <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
               </div>
             </Col>
 
@@ -50,6 +53,7 @@ function CDcliente() {
               <img src={contacto} alt="contacto" className='contacto' />
               <span className="larger-text">Número de Contacto:</span>
               <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
               </div>
             </Col>
           </Row>
@@ -60,6 +64,7 @@ function CDcliente() {
               <img src={CIF} alt="CIF" className='cif' />
               <span className="larger-text">CIF:</span>
               <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
               </div>
             </Col>
 

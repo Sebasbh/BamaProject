@@ -3,14 +3,6 @@
     width: 900px;
 }
 
-.title {
-    font-family: inria sans;
-    font-size: 20px;
-    color: blue;
-    padding-left: 50px;
-    font-weight: lighter;
-}
-
 .btns {
     display: grid;
     grid-template-rows: 100px 100px;

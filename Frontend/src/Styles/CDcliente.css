@@ -18,9 +18,6 @@
 }
 
 .larger-input {
-    font-size: x-large;
-    border-color: lightgray;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    font-size: xx-large;
+    border: none;
 }
