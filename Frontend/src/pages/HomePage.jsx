@@ -11,10 +11,10 @@ function HomePage() {
         </header>
         
         <div className='btns'>
-            <button className='clientes'><h1>CLIENTES <h2>^</h2></h1></button>
-            <button className='facturas'><h1>FACTURAS <h2>^</h2></h1></button>
-            <button className='albaranes'><h1>ALBARANES <h2>^</h2></h1></button>
-            <button className='pedidos'><h1>PEDIDOS <h2>^</h2></h1></button>
+            <button className='clientes'><h1 className='clnts'>CLIENTES<img src={arrow} className='arrow'/></h1></button>
+            <button className='facturas'><h1 className='facts'>FACTURAS<img src={arrow} className='arrow'/></h1></button>
+            <button className='albaranes'><h1 className='albrns'>ALBARANES<img src={arrow} className='arrow'/></h1></button>
+            <button className='pedidos'><h1 className='pdds'>PEDIDOS<img src={arrow} className='arrow'/></h1></button>
         </div>
         <Footer />
     </div>
