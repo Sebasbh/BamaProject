@@ -7,8 +7,15 @@ import Footer from './Footer';
 function HomePage() {
   return (
     <div>
+<<<<<<< HEAD
         <img src={logo} alt='logo' className='Logo'/>
         <h1 className='home'>Home</h1>
+=======
+        <header>
+          <img src={logo} alt='logo' className='Logo'/>
+        </header>
+        
+>>>>>>> 2589db9 (changes homepage)
         <div className='btns'>
             <button className='clientes'><h1 className='clnts'>CLIENTES<img src={arrow} className='arrow'/></h1></button>
             <button className='facturas'><h1 className='facts'>FACTURAS<img src={arrow} className='arrow'/></h1></button>

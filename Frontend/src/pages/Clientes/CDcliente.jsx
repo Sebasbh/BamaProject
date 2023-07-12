@@ -14,8 +14,74 @@ import Col from 'react-bootstrap/Col';
 
 function CDcliente() {
   return (
+<<<<<<< HEAD
     <div>CDcliente</div>
   )
+=======
+    <div>
+      <header>Encabezado</header>
+      <Container>
+        <form className='porfa'>
+          <Row xs={1} md={2} className="justify-content-center mt-4">
+            <Col sm={12} md={6}>
+            <div className="mb-4">
+              <img src={personita} alt='icono-cliente' className='personita' />
+              <span className="larger-text">Cliente:</span>
+              <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
+              </div>
+            </Col>
+
+            <Col sm={12} md={6}>
+            <div className="mb-4">
+              <img src={tarjetas} alt="tarjetas" className='tarjetas' />
+              <span className="larger-text">Forma de Pago:</span>
+              <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
+              </div>
+            </Col>
+          </Row>
+
+          <Row xs={1} md={2} className="justify-content-center mt-4">
+            <Col sm={12} md={6}>
+            <div className="mb-4">
+              <img src={direccion} alt='direccion' className='direccion' />
+              <span className="larger-text">Dirección Social:</span>
+              <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
+              </div>
+            </Col>
+
+            <Col sm={12} md={6}>
+            <div className="mb-4">
+              <img src={contacto} alt="contacto" className='contacto' />
+              <span className="larger-text">Número de Contacto:</span>
+              <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
+              </div>
+            </Col>
+          </Row>
+
+          <Row xs={1} md={2} className="justify-content-center mt-4">
+            <Col sm={12} md={6}>
+            <div className="mb-4">
+              <img src={CIF} alt="CIF" className='cif' />
+              <span className="larger-text">CIF:</span>
+              <input type="text" className='larger-input' />
+              <hr className="horizontal-line" />
+              </div>
+            </Col>
+
+            <Col sm={12} md={6} className="d-flex justify-content-end">
+              <Button className='registro' type="submit">Registrar</Button>
+            </Col>
+          </Row>
+        </form>
+      </Container>
+      <Footer />
+    </div>
+  );
+>>>>>>> 2589db9 (changes homepage)
 }
 
 export default CDcliente;
