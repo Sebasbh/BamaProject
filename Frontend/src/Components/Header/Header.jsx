@@ -1,26 +1,32 @@
-import React from 'react'
-import './Header.css'
+import React from 'react';
 import logo from '../assets/Images/logo.png';
-
-
+import { Navbar, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-logo">
-          <img src={logo} alt='logo' />
-        </div>
-        <ul className="navbar-menu">
-          <li className='one'>Clientes</li>
-          <li className='two'>Facturas</li>
-          <li className='three'>Pedidos</li>
-          <li className='four'>Albaranes</li>  
-        </ul>
-      </nav>
-     
+      <Navbar bg="white" variant="light" style={{ height: '10vh' }}>
+        <Navbar.Brand>
+          <img src={logo} alt="logo" className="navbar-logo" style={{ height: '15vh', marginRight: 'auto', padding: '30px' }} />
+        </Navbar.Brand>
+        <Nav className="ml-auto" style={{ marginLeft: 'auto', padding: '30px' }}>
+          <Nav.Link as={Link} to="/clientes" className="one" style={{ textDecoration: 'none', color: 'black' }}>
+            <span style={{ textDecoration: 'underline', color: '#FF7300' }}>Clientes</span>
+          </Nav.Link>
+          <Nav.Link as={Link} to="/facturas" className="two" style={{ textDecoration: 'none', color: 'black' }}>
+            <span style={{ textDecoration: 'underline', color: '#E32718' }}>Facturas</span>
+          </Nav.Link>
+          <Nav.Link as={Link} to="/pedidos" className="three" style={{ textDecoration: 'none', color: 'black' }}>
+            <span style={{ textDecoration: 'underline', color: '#114899' }}>Pedidos</span>
+          </Nav.Link>
+          <Nav.Link as={Link} to="/albaranes" className="four" style={{ textDecoration: 'none', color: 'black' }}>
+            <span style={{ textDecoration: 'underline', color: '#2E2C84' }}>Albaranes</span>
+          </Nav.Link>
+        </Nav>
+      </Navbar>
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;

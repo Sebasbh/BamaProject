@@ -13,7 +13,7 @@ const FormularioClientes = ({ cliente, setclientes }) => {
   const [forma_de_pago, setFormaPago] = useState('');
 
   useEffect(() => {
-    // Realizar la solicitud GET para obtener los datos de un albarán existente
+    // Realizar la solicitud GET para obtener los datos de un cliente existente
     axios
       .get('http://localhost:8000/clientes/{id}') // Reemplaza {id} con el ID del albarán que deseas editar
       .then(response => {
@@ -35,7 +35,7 @@ const FormularioClientes = ({ cliente, setclientes }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    // Crear el objeto albarán a enviar
+    // Crear el objeto cliente a enviar
     const cliente = {
       empresa,
       direccion_social,
@@ -46,7 +46,7 @@ const FormularioClientes = ({ cliente, setclientes }) => {
       forma_de_pago,
     };
 
-    // Enviar la solicitud POST para crear/editar el albarán
+    // Enviar la solicitud POST para crear/editar el cliente
     axios
       .post('http://localhost:8000/clientes', cliente)
       .then(response => {
@@ -99,9 +99,11 @@ const FormularioClientes = ({ cliente, setclientes }) => {
                         style={{ backgroundColor: 'white' }}
                       />
                      </Form.Group>
+
                 </Form.Group>
-
-
+                <Button variant="primary" type="submit">
+                  {cliente ? 'Editar Cliente' : 'Crear Cliente'}
+                </Button>
               </Form>
             </div>
           </Col>
@@ -132,12 +134,6 @@ const FormularioClientes = ({ cliente, setclientes }) => {
                   style={{ backgroundColor: 'white' }}
                 />
               </Form.Group>
-
-            <Button variant="primary" type="submit" style={{ marginTop: '30px' }}>
-                {cliente ? 'Editar Cliente' : 'Crear Cliente'}
-            </Button>
-
-              
             </div>
           </Col>
         
@@ -148,3 +144,6 @@ const FormularioClientes = ({ cliente, setclientes }) => {
 };
 
 export default FormularioClientes;
+
+
+
