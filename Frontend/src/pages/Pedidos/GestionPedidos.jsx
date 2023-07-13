@@ -3,6 +3,7 @@ import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col,
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { PlusSquare, EyeFill, Trash } from 'react-bootstrap-icons';
+import Footer from '../../Components/footer/Footer';
 
 function ListaPedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -103,6 +104,7 @@ function ListaPedidos() {
           </Card>
         </Col>
       </Row>
+      <Footer/>
     </Container>
   );
 }

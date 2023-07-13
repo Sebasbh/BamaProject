@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../../Components/footer/Footer';
 
 function DetallePedido() {
   const [pedido, setPedido] = useState(null);
@@ -43,6 +44,7 @@ function DetallePedido() {
       ) : (
         <p>No se encontró el pedido con el ID proporcionado.</p>
       )}
+      <Footer/>
     </div>
   );
 }

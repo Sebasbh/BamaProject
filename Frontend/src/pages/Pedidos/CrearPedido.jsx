@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../Components/footer/Footer';
 
 const CrearPedidos = () => {
   const [numeroDePedido, setNumeroDePedido] = useState('');
@@ -96,6 +97,7 @@ const CrearPedidos = () => {
           {isLoading ? 'Cargando...' : 'Registrar Pedido'}
         </Button>
       </Form>
+      <Footer />
     </Container>
   );
 };

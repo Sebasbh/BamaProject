@@ -14,10 +14,6 @@ import Col from 'react-bootstrap/Col';
 
 function CDcliente() {
   return (
-<<<<<<< HEAD
-    <div>CDcliente</div>
-  )
-=======
     <div>
       <header>Encabezado</header>
       <Container>
@@ -81,7 +77,6 @@ function CDcliente() {
       <Footer />
     </div>
   );
->>>>>>> 2589db9 (changes homepage)
 }
 
 export default CDcliente;
