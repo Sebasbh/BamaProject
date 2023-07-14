@@ -1,0 +1,264 @@
+[{
+  "_id": {
+    "$oid": "64afe929bc2055921afed723"
+  },
+  "numero_de_pedido": 1,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 200,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe94abc2055921afed726"
+  },
+  "numero_de_pedido": 2,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 300,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe952bc2055921afed729"
+  },
+  "numero_de_pedido": 3,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 400,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Cerrado",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe9a4bc2055921afed72d"
+  },
+  "numero_de_pedido": 4,
+  "fecha_de_pedido": {
+    "$date": "2023-04-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 600,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe9a8bc2055921afed730"
+  },
+  "numero_de_pedido": 5,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 700,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe9a9bc2055921afed733"
+  },
+  "numero_de_pedido": 6,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 900,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe9a9bc2055921afed736"
+  },
+  "numero_de_pedido": 7,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 200,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64afe9aabc2055921afed739"
+  },
+  "numero_de_pedido": 8,
+  "fecha_de_pedido": {
+    "$date": "2023-07-13T10:00:00.000Z"
+  },
+  "cliente_id": {
+    "$oid": "615943f57c1b31a2a3e4f567"
+  },
+  "importe": 100,
+  "archivo_adjunto": "ruta/archivo.pdf",
+  "estado": "Abierto",
+  "total_facturado": 0,
+  "albaranes_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f568"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f569"
+    }
+  ],
+  "facturas_id": [
+    {
+      "$oid": "615943f57c1b31a2a3e4f56a"
+    },
+    {
+      "$oid": "615943f57c1b31a2a3e4f56b"
+    }
+  ],
+  "__v": 0
+}]

@@ -1,18 +1,18 @@
 import React from 'react';
-import '../../Styles/footer.css';
-import logoPelota from '../assets/Images/logoPelota.png';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+const Footer = () => {
+  return (
+<div>
+      <footer className="bg-dark text-light text-center py-4">
+        <div className="container">
+          <p>Generamos la ventaja competitiva que necesitas.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Footer;
 
 
-function Footer() {
-    return (
-      <div className='footer'> 
-        <h1 className='frase-footer'>
-          <img src={logoPelota} alt="logoBama" className='logoPelota' />
-          "Generamos la ventaja competitiva que necesitas."
-        </h1>
-      </div>
-    );
-  }
 
-  export default Footer;

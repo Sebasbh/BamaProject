@@ -1,21 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { PlusSquare, EyeFill, Trash } from 'react-bootstrap-icons';
+//import Footer from "../../Components/footer/Footer";
 
-function ListaPedidos() {
+function GestionPedidos() {
   const [pedidos, setPedidos] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortedField, setSortedField] = useState("");
+  const [sortedOrder, setSortedOrder] = useState("asc");
+
+  const fetchPedidos = useCallback(async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/pedidos', {
+        params: {
+          search: searchQuery,
+          sortBy: sortedField,
+          sortOrder: sortedOrder
+        }
+      });
+      setPedidos(response.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [searchQuery, sortedField, sortedOrder]);
 
   useEffect(() => {
     fetchPedidos();
-  }, []);
-
-  const fetchPedidos = async () => {
-    const response = await axios.get('http://localhost:8000/pedidos');
-    setPedidos(response.data);
-    console.log(response);
-  };
+  }, [fetchPedidos]);
 
   const eliminarPedido = async (pedidoId) => {
     try {
@@ -23,6 +37,19 @@ function ListaPedidos() {
       fetchPedidos();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSort = (field) => {
+    if (sortedField === field) {
+      setSortedOrder(sortedOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortedField(field);
+      setSortedOrder("asc");
     }
   };
 
@@ -37,17 +64,19 @@ function ListaPedidos() {
                 <FormControl
                   placeholder="Buscar pedidos"
                   aria-label="Buscar pedidos"
+                  value={searchQuery}
+                  onChange={handleSearch}
                 />
               </InputGroup>
               <Table striped bordered hover responsive className="shadow-sm">
                 <thead className="thead-dark">
                   <tr>
-                    <th>Nº pedido</th>
-                    <th>Fecha pedido</th>
-                    <th>ID Cliente</th>
-                    <th>Importe</th>
+                    <th onClick={() => handleSort("numero_de_pedido")}>Nº pedido</th>
+                    <th onClick={() => handleSort("fecha_de_pedido")}>Fecha pedido</th>
+                    <th onClick={() => handleSort("cliente_id")}>ID Cliente</th>
+                    <th onClick={() => handleSort("importe")}>Importe</th>
                     <th>% facturado</th>
-                    <th>Estado</th>
+                    <th onClick={() => handleSort("estado")}>Estado</th>
                     <th>Nº Facturas correspondientes</th>
                     <th>Nº Albaranes correspondientes</th>
                     <th>Acciones</th>
@@ -78,10 +107,8 @@ function ListaPedidos() {
                       </td>
                       <td>
                         <div>
-                          <Link to={`/DetallePedido/${pedido._id}`}>
-                            <Button variant="primary" size="sm">
-                              <EyeFill className="mb-1" /> Ver más
-                            </Button>
+                          <Link to={`/DetallePedido/${pedido._id}`} className="btn btn-primary btn-sm">
+                            <EyeFill className="mb-1" /> Ver más
                           </Link>
                           <Button variant="danger" size="sm" onClick={() => eliminarPedido(pedido._id)}>
                             <Trash className="mb-1" /> Eliminar
@@ -94,10 +121,8 @@ function ListaPedidos() {
               </Table>
             </Card.Body>
             <Card.Footer className="text-center">
-              <Link to="/CrearPedido">
-                <Button variant="primary" size="lg">
-                  <PlusSquare className="mb-1" /> Nuevo Pedido
-                </Button>
+              <Link to="/CrearPedido" className="btn btn-primary btn-lg">
+                <PlusSquare className="mb-1" /> Nuevo Pedido
               </Link>
             </Card.Footer>
           </Card>
@@ -107,4 +132,4 @@ function ListaPedidos() {
   );
 }
 
-export default ListaPedidos;
+export default GestionPedidos;
