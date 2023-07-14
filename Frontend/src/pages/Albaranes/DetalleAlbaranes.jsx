@@ -75,7 +75,7 @@ function DetalleAlbaranes() {
       .then(response => {
         setAlbaran(null);
         alert('Albarán eliminado correctamente.');
-        navigate('/GestionAlbaranes');
+         navigate('/GestionAlbaranes');
       })
       .catch(error => console.log(error));
   };
