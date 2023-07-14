@@ -11,7 +11,7 @@ function Header() {
           <img src={logo} alt="logo" className="navbar-logo" style={{ height: '15vh', marginRight: 'auto', padding: '30px' }} />
         </Navbar.Brand>
         <Nav className="ml-auto" style={{ marginLeft: 'auto', padding: '30px' }}>
-          <Nav.Link as={Link} to="/clientes" className="one" style={{ textDecoration: 'none', color: 'black' }}>
+          <Nav.Link as={Link} to="/GestionClientes" className="one" style={{ textDecoration: 'none', color: 'black' }}>
             <span style={{ textDecoration: 'underline', color: '#FF7300' }}>Clientes</span>
           </Nav.Link>
           <Nav.Link as={Link} to="/facturas" className="two" style={{ textDecoration: 'none', color: 'black' }}>

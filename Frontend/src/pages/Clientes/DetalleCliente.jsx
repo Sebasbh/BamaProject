@@ -33,12 +33,14 @@ function DetalleCliente() {
 
   return (
     <>
+    <Container>
       <Header/>
       <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
       <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
         <Breadcrumb.Item href="/GestionClientes">GestiónClientes</Breadcrumb.Item>
         <Breadcrumb.Item active>DetalleCliente</Breadcrumb.Item>
       </Breadcrumb>
+      <Container>
       <Container fluid>
         <Row className="align-items-center" style={{ height: '50vh' }}>
           <Col xs={12} md={3} className="d-flex flex-column align-items-center justify-content-center">
@@ -103,7 +105,9 @@ function DetalleCliente() {
             </Container>
           </Col>
         </Row>
+        </Container>
       </Container>
+    </Container>
     </>
   );
 }

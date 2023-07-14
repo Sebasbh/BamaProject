@@ -37,12 +37,13 @@ function GestionClientes() {
   };
 
   const filtrarClientes = (cliente) => {
-    const { empresa, CIF, activo } = cliente;
+    const { empresa, CIF, forma_de_pago, activo } = cliente;
   
     // Filtrar por empresa, CIF y activo
     return (
       empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
       CIF?.toLowerCase().includes(consulta.toLowerCase()) ||
+      forma_de_pago?.toLowerCase().includes(consulta.toLowerCase()) ||
       String(activo)?.toLowerCase().includes(consulta.toLowerCase())
     );
   };
@@ -97,7 +98,7 @@ function GestionClientes() {
               <td> {cliente.CIF} </td>
               <td> {cliente.forma_de_pago} </td>
               <td>
-                Activo:{' '}
+                {' '}
                 {cliente.activo ? (
                   <span style={{ color: 'green' }}>🟢</span>
                 ) : (
