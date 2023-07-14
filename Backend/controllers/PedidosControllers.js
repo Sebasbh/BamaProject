@@ -27,12 +27,29 @@ export const getPedidos = async (req, res) => {
 // Crear un pedido
 export const createPedido = async (req, res) => {
    try {
-      await Pedido.create(req.body);
+      const ultimoPedido = await Pedido.findOne().sort({ numero_de_pedido: -1 }).exec();
+      const numeroPedido = ultimoPedido ? ultimoPedido.numero_de_pedido + 1 : 1;
+      const pedido = await Pedido.create({ ...req.body, numero_de_pedido: numeroPedido });
+      
       res.status(200).json({
-         message: "¡Pedido creado correctamente!"
+         message: "¡Pedido creado correctamente!", pedido
       });
    } catch (error) {
       res.json({ message: error.message });
+   }
+};
+
+// Obtener el próximo número de pedido
+export const getNextPedidoNumber = async (req, res) => {
+   try {
+       const ultimoPedido = await Pedido.findOne().sort({ numero_de_pedido: -1 }).exec();
+       const nextPedidoNumber = ultimoPedido ? ultimoPedido.numero_de_pedido + 1 : 1;
+
+       res.status(200).json({
+           nextPedidoNumber
+       });
+   } catch (error) {
+       res.status(500).json({ message: error.message });
    }
 };
 

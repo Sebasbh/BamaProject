@@ -1,13 +1,11 @@
 import React from 'react';
 import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
-import Footer from './Footer';
+import Footer from '../Components/footer/Footer';
 
 function HomePage() {
   return (
     <div>
-        <img src={logo} alt='logo' className='Logo'/>
-        <h1 className='home'>Home</h1>
         <header>
           <img src={logo} alt='logo' className='Logo'/>
         </header>

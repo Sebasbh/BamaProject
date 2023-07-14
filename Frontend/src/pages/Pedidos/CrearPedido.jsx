@@ -1,103 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-const CrearPedidos = () => {
-  const [numeroDePedido, setNumeroDePedido] = useState('');
-  const [fechaDePedido, setFechaDePedido] = useState('');
+const CrearPedido = () => {
+  const [numeroPedido, setNumeroPedido] = useState(null);
   const [cliente, setCliente] = useState('');
   const [importe, setImporte] = useState('');
-  const [archivoAdjunto, setArchivoAdjunto] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [archivo, setArchivo] = useState(null);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    // Obtener el próximo número de pedido al montar el componente
+    axios.get('http://localhost:8000/pedidos/next-number')
+      .then(res => setNumeroPedido(res.data.nextPedidoNumber))
+      .catch(err => console.error(err));
+  }, []);
 
-  const handleSubmit = (e) => {
+/*   const handleFileChange = e => {
+    setArchivo(e.target.files[0]);
+  }; */
+
+  const handleSubmit = e => {
     e.preventDefault();
-
-    // Validar campos requeridos antes de enviar el formulario
-    if (!numeroDePedido || !fechaDePedido || !cliente || !importe) {
-      setError('Por favor, complete todos los campos obligatorios.');
-      return;
-    }
-
-    setError('');
-    setIsLoading(true);
-
-    const pedido = new FormData();
-    pedido.append('numero_de_pedido', numeroDePedido);
-    pedido.append('fecha_de_pedido', fechaDePedido);
-    pedido.append('cliente', cliente);
-    pedido.append('importe', importe);
-    pedido.append('archivo_adjunto', archivoAdjunto);
-
-    axios
-      .post('http://localhost:8000/pedidos', pedido)
-      .then((response) => {
-        console.log(response.data);
-        navigate('/GestionPedidos');
-      })
-      .catch((error) => {
-        console.log(error);
-        setError('Ocurrió un error al crear el pedido.');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    
+    const formData = new FormData();
+    formData.append('numero_de_pedido', numeroPedido);
+    formData.append('cliente_id', cliente);
+    formData.append('importe', importe);
+    formData.append('archivo_adjunto', archivo);
+    
+    axios.post('http://localhost:8000/pedidos', formData)
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
   };
 
   return (
     <Container>
-      <h3>Registrar Pedido</h3>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="numero_de_pedido">
-          <Form.Label>Número de Pedido:</Form.Label>
-          <Form.Control
-            type="number"
-            onChange={(e) => setNumeroDePedido(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="fecha_de_pedido">
-          <Form.Label>Fecha de Pedido:</Form.Label>
-          <Form.Control
-            type="date"
-            onChange={(e) => setFechaDePedido(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="cliente">
-          <Form.Label>Cliente:</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={(e) => setCliente(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="importe">
-          <Form.Label>Importe:</Form.Label>
-          <Form.Control
-            type="number"
-            onChange={(e) => setImporte(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Adjuntar Archivo:</Form.Label>
-          <Form.Control
-            type="file"
-            onChange={(e) => setArchivoAdjunto(e.target.files[0])}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled={isLoading}>
-          {isLoading ? 'Cargando...' : 'Registrar Pedido'}
-        </Button>
-      </Form>
+      <Row className="justify-content-md-center">
+        <Col xs lg="6">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formNumeroPedido">
+              <Form.Label>Número de pedido</Form.Label>
+              <Form.Control type="text" readOnly value={numeroPedido || ''} />
+            </Form.Group>
+
+            <Form.Group controlId="formCliente">
+              <Form.Label>Cliente</Form.Label>
+              <Form.Control type="text" placeholder="Ingrese el ID del cliente" onChange={e => setCliente(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group controlId="formImporte">
+              <Form.Label>Importe</Form.Label>
+              <Form.Control type="text" placeholder="Ingrese el importe del pedido" onChange={e => setImporte(e.target.value)} />
+            </Form.Group>
+
+{/*             <Form.Group>
+              <Form.File id="formArchivoAdjunto" label="Adjuntar archivo" onChange={handleFileChange} />
+            </Form.Group> 
+ */}
+            <Button variant="primary" type="submit">
+              Crear pedido
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };
 
-export default CrearPedidos;
+export default CrearPedido;
