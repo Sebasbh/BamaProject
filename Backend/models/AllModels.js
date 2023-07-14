@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 
 const ClienteSchema = new mongoose.Schema({
   empresa: { type: String, /* required: true, */ },
