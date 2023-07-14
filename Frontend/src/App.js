@@ -9,6 +9,9 @@ import FormularioClientes from './pages/Clientes/FormularioClientes';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import DetalleFactura from './pages/Facturas/DetalleFactura';
+import CrearPedido from './pages/Pedidos/CrearPedido';
+import GestionPedidos from './pages/Pedidos/GestionPedidos';
+import DetallePedido from './pages/Pedidos/DellatePedido';
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
         <Route path="/DetalleFactura" element={<DetalleFactura/>} />
         <Route path="/DetalleCliente/:id" element={<DetalleCliente/>} />
         <Route path="/FormularioClientes" element={<FormularioClientes />} />
+        <Route path="/CrearPedido" element={<CrearPedido/>}/>
+        <Route path="/GestionPedidos" element={<GestionPedidos/>}/>
+        <Route path="/DetallePedido/:id" element={<DetallePedido />} />        
         <Route element={NotFound} />
        </Routes>
     </Router>
@@ -28,3 +34,4 @@ const App = () => {
 };
 
 export default App;
+
