@@ -6,7 +6,7 @@ const CrearPedido = () => {
   const [numeroPedido, setNumeroPedido] = useState(null);
   const [cliente, setCliente] = useState('');
   const [importe, setImporte] = useState('');
-  const [archivo, setArchivo] = useState(null);
+  //const [archivo, setArchivo] = useState(null);
 
   useEffect(() => {
     // Obtener el próximo número de pedido al montar el componente
@@ -26,7 +26,7 @@ const CrearPedido = () => {
     formData.append('numero_de_pedido', numeroPedido);
     formData.append('cliente_id', cliente);
     formData.append('importe', importe);
-    formData.append('archivo_adjunto', archivo);
+ //   formData.append('archivo_adjunto', archivo);
     
     axios.post('http://localhost:8000/pedidos', formData)
       .then(res => console.log(res.data))
