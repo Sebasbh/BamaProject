@@ -1,0 +1,23 @@
+.registro {
+    display: flex;
+    border: none;
+    background-color: #FF7300;
+    color: white;
+    font-size: 40px;
+    font-family: inria sans;
+    margin-top: 50px;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.782),0 17px 50px 0 rgba(0, 0, 0, 0.776);
+}
+
+.porfa {
+    padding-top: 200px;
+}
+
+.larger-text {
+    font-size: 25px;
+}
+
+.larger-input {
+    font-size: xx-large;
+    border: none;
+}
