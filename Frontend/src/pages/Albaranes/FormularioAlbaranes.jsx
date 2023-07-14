@@ -1,139 +1,153 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-const FormularioAlbaranes = () => {
-  const [numero, setNumero] = useState('');
+function FormularioAlbaranes() {
+  const { id } = useParams();
+  const [numero_de_albaran, setNumeroDeAlbaran] = useState('');
+  const [cliente_id, setClienteId] = useState('');
+  const [fecha_albaran, setFechaAlbaran] = useState('');
+  const [pedido_id, setPedidoId] = useState('');
   const [importe, setImporte] = useState('');
-  const [entregado, setEntregado] = useState(false);
-  const [cliente, setCliente] = useState('');
-  const [pedido, setPedido] = useState('');
-  const [firmado, setFirmado] = useState(false);
-  const [cif, setCif] = useState('');
-  const [fecha, setFecha] = useState('');
+  const [estado, setEstado] = useState('');
+  const [albaranAgregado, setAlbaranAgregado] = useState(false); // Nuevo estado para el mensaje de albaran agregado
+  const navigate = useNavigate();
 
- 
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crear el objeto albarán a enviar
     const albaran = {
-      numero,
+      numero_de_albaran,
+      cliente_id,
+      fecha_albaran,
       importe,
-      entregado,
-      cliente,
-      pedido,
-      firmado,
-      cif,
-      fecha
+      pedido_id,
+      estado,
     };
 
-    // Enviar la solicitud POST para crear el albarán
-    axios
-      .post('http://localhost:8000/albaranes', albaran)
-      .then(response => {
-        console.log(response.data);
-        // Redireccionar a la página de gestión de albaranes
-        <Link to ='/GestionAlbaranes'></Link>
-      })
-      .catch(error => console.log(error));
+    try {
+      const response = await axios.post('http://localhost:8000/albaranes', albaran);
+      if (response.status === 201) {
+        setAlbaranAgregado(true); // Actualizar el estado de albaranAgregado cuando se completa la solicitud
+        alert('Albarán creado correctamente.');
+        navigate('/GestionAlbaranes');
+      } else {
+        alert('Error al crear el albarán.');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Error al crear el albarán.');
+    }
   };
+
 
   return (
     <>
       <Header />
-      <Container className="parent-container">
-        <h3 className="title">Formulario para crear los Albaranes</h3>
-        <br /> <br />
-        <Row>
-          <Col className="left-container">
-            <div className="block">
-              <Form onSubmit={handleSubmit}>
+      <Container className="d-flex align-items-center justify-content-center">
+        <div>
+          <h3>Crear Albaran Nuevo</h3>
+          {albaranAgregado ? (
+            <Alert variant="success">Albaran agregado correctamente.</Alert>
+          ) : null}
+          <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Col md={6}>
                 <Form.Group controlId="numero">
-                  <Form.Label>Nº Albaran</Form.Label>
+                  <Form.Label>NºAlbaran</Form.Label>
                   <Form.Control
                     type="text"
-                    value={numero}
-                    onChange={e => setNumero(e.target.value)}
+                    value={numero_de_albaran}
+                    onChange={(e) => setNumeroDeAlbaran(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="clientes">
+                  <Form.Label>cliente_id</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={cliente_id}
+                    onChange={(e) => setClienteId(e.target.value)}
+                    style={{ width: '500px', height: '40px' }}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="fecha">
+                  <Form.Label>fecha_albaran</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={fecha_albaran}
+                    onChange={(e) => setFechaAlbaran(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
                 <Form.Group controlId="importe">
                   <Form.Label>Importe</Form.Label>
                   <Form.Control
                     type="text"
                     value={importe}
-                    onChange={e => setImporte(e.target.value)}
+                    onChange={(e) => setImporte(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
-                <Form.Group controlId="entregado">
-                  <Form.Check
-                    type="checkbox"
-                    label="Entregado"
-                    checked={entregado}
-                    onChange={e => setEntregado(e.target.checked)}
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="estado">
+                  <Form.Label>Estado</Form.Label>
+                  <Form.Select
+                    value={estado}
+                    onChange={(e) => setEstado(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
+                  >
+                    <option value="">Seleccione una opción</option>
+                    <option value="Firmado">Firmado</option>
+                    <option value="No firmado">No firmado</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="pedido">
+                  <Form.Label>Pedido-id</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={pedido_id}
+                    onChange={(e) => setPedidoId(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                  Crear Albarán
-                </Button>
-              </Form>
-            </div>
-          </Col>
-          <Col className="middle-container">
-            <div className="block">
-              <Form.Group controlId="cliente">
-                <Form.Label>Cliente</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={cliente}
-                  onChange={e => setCliente(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="pedido">
-                <Form.Label>Pedido</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={pedido}
-                  onChange={e => setPedido(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="firmado">
-                <Form.Check
-                  type="checkbox"
-                  label="Firmado"
-                  checked={firmado}
-                  onChange={e => setFirmado(e.target.checked)}
-                />
-              </Form.Group>
-            </div>
-          </Col>
-          <Col className="right-container">
-            <div className="albarans">
-              <Form.Group controlId="cif">
-                <Form.Label>CIF</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={cif}
-                  onChange={e => setCif(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="fecha">
-                <Form.Label>Fecha</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={fecha}
-                  onChange={e => setFecha(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-          </Col>
-        </Row>
+              </Col>
+            </Row>
+            <Button variant="primary" type="submit" className="mt-3">
+              Crear albaran
+            </Button>
+          </Form>
+        </div>
       </Container>
     </>
   );
-};
+}
 
 export default FormularioAlbaranes;
+
+
+
+
+
+
