@@ -6,8 +6,10 @@
 
 .frase-footer {
     display: flex;
+    justify-content: space-between;
     font-family: inria sans;
     color: white;
+    padding-right: 450px;
 }
 
 .logoPelota {
