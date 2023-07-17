@@ -1,4 +1,5 @@
 import { Pedido } from "../models/AllModels.js";
+import { Cliente } from "../models/AllModels.js";
 
 // Métodos para el CRUD de pedido
 
@@ -78,3 +79,21 @@ export const deletePedido = async (req, res) => {
       res.json({ message: error.message });
    }
 };
+
+
+// Mostrar un cliente con sus pedidos
+export const getClientePedidos = async (req, res) => {
+   try {
+     const id = req.params.id;
+     const cliente = await Cliente.findById(id); // Utilizamos `await Cliente.findById()` para obtener el cliente por su ID
+     if (!cliente) {
+       return res.status(404).json({ message: 'Cliente no encontrado' });
+     }
+ 
+     const pedidos = await Pedido.find({ cliente_id: id }).populate('cliente_id'); // Utilizamos `await Pedido.find()` para obtener los pedidos del cliente por su ID
+     res.json({ cliente: cliente, pedidos: pedidos });
+   } catch (error) {
+     res.status(500).json({ message: error.message });
+   }
+ };
+ 
