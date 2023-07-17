@@ -1,153 +1,123 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import Header from "../../Components/Header/Header";
 
 const URI = "http://localhost:8000/clientes/";
 import { Link } from 'react-router-dom';
 
+// Define la instancia de axios con la URL base
+const api = axios.create({
+  baseURL: 'http://localhost:8000'
+});
 
-const API_BASE_URL = 'http://localhost:8000';
+const fetchClientesAndPedidoNumber = async () => {
+  try {
+    const [{ data: clientes }, { data: { nextPedidoNumber } }] = await Promise.all([
+      api.get('/clientes'),
+      api.get('/pedidos/next-number')
+    ]);
+    return { clientes, nextPedidoNumber };
+  } catch (error) {
+    throw new Error('Error al cargar los datos.');
+  }
+};
 
 const CrearPedido = () => {
-  const [numeroPedido, setNumeroPedido] = useState(0);
-  const [cliente, setCliente] = useState("");
+  const [clientes, setClientes] = useState([]);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState("");
   const [importe, setImporte] = useState("");
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [numeroPedido, setNumeroPedido] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+  const [pedidoCreado, setPedidoCreado] = useState(null);
 
   useEffect(() => {
-    const fetchNextPedidoNumber = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(`${API_BASE_URL}/pedidos/next-number`);
-        setNumeroPedido(response.data.nextPedidoNumber);
+        const { clientes, nextPedidoNumber } = await fetchClientesAndPedidoNumber();
+        setClientes(clientes);
+        setNumeroPedido(nextPedidoNumber);
+        setError(null);
       } catch (error) {
-        console.error(error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-
-    fetchNextPedidoNumber();
+    fetchData();
   }, []);
 
-  const validateForm = () => {
-    setError('');
-    setSuccessMessage('');
-
-    if (!numeroPedido || !cliente || !importe) {
-      setError('Por favor, complete todos los campos del formulario.');
-      return false;
-    }
-
-    const roundedImporte = parseFloat(importe).toFixed(2);
-    const numberRegex = /^\d+(\.\d{1,2})?$/;
-    if (!numberRegex.test(roundedImporte)) {
-      setError('El importe debe ser un valor numérico válido.');
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleChangeCliente = (e) => {
-    setCliente(e.target.value);
-  };
-
-  const handleChangeImporte = (e) => {
-    setImporte(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!clienteSeleccionado || !importe) {
+      setError('Por favor, rellena todos los campos.');
       return;
     }
 
-    setError('');
-    setSuccessMessage('');
-    setIsSubmitting(true);
+    const newPedido = {
+      empresa: clienteSeleccionado,
+      importe: parseFloat(importe),
+    };
 
-    const formData = new FormData();
-    formData.append('numero_de_pedido', numeroPedido);
-    formData.append('cliente_id', cliente);
-    formData.append('importe', parseFloat(importe).toFixed(2));
-
-    axios
-      .post(`${API_BASE_URL}/pedidos`, formData)
-      .then((res) => {
-        setSuccessMessage('¡Pedido creado exitosamente!');
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
-        if (err.response && err.response.data) {
-          setError(err.response.data.error);
-        }
-        console.error(err);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    setLoading(true);
+    try {
+      const { data: { pedido } } = await api.post('/pedidos', newPedido);
+      setMessage('¡Pedido creado correctamente!');
+      setClienteSeleccionado('');
+      setImporte('');
+      setError(null);
+      setPedidoCreado(pedido);
+    } catch {
+      setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
+  if (loading) {
+    return <Spinner animation="border" />;
+  }
+
   return (
-    <Container>
-      <Header />
-      <Container className="parent-container">
-        <h3 className="title">Formulario para crear pedidos</h3>
-        <br /> <br />
-        <Col className="left-container"></Col>
-        <Row className="justify-content-md-center">
-          <Col xs lg="6">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formNumeroPedido">
-                <Form.Label>Número de pedido</Form.Label>
-                <Form.Control type="text" readOnly value={numeroPedido || ""} />
-              </Form.Group>
-
-              <Form.Group controlId="formCliente">
-                <Form.Label>Cliente</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  value={cliente}
-                  onChange={(e) => setCliente(e.target.value)}
-                >
-                  <option>Selecciona al cliente</option>
-                  {clientes.map((cliente) => (
-                    <option key={cliente.id} value={cliente.id}>
-                      {cliente.empresa}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-
-            <Form.Group controlId="formImporte">
-              <Form.Label>Importe</Form.Label>
-              <Form.Control
-                type="number"
-                step="0.01"
-                placeholder="Ingrese el importe del pedido"
-                value={importe}
-                onChange={handleChangeImporte}
-              />
-            </Form.Group>
-
-            {error && <Alert variant="danger">{error}</Alert>}
-            {successMessage && <Alert variant="success">{successMessage}</Alert>}
-
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Enviando...' : 'Crear pedido'}
-            </Button>
-
-            <Link to="/GestionPedidos" className="btn btn-primary">
-              Volver a la lista de pedidos
-            </Link>
-          </Form>
-        </Col>
-      </Row>
-      </Container>
-    </Container>
+    <div className="container">
+      <h2 className="mb-4">Crear Pedido</h2>
+      {message && <Alert variant="success">{message}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Form onSubmit={onSubmit}>
+        <Form.Group controlId="numeroPedido">
+          <Form.Label>Número de Pedido</Form.Label>
+          <Form.Control type="text" value={numeroPedido} readOnly />
+        </Form.Group>
+        <Form.Group controlId="cliente">
+          <Form.Label>Empresa</Form.Label>
+          <Form.Control as="select" value={clienteSeleccionado} onChange={(e) => setClienteSeleccionado(e.target.value)}>
+            <option value="">Selecciona una empresa</option>
+            {clientes.map((cliente) =>
+              <option key={cliente.CIF} value={cliente.empresa}>{cliente.empresa}</option>
+            )}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="importe">
+          <Form.Label>Importe</Form.Label>
+          <Form.Control type="number" value={importe} onChange={(e) => setImporte(e.target.value)} />
+        </Form.Group>
+        <Button variant="primary" type="submit" disabled={loading}>
+          Crear Pedido
+        </Button>
+        <Link to="/GestionPedidos" className="btn btn-secondary ml-2">
+          Volver a la gestión de pedidos
+        </Link>
+        {pedidoCreado && (
+          <Link to={`/DetallePedido/${pedidoCreado._id}`} className="btn btn-primary ml-2">
+            Ver detalles
+          </Link>
+        )}
+      </Form>
+    </div>
   );
 };
 

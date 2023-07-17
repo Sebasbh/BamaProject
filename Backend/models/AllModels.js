@@ -12,13 +12,14 @@ const ClienteSchema = new mongoose.Schema({
 const PedidoSchema = new mongoose.Schema({
     numero_de_pedido: { type: Number, /* required: true, */ unique: true },
     fecha_de_pedido: { type: Date, default: Date.now },
-    cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true, */ },
+    //cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true, */ },
+    empresa: { type: String, /* required: true, */ },
     importe: { type: Number, /* required: true, */ },
     archivo_adjunto: { type: String },
     estado: { type: String, enum: ['Abierto', 'Cerrado'], default: 'Abierto' },
     total_facturado: { type: Number, default: 0 },
-    albaranes_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'albaranes' }],
-    facturas_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'facturas' }]
+    albaranes_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'albaranes', default: null }],
+    facturas_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'facturas', default: null }]
 });
 
 const AlbaranSchema = new mongoose.Schema({

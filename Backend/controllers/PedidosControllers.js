@@ -44,17 +44,44 @@ export const getPedidos = async (req, res) => {
 // Crear un pedido
 export const createPedido = async (req, res) => {
    try {
-      const ultimoPedido = await Pedido.findOne().sort({ numero_de_pedido: -1 }).exec();
-      const numeroPedido = ultimoPedido ? ultimoPedido.numero_de_pedido + 1 : 1;
-      const pedido = await Pedido.create({ ...req.body, numero_de_pedido: numeroPedido });
-      
-      res.status(200).json({
-         message: "¡Pedido creado correctamente!", pedido
-      });
+     const ultimoPedido = await Pedido.findOne().sort({ numero_de_pedido: -1 }).exec();
+     const numeroPedido = ultimoPedido ? ultimoPedido.numero_de_pedido + 1 : 1;
+ 
+     const { empresa, importe, archivo_adjunto } = req.body;
+ 
+     // Validar los campos requeridos
+     if (!empresa || !importe) {
+       return res.status(400).json({ error: 'Empresa e importe son campos requeridos.' });
+     }
+ 
+     // Validar el formato del importe
+     if (typeof importe !== 'number' || importe <= 0) {
+       return res.status(400).json({ error: 'El importe debe ser un número mayor que cero.' });
+     }
+ 
+     const pedidoData = {
+       numero_de_pedido: numeroPedido,
+       fecha_de_pedido: new Date(),
+       empresa,
+       importe,
+       archivo_adjunto,
+       estado: 'Abierto',
+       total_facturado: 0,
+       albaranes_id: [],
+       facturas_id: []
+     };
+ 
+     const pedido = await Pedido.create(pedidoData);
+ 
+     res.status(200).json({
+       message: '¡Pedido creado correctamente!',
+       pedido
+     });
    } catch (error) {
-      res.json({ message: error.message });
+     console.error(error);
+     res.status(500).json({ error: 'Error al crear el pedido. Por favor, inténtelo nuevamente.' });
    }
-};
+ };
 
 // Obtener el próximo número de pedido
 export const getNextPedidoNumber = async (req, res) => {

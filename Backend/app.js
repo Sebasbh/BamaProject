@@ -5,6 +5,7 @@ import router from './routes/routes.js';
 import PedidoRouter from './routes/PedidoRoutes.js';
 import ClientesRouter from './routes/ClientesRoutes.js'
 import FacturaRouter from './routes/FacturasRoutes.js';
+import ClienteRouter from './routes/ClientePedidos.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/', router);
 app.use('/clientes', ClientesRouter);
 app.use('/pedidos', PedidoRouter);
 app.use('/facturas', FacturaRouter);
+app.use('/clientes', ClienteRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
