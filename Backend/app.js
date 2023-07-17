@@ -18,7 +18,7 @@ const corsOptions = {
 console.log('Debug: El archivo app.js se está ejecutando.');
 
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json());;
 
 app.use('/', router);
 app.use('/clientes', ClientesRouter);
