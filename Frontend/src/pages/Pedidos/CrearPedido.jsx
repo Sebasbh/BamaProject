@@ -52,56 +52,46 @@ const CrearPedido = () => {
       <Container className="parent-container">
         <h3 className="title">Formulario para crear pedidos</h3>
         <br /> <br />
-        
-          <Col className="left-container"></Col>
-      <Row className="justify-content-md-center">
-        <Col xs lg="6">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formNumeroPedido">
-              <Form.Label>Número de pedido</Form.Label>
-              <Form.Control type="text" readOnly value={numeroPedido || ""} />
-            </Form.Group>
+        <Col className="left-container"></Col>
+        <Row className="justify-content-md-center">
+          <Col xs lg="6">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formNumeroPedido">
+                <Form.Label>Número de pedido</Form.Label>
+                <Form.Control type="text" readOnly value={numeroPedido || ""} />
+              </Form.Group>
 
-            {/*<Form.Group controlId="formCliente">
-              <Form.Label>Cliente</Form.Label>
-              <Form.Select aria-label="Default select example">
-                <option>Selecciona al cliente</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Select>
-              </Form.Group>*/}
-            <Form.Group controlId="formCliente">
-              <Form.Label>Cliente</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                value={cliente}
-                onChange={(e) => setCliente(e.target.value)}
-              >
-                <option>Selecciona al cliente</option>
-                {clientes.map((cliente) => (
-                  <option key={cliente.id} value={cliente.id}>
-                    {cliente.empresa}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+              <Form.Group controlId="formCliente">
+                <Form.Label>Cliente</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  value={cliente}
+                  onChange={(e) => setCliente(e.target.value)}
+                >
+                  <option>Selecciona al cliente</option>
+                  {clientes.map((cliente) => (
+                    <option key={cliente.id} value={cliente.id}>
+                      {cliente.empresa}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
 
-            <Form.Group controlId="formImporte">
-              <Form.Label>Importe</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el importe del pedido"
-                onChange={(e) => setImporte(e.target.value)}
-              />
-            </Form.Group>
+              <Form.Group controlId="formImporte">
+                <Form.Label>Importe</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el importe del pedido"
+                  onChange={(e) => setImporte(e.target.value)}
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Crear pedido
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+              <Button variant="primary" type="submit">
+                Crear pedido
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     </Container>
   );

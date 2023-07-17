@@ -44,7 +44,7 @@ function ListaPedidos() {
                   <tr>
                     <th>Nº pedido</th>
                     <th>Fecha pedido</th>
-                    <th>ID Cliente</th>
+                    <th>Cliente</th>
                     <th>Importe</th>
                     <th>% facturado</th>
                     <th>Estado</th>
