@@ -4,7 +4,7 @@ import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
 import {Container, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import { ChevronCompactUp, Person } from 'react-bootstrap-icons';
-import Footer from '../Components/footer/Footer';
+
 
 function HomePage() {
   const [popoverOpen, setPopoverOpen] = useState(false);

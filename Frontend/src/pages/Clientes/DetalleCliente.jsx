@@ -48,9 +48,9 @@ function DetalleCliente() {
     <Container>
       <Header/>
       <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
-      <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/GestionClientes">GestiónClientes</Breadcrumb.Item>
-        <Breadcrumb.Item active>DetalleCliente</Breadcrumb.Item>
+      <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="/GestionClientes">Clientes</Breadcrumb.Item>
+        <Breadcrumb.Item active>Detalle Cliente</Breadcrumb.Item>
       </Breadcrumb>
       <Container>
       <Container fluid>

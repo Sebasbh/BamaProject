@@ -67,14 +67,14 @@ function GestionClientes() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-    <Header />
+    
+        <Container>
+        <Header />
       <Container style={{ flex: 1 }}>
         <Breadcrumb>
-          <Breadcrumb.Item href="#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
         </Breadcrumb>
-        <Container>
           <Row>
             <Col md lg="4">
               <Form.Control
@@ -143,7 +143,7 @@ function GestionClientes() {
           />
         </Pagination>
       </Container>
-    </div>
+    
   );
 }
 

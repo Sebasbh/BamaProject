@@ -7,6 +7,7 @@ import ClientesRouter from './routes/ClientesRoutes.js'
 import FacturaRouter from './routes/FacturasRoutes.js';
 import ClienteRouter from './routes/ClientePedidos.js';
 
+
 const app = express();
 
 const corsOptions = {
