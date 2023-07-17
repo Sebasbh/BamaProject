@@ -146,6 +146,7 @@ const CrearPedido = () => {
           </Form>
         </Col>
       </Row>
+      </Container>
     </Container>
   );
 };
