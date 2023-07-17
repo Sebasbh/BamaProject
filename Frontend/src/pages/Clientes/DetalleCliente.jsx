@@ -25,6 +25,18 @@ function DetalleCliente() {
     fetchCliente();
   }, [id]);
 
+  const handleEliminarCliente = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/clientes/${id}`);
+      // Mostrar mensaje de éxito
+      alert('Cliente eliminado exitosamente.');
+      // Redirigir a la página de gestión de clientes
+      window.location.href = '/GestionClientes';
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) {
     return <p>Cargando detalles del cliente...</p>;
   }
@@ -48,16 +60,23 @@ function DetalleCliente() {
           </Col>
           <Col xs={12} md={9}>
             <Container className="detalle-cliente">
-              <Row className="botonesArriba">
+              <Row className="botonesArriba" style={{ marginTop: '50px' }}>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
-                  <Button variant="primary" className="botonFacturas" size="sm" style={{ width: '120px' }}>
-                    🧾 Facturas
+                  <Button variant="warning" className="botonEditar" size="sm" style={{ width: '180px' }}>
+                    🖊️ Editar Cliente
                   </Button>
-                  <Button variant="success" className="botonPedidos" size="sm" style={{ width: '120px' }}>
-                    📋 Pedidos
+                  <Button
+                    variant="danger"
+                    className="botonEliminar"
+                    size="sm"
+                    style={{ width: '180px' }}
+                    onClick={handleEliminarCliente}
+                  >
+                    🗑️ Eliminar Cliente
                   </Button>
                 </div>
               </Row>
+
               <Row>
                 <Col>
                   <div>
@@ -71,7 +90,8 @@ function DetalleCliente() {
                         <p>Forma de pago: {cliente.forma_de_pago}</p>
                         <p>Fecha: {cliente.fecha_creacion}</p>
                         <p>
-                          Activo: {cliente.activo ? (
+                          Activo:{' '}
+                          {cliente.activo ? (
                             <span style={{ color: 'green' }}>🟢</span>
                           ) : (
                             <span style={{ color: 'red' }}>🔴</span>
@@ -86,13 +106,13 @@ function DetalleCliente() {
                 </Col>
               </Row>
 
-              <Row className="botonesAbajo" style={{ marginTop: '50px' }}>
+              <Row className="botonesAbajo">
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
-                  <Button variant="warning" className="botonEditar" size="sm" style={{ width: '180px' }}>
-                    🖊️ Editar Cliente
+                  <Button variant="primary" className="botonFacturas" size="sm" style={{ width: '120px' }}>
+                    🧾 Facturas
                   </Button>
-                  <Button variant="danger" className="botonEliminar" size="sm" style={{ width: '180px' }}>
-                    🗑️ Eliminar Cliente
+                  <Button variant="success" className="botonPedidos" size="sm" style={{ width: '120px' }}>
+                    📋 Pedidos
                   </Button>
                 </div>
               </Row>
@@ -100,9 +120,9 @@ function DetalleCliente() {
           </Col>
         </Row>
       </Container>
-      
     </>
   );
 }
 
 export default DetalleCliente;
+
