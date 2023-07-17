@@ -3,16 +3,32 @@ import { Cliente } from "../models/AllModels.js";
 
 // Métodos para el CRUD de pedido
 
-// Mostrar todos los Pedido
+// Mostrar todos los pedidos con filtros y ordenamiento
 export const getAllPedidos = async (req, res) => {
    try {
-      const pedido = await Pedido.find();
-      res.status(200).json(pedido);
-      console.log(pedido)
+     const { search, sortBy, sortOrder } = req.query;
+ 
+     let query = Pedido.find();
+ 
+     if (search) {
+       query = query.find({
+         $or: [
+           { fecha_de_pedido: { $regex: search, $options: "i" } },
+           { cliente_id: { $regex: search, $options: "i" } }
+         ]
+       });
+     }
+ 
+     if (sortBy && sortOrder) {
+       query = query.sort({ [sortBy]: sortOrder === "asc" ? 1 : -1 });
+     }
+ 
+     const pedidos = await query.exec();
+     res.status(200).json(pedidos);
    } catch (error) {
-      res.json({ message: error.message });
+     res.status(500).json({ message: error.message });
    }
-};
+ };
 
 // Mostrar un Pedido
 export const getPedidos = async (req, res) => {

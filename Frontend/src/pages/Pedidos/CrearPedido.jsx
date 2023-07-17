@@ -1,49 +1,94 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import Header from "../../Components/Header/Header";
 
 const URI = "http://localhost:8000/clientes/";
+import { Link } from 'react-router-dom';
+
+
+const API_BASE_URL = 'http://localhost:8000';
 
 const CrearPedido = () => {
-  const [numeroPedido, setNumeroPedido] = useState(null);
+  const [numeroPedido, setNumeroPedido] = useState(0);
   const [cliente, setCliente] = useState("");
   const [importe, setImporte] = useState("");
-  //const [archivo, setArchivo] = useState(null);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Obtener el próximo número de pedido al montar el componente
-    axios
-      .get("http://localhost:8000/pedidos/next-number")
-      .then((res) => setNumeroPedido(res.data.nextPedidoNumber))
-      .catch((err) => console.error(err));
-    // Obtener la lista de clientes al montar el componente
-    getClientes();
+    const fetchNextPedidoNumber = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/pedidos/next-number`);
+        setNumeroPedido(response.data.nextPedidoNumber);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchNextPedidoNumber();
   }, []);
 
-  /*   const handleFileChange = e => {
-    setArchivo(e.target.files[0]);
-  }; */
+  const validateForm = () => {
+    setError('');
+    setSuccessMessage('');
+
+    if (!numeroPedido || !cliente || !importe) {
+      setError('Por favor, complete todos los campos del formulario.');
+      return false;
+    }
+
+    const roundedImporte = parseFloat(importe).toFixed(2);
+    const numberRegex = /^\d+(\.\d{1,2})?$/;
+    if (!numberRegex.test(roundedImporte)) {
+      setError('El importe debe ser un valor numérico válido.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChangeCliente = (e) => {
+    setCliente(e.target.value);
+  };
+
+  const handleChangeImporte = (e) => {
+    setImporte(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return;
+    }
+
+    setError('');
+    setSuccessMessage('');
+    setIsSubmitting(true);
+
     const formData = new FormData();
-    formData.append("numero_de_pedido", numeroPedido);
-    formData.append("cliente_id", cliente);
-    formData.append("importe", importe);
-    //   formData.append('archivo_adjunto', archivo);
+    formData.append('numero_de_pedido', numeroPedido);
+    formData.append('cliente_id', cliente);
+    formData.append('importe', parseFloat(importe).toFixed(2));
 
     axios
-      .post("http://localhost:8000/pedidos", formData)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
-  };
-
-  const [clientes, setClientes] = useState([]);
-  const getClientes = async () => {
-    const res = await axios.get(URI);
-    setClientes(res.data);
+      .post(`${API_BASE_URL}/pedidos`, formData)
+      .then((res) => {
+        setSuccessMessage('¡Pedido creado exitosamente!');
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
+        if (err.response && err.response.data) {
+          setError(err.response.data.error);
+        }
+        console.error(err);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -77,22 +122,30 @@ const CrearPedido = () => {
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group controlId="formImporte">
-                <Form.Label>Importe</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Ingrese el importe del pedido"
-                  onChange={(e) => setImporte(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group controlId="formImporte">
+              <Form.Label>Importe</Form.Label>
+              <Form.Control
+                type="number"
+                step="0.01"
+                placeholder="Ingrese el importe del pedido"
+                value={importe}
+                onChange={handleChangeImporte}
+              />
+            </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Crear pedido
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+            <Button variant="primary" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Enviando...' : 'Crear pedido'}
+            </Button>
+
+            <Link to="/GestionPedidos" className="btn btn-primary">
+              Volver a la lista de pedidos
+            </Link>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };
