@@ -24,14 +24,20 @@ const getAlbaran = async (req, res) => {
   }
 };
 
-// Crear un Albaran
+// Crear un albaran
 const createAlbaran = async (req, res) => {
   try {
-    const albaran = await Albaran.create(req.body);
-    res.status(201).json({ message: 'Albarán creado correctamente' });
+     const ultimoAlbaran = await Albaran.findOne().sort({ numero_de_albaran: -1 }).exec();
+     const numeroAlbaran = ultimoAlbaran ? ultimoAlbaran.numero_de_albaran + 1 : 1;
+     const albaran = await Albaran.create({ ...req.body, numero_de_albaran: numeroAlbaran });
+     
+     res.status(200).json({
+        message: "¡Albaran creado correctamente!", albaran
+     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+     res.json({ message: error.message });
+   }
+
 };
 
 // Actualizar un Albaran

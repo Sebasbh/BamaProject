@@ -85,8 +85,8 @@ function DetalleAlbaranes() {
       <Container>
         <Header />
         <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
-          <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">GestionAlbaranes</Breadcrumb.Item>
           <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
+          <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">GestionAlbaranes</Breadcrumb.Item>
           <Breadcrumb.Item active>DetalleAlbaranes</Breadcrumb.Item>
         </Breadcrumb>
 
