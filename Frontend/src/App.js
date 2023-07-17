@@ -10,14 +10,11 @@ import DetalleFactura from "./pages/Facturas/DetalleFactura";
 import CrearPedido from "./pages/Pedidos/CrearPedido";
 import GestionPedidos from "./pages/Pedidos/GestionPedidos";
 import DetallePedido from "./pages/Pedidos/DellatePedido";
+import GestionAlbaranes from "./pages/Albaranes/GestionAlbaranes";
+import DetalleAlbaranes from "./pages/Albaranes/DetalleAlbaranes";
+import FormularioAlbaranes from "./pages/Albaranes/FormularioAlbaranes";
 import "./App.css";
 import Footer from "./Components/footer/Footer";
-import GestionAlbaranes from './pages/Albaranes/GestionAlbaranes';
-import DetalleAlbaranes from './pages/Albaranes/DetalleAlbaranes';
-import FormularioAlbaranes from './pages/Albaranes/FormularioAlbaranes';
-import './App.css';
-import Footer from './Components/Footer/Footer';
-
 
 const App = () => {
   return (
@@ -42,6 +39,19 @@ const App = () => {
                 <Route path="/CrearPedido" element={<CrearPedido />} />
                 <Route path="/GestionPedidos" element={<GestionPedidos />} />
                 <Route path="/DetallePedido/:id" element={<DetallePedido />} />
+                <Route
+                  path="/GestionAlbaranes"
+                  element={<GestionAlbaranes />}
+                />
+                <Route
+                  path="/DetalleAlbaranes/:id"
+                  element={<DetalleAlbaranes />}
+                />
+                <Route
+                  path="/FormularioAlbaranes"
+                  element={<FormularioAlbaranes />}
+                />
+
                 <Route element={NotFound} />
               </Routes>
             </div>
@@ -50,7 +60,6 @@ const App = () => {
         <Footer />
       </div>
     </Router>
-
   );
 };
 
