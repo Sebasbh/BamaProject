@@ -49,6 +49,11 @@ const CrearPedido = () => {
   return (
     <Container>
       <Header />
+      <Container className="parent-container">
+        <h3 className="title">Formulario para crear pedidos</h3>
+        <br /> <br />
+        
+          <Col className="left-container"></Col>
       <Row className="justify-content-md-center">
         <Col xs lg="6">
           <Form onSubmit={handleSubmit}>
@@ -97,6 +102,7 @@ const CrearPedido = () => {
           </Form>
         </Col>
       </Row>
+      </Container>
     </Container>
   );
 };
