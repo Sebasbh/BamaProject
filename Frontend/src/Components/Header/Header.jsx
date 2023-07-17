@@ -17,10 +17,10 @@ function Header() {
           <Nav.Link as={Link} to="/facturas" className="two" style={{ textDecoration: 'none', color: 'black' }}>
             <span style={{ textDecoration: 'underline', color: '#E32718' }}>Facturas</span>
           </Nav.Link>
-          <Nav.Link as={Link} to="/pedidos" className="three" style={{ textDecoration: 'none', color: 'black' }}>
+          <Nav.Link as={Link} to="/GestionPedidos" className="three" style={{ textDecoration: 'none', color: 'black' }}>
             <span style={{ textDecoration: 'underline', color: '#114899' }}>Pedidos</span>
           </Nav.Link>
-          <Nav.Link as={Link} to="/albaranes" className="four" style={{ textDecoration: 'none', color: 'black' }}>
+          <Nav.Link as={Link} to="/Gestionalbaranes" className="four" style={{ textDecoration: 'none', color: 'black' }}>
             <span style={{ textDecoration: 'underline', color: '#2E2C84' }}>Albaranes</span>
           </Nav.Link>
         </Nav>

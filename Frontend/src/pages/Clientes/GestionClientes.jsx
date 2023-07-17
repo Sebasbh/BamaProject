@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/footer/Footer';
+
 
 const URI = 'http://localhost:8000/clientes/';
 
@@ -68,7 +68,7 @@ function GestionClientes() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      {/* <Header /> */}
+    <Header />
       <Container style={{ flex: 1 }}>
         <Breadcrumb>
           <Breadcrumb.Item href="#">Inicio</Breadcrumb.Item>
