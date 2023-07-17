@@ -1,7 +1,6 @@
 import React from 'react';
 import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
-import Footer from '../Components/footer/Footer';
 
 function HomePage() {
   return (
@@ -16,7 +15,6 @@ function HomePage() {
             <button className='albaranes'><h1 className='albrns'>ALBARANES</h1></button>
             <button className='pedidos'><h1 className='pdds'>PEDIDOS</h1></button>
         </div>
-        <Footer />
     </div>
   );
 }
