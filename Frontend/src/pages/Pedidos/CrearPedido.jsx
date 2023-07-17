@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import Header from "../../Components/Header/Header";
+import { Link } from 'react-router-dom';
 
 const URI = "http://localhost:8000/clientes/";
-import { Link } from 'react-router-dom';
+
 
 // Define la instancia de axios con la URL base
 const api = axios.create({
