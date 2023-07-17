@@ -12,6 +12,12 @@ import GestionPedidos from "./pages/Pedidos/GestionPedidos";
 import DetallePedido from "./pages/Pedidos/DellatePedido";
 import "./App.css";
 import Footer from "./Components/footer/Footer";
+import GestionAlbaranes from './pages/Albaranes/GestionAlbaranes';
+import DetalleAlbaranes from './pages/Albaranes/DetalleAlbaranes';
+import FormularioAlbaranes from './pages/Albaranes/FormularioAlbaranes';
+import './App.css';
+import Footer from './Components/Footer/Footer';
+
 
 const App = () => {
   return (
@@ -44,6 +50,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
+
   );
 };
 
