@@ -1,150 +1,148 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const FormularioClientes = ({ cliente, setclientes }) => {
+const NuevoClienteFormulario = () => {
   const [empresa, setEmpresa] = useState('');
-  const [direccion_social, setDireccionSocial] = useState('');
+  const [pedidos, setPedidos] = useState('');
+  const [direccionSocial, setDireccionSocial] = useState('');
   const [CIF, setCIF] = useState('');
-  const [fecha_creacion, setFechaCreacion] = useState('');
-  const [activo, setActivo] = useState('');
-  const [pedidos_id, setPedidosId] = useState('');
-  const [forma_de_pago, setFormaPago] = useState('');
-
-  useEffect(() => {
-    // Realizar la solicitud GET para obtener los datos de un albarán existente
-    axios
-      .get('http://localhost:8000/clientes/{id}') // Reemplaza {id} con el ID del albarán que deseas editar
-      .then(response => {
-        const cliente = response.data;
-        // Actualizar el estado con los datos del albarán obtenido
-        setEmpresa(cliente.empresa);
-        setDireccionSocial(cliente.direccion_social);
-        setCIF(cliente.CIF);
-        setFechaCreacion(cliente.fecha_creacion);
-        setActivo(cliente.activo);
-        setPedidosId(cliente.pedidos_id);
-        setFormaPago(cliente.forma_de_pago);
-      })
-      .catch(error => console.log(error));
-  }, []);
+  const [formaPago, setFormaPago] = useState('');
+  const [activo, setActivo] = useState(true);
+  const [clienteAgregado, setClienteAgregado] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crear el objeto albarán a enviar
     const cliente = {
       empresa,
-      direccion_social,
+      pedidos,
+      direccion_social: direccionSocial,
       CIF,
-      fecha_creacion,
+      forma_de_pago: formaPago,
       activo,
-      pedidos_id,
-      forma_de_pago,
+      fecha_creacion: new Date().toLocaleDateString(),
     };
 
-    // Enviar la solicitud POST para crear/editar el albarán
-    axios
-      .post('http://localhost:8000/clientes', cliente)
-      .then(response => {
-        console.log(response.data);
-        // Redireccionar a la página de gestión de clientes
-        navigate('/Gestionclientes');
-      })
-      .catch(error => console.log(error));
+    try {
+      await axios.post('http://localhost:8000/clientes', cliente);
+      setClienteAgregado(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAceptarClick = () => {
+    setClienteAgregado(false);
+    navigate('/gestionclientes');
   };
 
   return (
-    <>
-      <Container className="parent-container">
-        <h3 className="title">Formulario para crear los clientes</h3>
-        <br /> <br />
-        <Row>
-          <Col className="left-container">
-            <div className="block">
-              <Form onSubmit={handleSubmit}>
+    <div style={{ marginTop: '150px', marginBottom: '50px' }}>
+      <Container className="d-flex align-items-center justify-content-center">
+        <div>
+          <h3 style={{ marginBottom: '100px' }}>Nuevo Cliente</h3>
+          {clienteAgregado && (
+            <Alert variant="success" className="mt-3">
+              Cliente agregado correctamente.
+            </Alert>
+          )}
+          <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Col md={6}>
                 <Form.Group controlId="empresa">
                   <Form.Label>Empresa</Form.Label>
                   <Form.Control
                     type="text"
                     value={empresa}
-                    onChange={e => setEmpresa(e.target.value)}
+                    onChange={(e) => setEmpresa(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
-                <Form.Group controlId="direccion_social">
-                  <Form.Label>Direccion Social</Form.Label>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="pedidos">
+                  <Form.Label>Pedidos</Form.Label>
                   <Form.Control
                     type="text"
-                    value={direccion_social}
-                    onChange={e => setDireccionSocial(e.target.value)}
+                    value={pedidos}
+                    onChange={(e) => setPedidos(e.target.value)}
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="direccionSocial">
+                  <Form.Label>Dirección Social</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={direccionSocial}
+                    onChange={(e) => setDireccionSocial(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
                 <Form.Group controlId="CIF">
                   <Form.Label>CIF</Form.Label>
                   <Form.Control
                     type="text"
                     value={CIF}
-                    onChange={e => setCIF(e.target.value)}
+                    onChange={(e) => setCIF(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
                   />
-
-                <Form.Group controlId="activo">
-                  <Form.Label>Activo</Form.Label>
-                     <Form.Control
-                        type="text"
-                        value={activo}
-                        onChange={e => setActivo(e.target.value)}
-                        style={{ backgroundColor: 'white' }}
-                      />
-                     </Form.Group>
                 </Form.Group>
-
-
-              </Form>
-            </div>
-          </Col>
-          <Col className="middle-container">
-            <div className="block">
-              <Form.Group controlId="pedidos_id">
-                <Form.Label>Pedidos</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={pedidos_id}
-                  onChange={e => setPedidosId(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="forma_de_pago">
-                <Form.Label>Forma de pago</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={forma_de_pago}
-                  onChange={e => setFormaPago(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="fecha_creacion">
-                <Form.Label>Fecha de creación</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={fecha_creacion}
-                  onChange={e => setFechaCreacion(e.target.value)}
-                  style={{ backgroundColor: 'white' }}
-                />
-              </Form.Group>
-
-            <Button variant="primary" type="submit" style={{ marginTop: '30px' }}>
-                {cliente ? 'Editar Cliente' : 'Crear Cliente'}
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="formaPago">
+                  <Form.Label>Forma de Pago</Form.Label>
+                  <Form.Select
+                    value={formaPago}
+                    onChange={(e) => setFormaPago(e.target.value)}
+                    required
+                    style={{ width: '500px', height: '40px' }}
+                  >
+                    <option value="">Seleccione una opción</option>
+                    <option value="Transferencia">Transferencia</option>
+                    <option value="Confirming">Confirming</option>
+                    <option value="Giro Bancario">Giro Bancario</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="activo">
+                  <Form.Check
+                    type="checkbox"
+                    label="Activo"
+                    checked={activo}
+                    onChange={(e) => setActivo(e.target.checked)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button variant="primary" type="submit" className="mt-3">
+              Agregar Cliente
             </Button>
-
-              
-            </div>
-          </Col>
-        
-        </Row>
+          </Form>
+          {clienteAgregado && (
+            <Button variant="success" className="mt-3" onClick={handleAceptarClick}>
+              Aceptar
+            </Button>
+          )}
+        </div>
       </Container>
-    </>
+    </div>
   );
 };
 
-export default FormularioClientes;
+export default NuevoClienteFormulario;

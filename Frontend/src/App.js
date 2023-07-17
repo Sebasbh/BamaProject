@@ -10,11 +10,14 @@ import FormularioClientes from './pages/Clientes/FormularioClientes';
 import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import DetalleFactura from './pages/Facturas/DetalleFactura';
-
+import './App.css';
+import Footer from './Components/footer/Footer';
 
 const App = () => {
   return (
     <Router>
+      <div className="app-wrapper">
+        <div className="content-wrapper">
        <Routes>
         <Route path="/Home" element={<HomePage />} />
         <Route path="/" element={<LoginPage/>} />
@@ -25,6 +28,9 @@ const App = () => {
         <Route path="/FormularioClientes" element={<FormularioClientes />} />
         <Route element={NotFound} />
        </Routes>
+       </div>
+       <Footer />
+       </div>
     </Router>
   );
 };

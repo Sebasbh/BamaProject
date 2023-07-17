@@ -100,6 +100,7 @@ function DetalleCliente() {
           </Col>
         </Row>
       </Container>
+      
     </>
   );
 }

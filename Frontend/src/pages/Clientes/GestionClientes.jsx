@@ -63,7 +63,7 @@ function GestionClientes() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Header />
+      {/* <Header /> */}
       <Container style={{ flex: 1 }}>
         <Breadcrumb>
           <Breadcrumb.Item href="#">Inicio</Breadcrumb.Item>
@@ -138,7 +138,6 @@ function GestionClientes() {
           />
         </Pagination>
       </Container>
-      <Footer />
     </div>
   );
 }
