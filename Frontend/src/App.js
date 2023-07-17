@@ -11,14 +11,17 @@ import CrearPedido from "./pages/Pedidos/CrearPedido";
 import GestionPedidos from "./pages/Pedidos/GestionPedidos";
 import DetallePedido from "./pages/Pedidos/DellatePedido";
 import "./App.css";
-import Footer from "./Components/footer/Footer";
+import Footer from "./Components/footer/Footer";import './App.css';
+import Footer from './Components/footer/Footer';
 
 const App = () => {
   return (
     <Router>
       <div className="app-wrapper">
         <div className="content-wrapper">
-          <Routes>
+         <div className="app-wrapper">
+        <div className="content-wrapper">
+       <Routes>
             <Route path="/Home" element={<HomePage />} />
             <Route path="/" element={<LoginPage />} />
             <Route path="/GestionClientes" element={<GestionClientes />} />
@@ -33,6 +36,9 @@ const App = () => {
         </div>
         <Footer />
       </div>
+       </div>
+       <Footer />
+       </div>
     </Router>
   );
 };
