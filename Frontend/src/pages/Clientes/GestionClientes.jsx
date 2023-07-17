@@ -2,10 +2,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import React from 'react';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
 import Pagination from 'react-bootstrap/Pagination';
@@ -14,7 +10,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
-import Header from '../../Components/Header/Header';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/footer/Footer';
 
@@ -37,8 +32,7 @@ function GestionClientes() {
     const res = await axios.get(URI);
     setClientes(res.data);
   };
-    setClientes(res.data);
-  };
+  
 
   const handleInputChange = (e) => {
     setConsulta(e.target.value);
@@ -49,7 +43,9 @@ function GestionClientes() {
     const res = await axios.get(`${URI}?consulta=${consulta}`);
     setClientes(res.data);
   };
-
+  const filtrarClientes = (cliente) => {
+    const { empresa, CIF, forma_de_pago, activo } = cliente;
+  
     // Filtrar por empresa, CIF y activo
     return (
       empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
@@ -58,6 +54,7 @@ function GestionClientes() {
       String(activo)?.toLowerCase().includes(consulta.toLowerCase())
     );
   };
+ 
 
   const clientesFiltrados = clientes.filter(filtrarClientes);
 

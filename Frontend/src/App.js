@@ -11,34 +11,38 @@ import CrearPedido from "./pages/Pedidos/CrearPedido";
 import GestionPedidos from "./pages/Pedidos/GestionPedidos";
 import DetallePedido from "./pages/Pedidos/DellatePedido";
 import "./App.css";
-import Footer from "./Components/footer/Footer";import './App.css';
-import Footer from './Components/footer/Footer';
+import Footer from "./Components/footer/Footer";
 
 const App = () => {
   return (
     <Router>
       <div className="app-wrapper">
         <div className="content-wrapper">
-         <div className="app-wrapper">
-        <div className="content-wrapper">
-       <Routes>
-            <Route path="/Home" element={<HomePage />} />
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/GestionClientes" element={<GestionClientes />} />
-            <Route path="/DetalleCliente/:id" element={<DetalleCliente />} />
-            <Route path="/FormularioClientes" element={<FormularioClientes />}/>
-            <Route path="/DetalleFactura" element={<DetalleFactura />} />
-            <Route path="/CrearPedido" element={<CrearPedido />} />
-            <Route path="/GestionPedidos" element={<GestionPedidos />} />
-            <Route path="/DetallePedido/:id" element={<DetallePedido />} />
-            <Route element={NotFound} />
-          </Routes>
+          <div className="app-wrapper">
+            <div className="content-wrapper">
+              <Routes>
+                <Route path="/Home" element={<HomePage />} />
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/GestionClientes" element={<GestionClientes />} />
+                <Route
+                  path="/DetalleCliente/:id"
+                  element={<DetalleCliente />}
+                />
+                <Route
+                  path="/FormularioClientes"
+                  element={<FormularioClientes />}
+                />
+                <Route path="/DetalleFactura" element={<DetalleFactura />} />
+                <Route path="/CrearPedido" element={<CrearPedido />} />
+                <Route path="/GestionPedidos" element={<GestionPedidos />} />
+                <Route path="/DetallePedido/:id" element={<DetallePedido />} />
+                <Route element={NotFound} />
+              </Routes>
+            </div>
+          </div>
         </div>
         <Footer />
       </div>
-       </div>
-       <Footer />
-       </div>
     </Router>
   );
 };
