@@ -56,8 +56,8 @@ function GestionAlbaranes() {
                 <Header />
 
                 <Breadcrumb className="p-4">
-                    <Breadcrumb.Item href="http://localhost:3000/">Login</Breadcrumb.Item>
-                    <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
+                    <Breadcrumb.Item href="/">Login</Breadcrumb.Item>
+                    <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
                     <Breadcrumb.Item active>GestionAlbaranes</Breadcrumb.Item>
                 </Breadcrumb>
 
