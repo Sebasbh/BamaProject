@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
 import {Container, Button, Popover, OverlayTrigger } from 'react-bootstrap';

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Alert, Breadcrumb } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../Components/Header/Header';
 
 const NuevoClienteFormulario = () => {
   const [empresa, setEmpresa] = useState('');
@@ -42,10 +43,20 @@ const NuevoClienteFormulario = () => {
   };
 
   return (
-    <div style={{ marginTop: '150px', marginBottom: '50px' }}>
+    <>
+    <Container>
+      <Header/>
+      <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
+        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="/GestionClientes">Clientes</Breadcrumb.Item>
+        <Breadcrumb.Item active>Crear Cliente</Breadcrumb.Item>
+      </Breadcrumb>
+      </Container>
+   
+    <div style={{ marginTop: '20px', marginBottom: '50px' }}>
       <Container className="d-flex align-items-center justify-content-center">
         <div>
-          <h3 style={{ marginBottom: '100px' }}>Nuevo Cliente</h3>
+          <h3 style={{ marginBottom: '30px' }}>Nuevo Cliente</h3>
           {clienteAgregado && (
             <Alert variant="success" className="mt-3">
               Cliente agregado correctamente.
@@ -143,6 +154,7 @@ const NuevoClienteFormulario = () => {
         </div>
       </Container>
     </div>
+    </>
   );
 };
 

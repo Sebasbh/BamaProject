@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge, Spinner, Breadcrumb} from 'react-bootstrap';
+import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { PlusSquare, EyeFill, Trash, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
-import Header from '../../Components/Header/Header';
 
 function GestionPedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -58,14 +57,7 @@ function GestionPedidos() {
   };
 
   return (
-    <Container>
-      <Header/>
-      <Container>
-        <Breadcrumb>
-            <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-            <Breadcrumb.Item active>Pedidos</Breadcrumb.Item>
-        </Breadcrumb>
-      </Container>
+    <Container fluid className="py-4">
       <Row>
         <Col lg={10} className="m-auto">
           <Card className="shadow">
@@ -175,8 +167,6 @@ function GestionPedidos() {
         </Col>
       </Row>
     </Container>
-    <Footer/>
-    </div>
   );
 }
 
