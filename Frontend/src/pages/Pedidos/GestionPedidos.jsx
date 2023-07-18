@@ -175,6 +175,8 @@ function GestionPedidos() {
         </Col>
       </Row>
     </Container>
+    <Footer/>
+    </div>
   );
 }
 

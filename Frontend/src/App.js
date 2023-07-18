@@ -15,47 +15,27 @@ import DetalleAlbaranes from "./pages/Albaranes/DetalleAlbaranes";
 import FormularioAlbaranes from "./pages/Albaranes/FormularioAlbaranes";
 import "./App.css";
 import Footer from "./Components/footer/Footer";
+import CrearFactura from './pages/Facturas/CrearFactura';
+import DetalleFactura from './pages/Facturas/DetalleFactura';
+import GestionFactura from './pages/Facturas/GestionFactura';
 
 const App = () => {
   return (
     <Router>
-      <div className="app-wrapper">
-        <div className="content-wrapper">
-          <div className="app-wrapper">
-            <div className="content-wrapper">
-              <Routes>
-                <Route path="/Home" element={<HomePage />} />
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/GestionClientes" element={<GestionClientes />} />
-                <Route
-                  path="/DetalleCliente/:id"
-                  element={<DetalleCliente />}
-                />
-                <Route
-                  path="/FormularioClientes"
-                  element={<FormularioClientes />}
-                />
-                <Route path="/DetalleFactura" element={<DetalleFactura />} />
-                <Route path="/CrearPedido" element={<CrearPedido />} />
-                <Route path="/GestionPedidos" element={<GestionPedidos />} />
-                <Route path="/DetallePedido/:id" element={<DetallePedido />} />
-                <Route path="/GestionAlbaranes" element={<GestionAlbaranes />}/>
-                <Route
-                  path="/DetalleAlbaranes/:id"
-                  element={<DetalleAlbaranes />}
-                />
-                <Route
-                  path="/FormularioAlbaranes"
-                  element={<FormularioAlbaranes />}
-                />
-
-                <Route element={NotFound} />
-              </Routes>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </div>
+       <Routes>
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/" element={<LoginPage/>} />
+        <Route path="/cdcliente" element={<CDcliente/>} />
+        <Route path="/DetalleCliente" element={<DetalleCliente/>} />
+        <Route path="/GestionClientes" element={<GestionClientes/>}/>
+        <Route path="/CrearPedido" element={<CrearPedido/>}/>
+        <Route path="/GestionPedidos" element={<GestionPedidos/>}/>
+        <Route path="/DetallePedido/:id" element={<DetallePedido />} />    
+        <Route path="/CrearFactura" element={<CrearFactura />} />
+        <Route path="/DetalleFactura" element={<DetalleFactura />} /> 
+        <Route path="/GestionFactura" element={<GestionFactura/>} />   
+        <Route element={NotFound} />
+       </Routes>
     </Router>
   );
 };
