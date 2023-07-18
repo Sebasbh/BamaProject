@@ -34,8 +34,11 @@ function HomePage() {
     } else if (option === 'PEDIDOS') {
       navigate('/GestionPedidos');
     } else if (option === 'FACTURAS') {
-      navigate('/GestionFactura')
+      navigate('/DetalleFactura')
     }
+  else if (option === 'ALBARANES') {
+    navigate('/GestionAlbaranes')
+  }
   };
 
   return (

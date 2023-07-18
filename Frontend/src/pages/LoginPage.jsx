@@ -88,7 +88,6 @@ function LoginPage() {
             <button type="submit" className="submit-button">Enviar</button>
           </form>
         </div>
-        <div className='footer'></div>
       </div>
 
       <div className="image-container" style={{ backgroundImage: `url(${imagen})`, backgroundSize: 'cover' }}></div>

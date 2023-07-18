@@ -73,6 +73,7 @@ function GestionClientes() {
       <Container style={{ flex: 1 }}>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Login</Breadcrumb.Item>
+
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
         </Breadcrumb>
