@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, ListGroup } from 'react-bootstrap';
+import { FaSave, FaArrowLeft, FaEdit } from 'react-icons/fa'; // Iconos de FontAwesome
 
 function DetallePedido() {
   let { id } = useParams();
@@ -39,12 +40,12 @@ function DetallePedido() {
   }
 
   return (
-    <Container>
+    <Container className="my-5">
       <Row className="justify-content-md-center">
-        <Col xs lg="6">
-          <Card className="my-4">
-            <Card.Header>{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
-            <Card.Body className="py-4">
+        <Col xs lg="8">
+          <Card className="mb-5 border-0 shadow-lg">
+            <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
+            <Card.Body className="py-5">
               {!editMode ? (
                 <>
                   <Card.Title>Empresa: {pedido.empresa}</Card.Title>
@@ -101,16 +102,20 @@ function DetallePedido() {
                     <Form.Label>Archivo Adjunto</Form.Label>
                     <Form.Control type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} onChange={handleChange} />
                   </Form.Group>
-                  <Button variant="primary" type="submit" className="mt-4">
-                    Guardar Cambios
-                  </Button>
                 </Form>
               )}
-              <Link to="/GestionPedidos" className="mt-4">
-                <Button variant="primary" className="me-2">Ir a gestión de pedidos</Button>
+            </Card.Body>
+          </Card>
+
+          <Card className="my-5 border-0 shadow-lg">
+            <Card.Body className="py-5 d-flex justify-content-between">
+              <Link to="/GestionPedidos">
+                <Button variant="info" className="me-2">
+                  <FaArrowLeft /> Ir a gestión de pedidos
+                </Button>
               </Link>
-              <Button variant="secondary" className="mt-4" onClick={() => setEditMode(!editMode)}>
-                {editMode ? 'Cancelar' : 'Editar Pedido'}
+              <Button variant="danger" onClick={() => setEditMode(!editMode)}>
+                {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
               </Button>
             </Card.Body>
           </Card>
