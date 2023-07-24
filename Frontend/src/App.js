@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import CDcliente from './pages/Clientes/CDcliente';
-import DetalleCliente from './pages/Clientes/DetalleCliente';
+//import CDcliente from './pages/Clientes/CDcliente';
+//import DetalleCliente from './pages/Clientes/DetalleCliente';
 import NotFound from './pages/NotFound';
-import GestionClientes from './pages/Clientes/GestionClientes';
+//import GestionClientes from './pages/Clientes/GestionClientes';
 import DetallePedidos from './pages/Pedidos/DetallePedidos';
 import GestionAlbaranes from './pages/Albaranes/GestionAlbaranes';
 import DetalleAlbaranes from './pages/Albaranes/DetalleAlbaranes';
@@ -24,9 +24,9 @@ const App = () => {
 
             <Route path="/Home" element={<HomePage />} />
             <Route path="/" element={<LoginPage />} />
-            <Route path="/cdcliente" element={<CDcliente />} />
-            <Route path="/DetalleCliente" element={<DetalleCliente />} />
-            <Route path="/GestionClientes" element={<GestionClientes />} />
+           {/* <Route path="/cdcliente" element={<CDcliente />} />*/}
+             {/* <Route path="/DetalleCliente" element={<DetalleCliente />} />
+            <Route path="/GestionClientes" element={<GestionClientes />} />*/}
             <Route path="/DetallePedidos" element={<DetallePedidos />} />
             <Route path="/GestionAlbaranes" element={<GestionAlbaranes />} />
             <Route path="/DetalleAlbaranes/:id" element={<DetalleAlbaranes />} />

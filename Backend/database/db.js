@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+{/*import mongoose from 'mongoose'
 const url = 'mongodb://localhost:27017/bama'
 mongoose.connect(url)
 
@@ -7,7 +7,7 @@ mongoose.connect(url)
  db.on('error', ()=> {console.log('¡Error al conectar a MongoDB!')})
  
  export default db 
-/*
+*/}
  import mongoose from 'mongoose';
 
 const url = 'mongodb://localhost:27017/bama';
@@ -28,4 +28,3 @@ try {
 }
 
 export default mongoose.connection;
- */

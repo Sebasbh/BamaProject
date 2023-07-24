@@ -1,4 +1,4 @@
-import express from 'express';
+/*import express from 'express';
 import cors from 'cors';
 import db from './database/db.js';
 import blogRoutes from './routes/routes.js';
@@ -22,7 +22,7 @@ try {
 app.listen(8000, () => {
   console.log('Server is up and running at http://localhost:8000/');
 });
-/*
+*/
 import express from 'express';
 import cors from 'cors';
 import db from './database/db.js';
@@ -44,10 +44,10 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/', router);
-app.use('/pedidos', PedidoRouter)
-app.use('/facturas', FacturaRouter);
+//app.use('/pedidos', PedidoRouter)
+//app.use('/facturas', FacturaRouter);
 app.use('/albaranes', albaranesRoutes);
-app.use('')
+//app.use('')
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -56,4 +56,4 @@ app.use((err, req, res, next) => {
 
 app.listen(8000, () => {
   console.log('Server UP running at http://localhost:8000/');
-});*/
+});
