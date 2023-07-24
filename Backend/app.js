@@ -1,3 +1,4 @@
+//app.js:
 import express from 'express';
 import cors from 'cors';
 import db from './database/db.js';
@@ -9,7 +10,7 @@ import ClienteRouter from './routes/ClientePedidos.js';
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin:['http://localhost:3000','http://localhost:3001'] ,
   optionsSuccessStatus: 200
 };
 

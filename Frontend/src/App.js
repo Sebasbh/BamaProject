@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CDcliente from './pages/Clientes/CDcliente';
@@ -11,8 +11,16 @@ import GestionPedidos from './pages/Pedidos/GestionPedidos';
 import DetallePedido from './pages/Pedidos/DellatePedido';
 import "./App.css"
 import Footer from './Components/footer/Footer';
+import withProtection from './Components/withProtection';
 
 const App = () => {
+  const ProtectedCDcliente = withProtection(CDcliente);
+  const ProtectedDetalleCliente = withProtection(DetalleCliente);
+  const ProtectedGestionClientes = withProtection(GestionClientes);
+  const ProtectedCrearPedido = withProtection(CrearPedido);
+  const ProtectedGestionPedidos = withProtection(GestionPedidos);
+  const ProtectedDetallePedido = withProtection(DetallePedido);
+
   return (
     <Router>
       <div className="app-wrapper">
@@ -20,12 +28,12 @@ const App = () => {
           <Routes>
             <Route path="/Home" element={<HomePage />} />
             <Route path="/" element={<LoginPage />} />
-            <Route path="/cdcliente" element={<CDcliente />} />
-            <Route path="/DetalleCliente" element={<DetalleCliente />} />
-            <Route path="/GestionClientes" element={<GestionClientes />} />
-            <Route path="/CrearPedido" element={<CrearPedido />} />
-            <Route path="/GestionPedidos" element={<GestionPedidos />} />
-            <Route path="/DetallePedido/:id" element={<DetallePedido />} />
+            <Route path="/cdcliente" element={<ProtectedCDcliente />} />
+            <Route path="/DetalleCliente" element={<ProtectedDetalleCliente />} />
+            <Route path="/GestionClientes" element={<ProtectedGestionClientes />} />
+            <Route path="/CrearPedido" element={<ProtectedCrearPedido />} />
+            <Route path="/GestionPedidos" element={<ProtectedGestionPedidos />} />
+            <Route path="/DetallePedido/:id" element={<ProtectedDetallePedido />} />
             <Route element={NotFound} />
           </Routes>
         </div>
@@ -36,4 +44,3 @@ const App = () => {
 };
 
 export default App;
-
