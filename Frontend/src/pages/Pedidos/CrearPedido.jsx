@@ -24,11 +24,14 @@ const CrearPedido = () => {
   const [clientes, setClientes] = useState([]);
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
-  const [numeroPedido, setNumeroPedido] = useState(null);
+  const [numeroPedido, setNumeroPedido] = useState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [pedidoCreado, setPedidoCreado] = useState(null);
+
+  // Nuevo estado para la fecha
+  const [fechaPedido, setFechaPedido] = useState(new Date().toISOString().substring(0, 10));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,12 +53,14 @@ const CrearPedido = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!clienteSeleccionado || !importe) {
-      setError('Por favor, rellena todos los campos.');
+    if (!clienteSeleccionado || !importe || isNaN(numeroPedido)) { // Validar que el número de pedido también sea un número válido
+      setError('Por favor, rellena todos los campos y asegúrate de ingresar un número de pedido válido.');
       return;
     }
 
     const newPedido = {
+      numero_de_pedido: parseInt(numeroPedido),
+      fecha_de_pedido: fechaPedido,  // Añade la fecha
       empresa: clienteSeleccionado,
       importe: parseFloat(importe),
     };
@@ -80,14 +85,24 @@ const CrearPedido = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <h2 className="mb-4">Crear Pedido</h2>
       {message && <Alert variant="success">{message}</Alert>}
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={onSubmit}>
         <Form.Group controlId="numeroPedido">
           <Form.Label>Número de Pedido</Form.Label>
-          <Form.Control type="text" value={numeroPedido} readOnly />
+          <input
+            className="form-control"
+            type="number"
+            value={numeroPedido}
+            onChange={(e) => setNumeroPedido(parseInt(e.target.value))}
+            placeholder="Ingrese el número de pedido"
+          />
+        </Form.Group>
+        <Form.Group controlId="fechaPedido">
+          <Form.Label>Fecha de Pedido</Form.Label>
+          <Form.Control type="date" value={fechaPedido} onChange={(e) => setFechaPedido(e.target.value)} />
         </Form.Group>
         <Form.Group controlId="cliente">
           <Form.Label>Empresa</Form.Label>
@@ -100,7 +115,8 @@ const CrearPedido = () => {
         </Form.Group>
         <Form.Group controlId="importe">
           <Form.Label>Importe</Form.Label>
-          <Form.Control type="number" value={importe} onChange={(e) => setImporte(e.target.value)} />
+          <Form.Control className="form-control" type="number" value={importe} onChange={(e) => setImporte(e.target.value)} />
+          <option value="">Selecciona una precio</option>
         </Form.Group>
         <Button variant="primary" type="submit" disabled={loading}>
           Crear Pedido

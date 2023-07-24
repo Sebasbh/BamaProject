@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
+import { Table, Button, InputGroup, FormControl, Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { PlusSquare, EyeFill, Trash, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
@@ -102,8 +102,6 @@ function GestionPedidos() {
                             Estado
                             {sortedField === 'estado' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
                           </th>
-                          <th>Nº Facturas correspondientes</th>
-                          <th>Nº Albaranes correspondientes</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
@@ -119,24 +117,6 @@ function GestionPedidos() {
                               <Badge variant={pedido.estado === 'Enviado' ? 'success' : 'warning'}>
                                 {pedido.estado}
                               </Badge>
-                            </td>
-                            <td>
-                              <ListGroup variant="flush">
-                                {pedido.facturas_id.map((factura) => (
-                                  <ListGroup.Item key={factura}>
-                                    ID Factura: <Badge variant="info">{factura}</Badge>
-                                  </ListGroup.Item>
-                                ))}
-                              </ListGroup>
-                            </td>
-                            <td>
-                              <ListGroup variant="flush">
-                                {pedido.albaranes_id.map((albaran) => (
-                                  <ListGroup.Item key={albaran}>
-                                    ID Albarán: <Badge variant="info">{albaran}</Badge>
-                                  </ListGroup.Item>
-                                ))}
-                              </ListGroup>
                             </td>
                             <td>
                               <div>
