@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge } from "react-bootstrap";
+import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { PlusSquare, EyeFill, Trash } from 'react-bootstrap-icons';
@@ -13,7 +13,7 @@ function GestionFactura() {
   }, []);
 
   const fetchFacturas = async () => {
-    const response = await axios.get('');
+    const response = await axios.get('http://localhost:8000/facturas');
     setFacturas(response.data);
     console.log(response);
   };
@@ -32,9 +32,11 @@ function GestionFactura() {
     <Container fluid className="py-4">
       <Row>
         <Col lg={10} className="m-auto">
-          <Card className="shadow">
-            <Card.Header as="h2" className="text-center bg-primary text-white">Lista de Facturas</Card.Header>
-            <Card.Body>
+          <div>
+            <div className="card-header text-center bg-primary text-white">
+              <h2>Lista de Facturas</h2>
+              </div>
+            <div className="card-body">
               <InputGroup className="mb-3">
                 <FormControl
                   placeholder="Buscar facturas"
@@ -93,15 +95,15 @@ function GestionFactura() {
                   ))}
                 </tbody>
               </Table>
-            </Card.Body>
-            <Card.Footer className="text-center">
+            </div>
+            <div className="card-footer text-center">
               <Link to="/CrearFactura">
                 <Button variant="primary" size="lg">
                   <PlusSquare className="mb-1" /> Nueva Factura
                 </Button>
               </Link>
-            </Card.Footer>
-          </Card>
+            </div>
+          </div>
         </Col>
       </Row>
     </Container>
@@ -111,3 +113,4 @@ function GestionFactura() {
 }
 
 export default GestionFactura;
+
