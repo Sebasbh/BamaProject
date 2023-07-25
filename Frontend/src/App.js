@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 import GestionClientes from './pages/Clientes/GestionClientes';
 import CrearPedido from './pages/Pedidos/CrearPedido';
 import GestionPedidos from './pages/Pedidos/GestionPedidos';
-import DetallePedido from './pages/Pedidos/DellatePedido';
+import DetallePedido from './pages/Pedidos/DetallePedido';
 import "./App.css"
 import Footer from './Components/footer/Footer';
 import withProtection from './Components/withProtection';

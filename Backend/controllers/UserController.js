@@ -1,8 +1,9 @@
 //UserController.js
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { secret, createToken } from '../services/jwt.js';
 import Usuario from '../models/UsuarioModel.js';
+
 
 dotenv.config();
 
@@ -28,11 +29,7 @@ export async function iniciarSesion(req, res) {
       // Crea un token
       let token;
       try {
-        token = jwt.sign(
-          { _id: usuario._id, email: usuario.email },
-          process.env.JWT_SECRET,
-          { expiresIn: '1h' }
-        );
+        token = createToken(usuario); 
       } catch (error) {
         console.error('Error al generar el token JWT: ', error);
         return res.status(500).json({ mensaje: 'Error al iniciar la sesión' });

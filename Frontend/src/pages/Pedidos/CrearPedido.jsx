@@ -10,13 +10,13 @@ const api = axios.create({
   baseURL: 'http://localhost:8000'
 });
 
-const fetchClientesAndPedidoNumber = async () => {
+const fetchClientes = async () => {
   try {
-    const [{ data: clientes }, { data: { nextPedidoNumber } }] = await Promise.all([
+    const [{ data: clientes }] = await Promise.all([
       api.get('/clientes'),
-      api.get('/pedidos/next-number')
+      
     ]);
-    return { clientes, nextPedidoNumber };
+    return { clientes };
   } catch (error) {
     throw new Error('Error al cargar los datos.');
   }
@@ -38,9 +38,8 @@ const CrearPedido = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { clientes, nextPedidoNumber } = await fetchClientesAndPedidoNumber();
+        const { clientes } = await fetchClientes();
         setClientes(clientes);
-        setNumeroPedido(nextPedidoNumber);
         setError(null);
       } catch (error) {
         setError(error.message);
