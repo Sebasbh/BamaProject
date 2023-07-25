@@ -4,7 +4,6 @@ import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
 
-// Define la instancia de axios con la URL base
 const api = axios.create({
   baseURL: 'http://localhost:8000'
 });
@@ -17,9 +16,9 @@ const fetchClientesPedidosAlbaranNumber = async () => {
       api.get('/albaranes/next/number')
     ]);
 
-    const clientes = response[0].data; // Obtener los clientes de la primera respuesta
-    const pedidos = response[1].data.pedidos; // Obtener los pedidos de la segunda respuesta
-    const nextAlbaranNumber = response[2].data.nextAlbaranNumber; // Obtener el próximo número de albarán de la tercera respuesta
+    const clientes = response[0].data;
+    const pedidos = response[1].data.pedidos;
+    const nextAlbaranNumber = response[2].data.nextAlbaranNumber;
 
     return { clientes, pedidos, nextAlbaranNumber };
   } catch (error) {
@@ -62,7 +61,7 @@ function FormularioAlbaranes() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!clienteSeleccionado || !importe || !pedidos || !clientes) {
+    if (!clienteSeleccionado || !importe || !pedidoSeleccionado) {
       setError('Por favor, rellena todos los campos.');
       return;
     }
@@ -70,8 +69,7 @@ function FormularioAlbaranes() {
     const newAlbaran = {
       empresa: clienteSeleccionado,
       importe: parseFloat(importe),
-      pedidos: [pedidos],
-      clientes: [clientes]
+      pedido: pedidoSeleccionado
     };
 
     setLoading(true);
@@ -136,7 +134,6 @@ function FormularioAlbaranes() {
                   />
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group controlId="estado">
                   <Form.Label>Estado</Form.Label>
@@ -152,7 +149,6 @@ function FormularioAlbaranes() {
                   </Form.Select>
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group controlId="fecha">
                   <Form.Label>Fecha:</Form.Label>
@@ -165,7 +161,6 @@ function FormularioAlbaranes() {
                   />
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group controlId="pedidos">
                   <Form.Label>Pedidos</Form.Label>
@@ -183,7 +178,6 @@ function FormularioAlbaranes() {
                     ))}
                   </Form.Control>
                 </Form.Group>
-
               </Col>
             </Row>
             <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
