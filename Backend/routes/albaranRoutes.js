@@ -8,15 +8,15 @@ import {
   getNextAlbaranNumber
 } from '../controllers/AlbaranController.js';
 
-const router = express.Router();
+const AlbaranRouter = express.Router();
 
-router.get('/', getAllAlbaranes);
-router.get('/:id', getAlbaran);
-router.get('/next-number',  getNextAlbaranNumber);
-router.post('/', createAlbaran);
-router.put('/:id', updateAlbaran);
-router.delete('/:id', deleteAlbaran);
+AlbaranRouter.get('/', getAllAlbaranes);
+AlbaranRouter.get('/:id', getAlbaran);
+AlbaranRouter.get('/next/number',  getNextAlbaranNumber);
+AlbaranRouter.post('/', createAlbaran);
+AlbaranRouter.put('/:id', updateAlbaran);
+AlbaranRouter.delete('/:id', deleteAlbaran);
 
 
-export default router;
+export default AlbaranRouter;
 

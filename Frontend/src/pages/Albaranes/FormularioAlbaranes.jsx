@@ -14,7 +14,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
     const response = await Promise.all([
       api.get('/clientes'),
       api.get('/pedidos'),
-      api.get('/Albaranes/next-number')
+      api.get('/albaranes/next/number')
     ]);
 
     const clientes = response[0].data; // Obtener los clientes de la primera respuesta
@@ -30,6 +30,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
 function FormularioAlbaranes() {
   const [clientes, setClientes] = useState([]);
   const [pedidos, setPedidos] = useState([]);
+  const [pedido, setPedido] = useState([]);
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
   const [numeroAlbaran, setNumeroAlbaran] = useState('');
@@ -38,6 +39,7 @@ function FormularioAlbaranes() {
   const [message, setMessage] = useState(null);
   const [fecha, setFecha] = useState('');
   const [estado, setEstado] = useState('boleano');
+  const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,16 +167,23 @@ function FormularioAlbaranes() {
               </Col>
 
               <Col md={6}>
-                <Form.Group controlId="pedido">
+                <Form.Group controlId="pedidos">
                   <Form.Label>Pedidos</Form.Label>
                   <Form.Control
-                    type="text"
-                    value={pedidos}
-                    onChange={(e) => setPedidos(e.target.value)}
-                    required
+                    as="select"
+                    value={pedidoSeleccionado}
+                    onChange={(e) => setPedidoSeleccionado(e.target.value)}
                     style={{ width: '500px', height: '40px' }}
-                  />
+                  >
+                    <option value="">Selecciona un pedido</option>
+                    {pedidos && pedidos.map((pedido) => ( // Verificación para evitar el error
+                      <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
+                        {pedido.numero_de_pedido}
+                      </option>
+                    ))}
+                  </Form.Control>
                 </Form.Group>
+
               </Col>
             </Row>
             <Button variant="primary" type="submit" className="mt-3" disabled={loading}>

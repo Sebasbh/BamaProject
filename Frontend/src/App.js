@@ -28,7 +28,7 @@ const App = () => {
            <Route path="/Home" element={<HomePage />} />
            <Route path="/" element={<LoginPage />} />
            <Route path="/GestionClientes" element={<GestionClientes />} />
-           <Route path="/DetalleCliente" element={<DetalleCliente />} />
+           <Route path="/DetalleCliente/:id" element={<DetalleCliente />} />
            <Route path="/FormularioClientes" element={<FormularioClientes />} />
            <Route path="/CrearPedido" element={<CrearPedido />} />
            <Route path="/GestionPedidos" element={<GestionPedidos />} />
@@ -37,7 +37,7 @@ const App = () => {
            <Route path="/DetalleFactura" element={<DetalleFactura />} /> 
            <Route path="/GestionFactura" element={<GestionFactura/>} /> 
           <Route path="/GestionAlbaranes" element={<GestionAlbaranes />} />
-          <Route path="/DetalleAlbaranes" element={<DetalleAlbaranes />} /> 
+          <Route path="/DetalleAlbaranes/:id" element={<DetalleAlbaranes />} /> 
           <Route path="/FormularioAlbaranes" element={<FormularioAlbaranes/>} />     
            <Route element={NotFound} />
          </Routes>

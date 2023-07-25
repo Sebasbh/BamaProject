@@ -1,11 +1,10 @@
-/*import express from 'express';
+import express from 'express';
 import cors from 'cors';
 import db from './database/db.js';
 import router from './routes/routes.js';
 import PedidoRouter from './routes/PedidoRoutes.js';
-import ClientesRouter from './routes/ClientesRoutes.js'
+import ClienteRouter from './routes/ClientesRoutes.js'
 import FacturaRouter from './routes/FacturasRoutes.js';
-import ClienteRouter from './routes/ClientePedidos.js';
 import AlbaranRouter from './routes/albaranRoutes.js';
 
 
@@ -22,10 +21,9 @@ app.use(cors(corsOptions));
 app.use(express.json());;
 
 app.use('/', router);
-app.use('/clientes', ClientesRouter);
+app.use('/clientes', ClienteRouter);
 app.use('/pedidos', PedidoRouter);
 app.use('/facturas', FacturaRouter);
-app.use('/clientes', ClienteRouter);
 app.use('/albaranes', AlbaranRouter);
 
 app.use((err, req, res, next) => {
@@ -35,4 +33,4 @@ app.use((err, req, res, next) => {
 
 app.listen(8000, () => {
   console.log('Server UP running at http://localhost:8000/');
-});*/
+});
