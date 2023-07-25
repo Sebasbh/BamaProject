@@ -1,6 +1,6 @@
 //routes.js:
 import express from 'express';
-import { iniciarSesion } from '../controllers/UserController.js';
+import { iniciarSesion, registrarUsuario } from '../controllers/UserController.js';
 
 const router = express.Router();
 
@@ -22,5 +22,7 @@ router.delete('/:id', deleteAlbaran)*/
 
 
 
+
+router.post('/user/register', registrarUsuario);
 
 export default router;

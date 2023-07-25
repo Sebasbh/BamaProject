@@ -1,113 +1,111 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Badge, ListGroup } from 'react-bootstrap';
-//import Footer from '../../Components/footer/Footer';
+import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
+import { FaSave, FaArrowLeft, FaEdit } from 'react-icons/fa'; 
 
 function DetallePedido() {
-  const [pedido, setPedido] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [importe, setImporte] = useState('');
-
-  // Obtiene el id del URL
-  const { id } = useParams();
+  let { id } = useParams();
+  const [pedido, setPedido] = useState({
+    numero_de_pedido: 0,
+    fecha_de_pedido: '',
+    empresa: '',
+    importe: 0,
+    archivo_adjunto: '',
+    estado: '',
+    total_facturado: 0,
+    albaranes_id: [],
+    facturas_id: []
+  });
+  const [editMode, setEditMode] = useState(false);
+  const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    const fetchPedido = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/pedidos/${id}`);
-        setPedido(response.data);
-        setLoading(false);
-        setImporte(response.data.importe);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
+    axios.get(`http://localhost:8000/pedidos/${id}`)
+      .then(res => {
+        const pedidoData = res.data;
+        setPedido(pedidoData);
+      })
+      .catch(err => console.log(err));
 
-    fetchPedido();
+    axios.get(`http://localhost:8000/clientes`)
+      .then(res => {
+        const clientesData = res.data;
+        setClientes(clientesData);
+      })
+      .catch(err => console.log(err));
   }, [id]);
 
-  if (loading) {
-    return <p>Cargando detalles del pedido...</p>;
+  const handleEdit = (e) => {
+    e.preventDefault();
+    axios.put(`http://localhost:8000/pedidos/${id}`, pedido)
+      .then(res => {
+        setEditMode(false);
+      })
+      .catch(err => console.log(err));
   }
 
-  const handleImporteChange = (event) => {
-    setImporte(event.target.value);
-  };
-
-  const guardarCambios = async () => {
-    try {
-      const response = await axios.put(`http://localhost:8000/pedidos/${id}`, {
-        importe: importe,
-        // Agrega los demás campos editables aquí
-      });
-      setPedido(response.data);
-      console.log('Pedido actualizado:', response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const handleChange = (e) => {
+    setPedido({ ...pedido, [e.target.name]: e.target.value });
+  }
 
   return (
-    <Container className="py-4">
-      <Row className="justify-content-center">
-        <Col md={8}>
-          <Card>
-            <Card.Header as="h2" className="text-center bg-primary text-white">
-              Detalle del Pedido
-            </Card.Header>
-            <Card.Body>
-              {pedido ? (
-                <>
-                  <ListGroup variant="flush">
-                    <ListGroup.Item>
-                      <strong>Número de pedido:</strong> {pedido.numero_de_pedido}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Fecha de pedido:</strong> {new Date(pedido.fecha_de_pedido).toLocaleDateString()}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>ID Cliente:</strong> {pedido.cliente_id}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Importe:</strong> 
-                      <input type="text" value={importe} onChange={handleImporteChange} />
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Estado:</strong>{' '}
-                      <Badge variant={pedido.estado === 'Abierto' ? 'success' : 'danger'}>{pedido.estado}</Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Total facturado:</strong> {pedido.total_facturado}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Albaranes ID:</strong>
-                      <ListGroup variant="flush">
-                        {pedido.albaranes_id.map((albaranId) => (
-                          <ListGroup.Item key={albaranId}>{albaranId}</ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <strong>Facturas ID:</strong>
-                      <ListGroup variant="flush">
-                        {pedido.facturas_id.map((facturaId) => (
-                          <ListGroup.Item key={facturaId}>{facturaId}</ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    </ListGroup.Item>
-                  </ListGroup>
-                  <button className="btn btn-primary" onClick={guardarCambios}>
-                    Guardar
-                  </button>
-                  <Link to="/GestionPedidos" className="btn btn-primary">
-                    Volver a la lista de pedidos
-                  </Link>
-                </>
-              ) : (
-                <p>No se encontró el pedido con el ID proporcionado.</p>
-              )}
+    <Container className="my-5">
+      <Row className="justify-content-md-center">
+        <Col xs lg="8">
+          <h1 className="mb-4">Detalle del Pedido</h1>
+          <Card className="mb-5 border-0 shadow-lg">
+            <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
+            <Card.Body className="py-5">
+              <Form onSubmit={handleEdit} className="mt-4">
+                <Form.Group controlId="formNumeroDePedido">
+                  <Form.Label>Número de Pedido</Form.Label>
+                  <Form.Control type="number" name="numero_de_pedido" value={pedido.numero_de_pedido} onChange={handleChange} readOnly={!editMode} />
+                </Form.Group>
+                <Form.Group controlId="formFechaDePedido">
+                  <Form.Label>Fecha de Pedido</Form.Label>
+                  <Form.Control type="date" name="fecha_de_pedido" value={pedido.fecha_de_pedido} onChange={handleChange} readOnly={!editMode} />
+                </Form.Group>
+                <Form.Group controlId="formEmpresa">
+                  <Form.Label>Empresa</Form.Label>
+                  <Form.Control as="select" name="empresa" value={pedido.empresa || ''} onChange={handleChange} readOnly={!editMode}>
+                    {clientes.map((cliente) =>
+                      <option key={cliente._id} value={cliente.empresa}>{cliente.empresa}</option>
+                    )}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="formImporte">
+                  <Form.Label>Importe</Form.Label>
+                  <Form.Control type="number" name="importe" value={pedido.importe || 0} onChange={handleChange} readOnly={!editMode} />
+                </Form.Group>
+                <Form.Group controlId="formEstado">
+                  <Form.Label>Estado</Form.Label>
+                  <Form.Control as="select" name="estado" value={pedido.estado || 'Abierto'} onChange={handleChange} readOnly={!editMode}>
+                    <option>Abierto</option>
+                    <option>Cerrado</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="formTotalFacturado">
+                  <Form.Label>Total Facturado</Form.Label>
+                  <Form.Control type="number" name="total_facturado" value={pedido.total_facturado || 0} onChange={handleChange} readOnly={!editMode} />
+                </Form.Group>
+                <Form.Group controlId="formArchivoAdjunto">
+                  <Form.Label>Archivo Adjunto</Form.Label>
+                  <Form.Control type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} onChange={handleChange} readOnly={!editMode} />
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card className="my-5 border-0 shadow-lg">
+            <Card.Body className="py-5 d-flex justify-content-between">
+              <Link to="/GestionPedidos">
+                <Button variant="info" className="me-2">
+                  <FaArrowLeft /> Ir a gestión de pedidos
+                </Button>
+              </Link>
+              <Button variant="danger" onClick={() => setEditMode(!editMode)}>
+                {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
+              </Button>
             </Card.Body>
           </Card>
         </Col>
