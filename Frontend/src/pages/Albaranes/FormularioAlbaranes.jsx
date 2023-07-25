@@ -17,7 +17,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
     ]);
 
     const clientes = response[0].data;
-    const pedidos = response[1].data.pedidos;
+    const pedidos = response[1].data;
     const nextAlbaranNumber = response[2].data.nextAlbaranNumber;
 
     return { clientes, pedidos, nextAlbaranNumber };
@@ -28,8 +28,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
 
 function FormularioAlbaranes() {
   const [clientes, setClientes] = useState([]);
-  const [pedidos, setPedidos] = useState([]);
-  const [pedido, setPedido] = useState([]);
+  const [pedidos, setPedidos] = useState(null);
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
   const [numeroAlbaran, setNumeroAlbaran] = useState('');
@@ -37,7 +36,7 @@ function FormularioAlbaranes() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [fecha, setFecha] = useState('');
-  const [estado, setEstado] = useState('boleano');
+  const [estado, setEstado] = useState('');
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
 
   useEffect(() => {
@@ -79,7 +78,7 @@ function FormularioAlbaranes() {
       setClienteSeleccionado('');
       setImporte('');
       setError(null);
-    } catch {
+    } catch (error) {
       setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
     } finally {
       setLoading(false);
@@ -137,7 +136,8 @@ function FormularioAlbaranes() {
               <Col md={6}>
                 <Form.Group controlId="estado">
                   <Form.Label>Estado</Form.Label>
-                  <Form.Select
+                  <Form.Control
+                    as="select"
                     value={estado}
                     onChange={(e) => setEstado(e.target.value)}
                     required
@@ -146,7 +146,7 @@ function FormularioAlbaranes() {
                     <option value="">Seleccione una opción</option>
                     <option value="Firmado">Firmado</option>
                     <option value="No firmado">No firmado</option>
-                  </Form.Select>
+                  </Form.Control>
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -171,21 +171,25 @@ function FormularioAlbaranes() {
                     style={{ width: '500px', height: '40px' }}
                   >
                     <option value="">Selecciona un pedido</option>
-                    {pedidos && pedidos.map((pedido) => ( // Verificación para evitar el error
-                      <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
-                        {pedido.numero_de_pedido}
-                      </option>
-                    ))}
+                    {/* Check if pedidos is not null before mapping through it */}
+                    {pedidos !== null &&
+                      pedidos.map((pedido) => (
+                        <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
+                          {pedido.numero_de_pedido}
+                        </option>
+                      ))}
                   </Form.Control>
                 </Form.Group>
+                {/* ... (rest of the code) */}
+                <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
+                  {loading ? 'Creando Albaran...' : 'Crear Albaran'}
+                </Button>
+                {/* Fix: Add the 'to' prop for the Link component */}
+                <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
+                  Cancelar
+                </Link>
               </Col>
             </Row>
-            <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
-              {loading ? 'Creando Albaran...' : 'Crear Albaran'}
-            </Button>
-            <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
-              Cancelar
-            </Link>
           </Form>
         </div>
       </Container>
@@ -194,6 +198,8 @@ function FormularioAlbaranes() {
 }
 
 export default FormularioAlbaranes;
+
+        
 
 
 
