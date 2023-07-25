@@ -5,7 +5,8 @@ import db from './database/db.js';
 import router from './routes/routes.js';
 import PedidoRouter from './routes/PedidoRoutes.js';
 import FacturaRouter from './routes/FacturasRoutes.js';
-import ClienteRouter from './routes/ClientePedidos.js';
+import ClienteRouter from './routes/ClienteRoutes.js';
+
 
 const app = express();
 

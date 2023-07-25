@@ -10,11 +10,21 @@ const api = axios.create({
   baseURL: 'http://localhost:8000'
 });
 
+// Set the Authorization header with token from LocalStorage
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
 const fetchClientes = async () => {
   try {
     const [{ data: clientes }] = await Promise.all([
       api.get('/clientes'),
-      
     ]);
     return { clientes };
   } catch (error) {

@@ -1,4 +1,6 @@
 //routes.js:
+
+//const check = require("../middlewares/auth");
 import express from 'express';
 import { iniciarSesion, registrarUsuario } from '../controllers/UserController.js';
 
