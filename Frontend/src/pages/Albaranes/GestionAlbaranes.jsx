@@ -35,12 +35,13 @@ function GestionAlbaranes() {
         // Filtrar por cliente_id, Importe y fecha_albaran
         return (
             cliente_id?.toLowerCase().includes(consulta.toLowerCase()) ||
-            importe && String(importe).toLowerCase().includes(consulta.toLowerCase()) ||
-            fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase())
+            (importe && String(importe).toLowerCase().includes(consulta.toLowerCase())) ||
+            (fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase()))
         );
     };
 
-    const albaranesFiltrados = albaran.filter(filtrarAlbaranes);
+    // Verificar si albaran es un array antes de filtrar
+    const albaranesFiltrados = Array.isArray(albaran) ? albaran.filter(filtrarAlbaranes) : [];
 
     // Obtener los índices de los albaranes actuales
     const indexOfLastAlbaran = currentPage * albaranesPerPage;
@@ -84,12 +85,11 @@ function GestionAlbaranes() {
                         </div>
                     </Row>
 
-
                     <Table striped hover className="mt-5">
                         <thead className="text-center">
                             <tr>
                                 <th><Button variant="warning">NºAlbaran</Button></th>
-                                <th><Button variant="danger">Clientes</Button></th>
+                                <th><Button variant="danger">Empresa</Button></th>
                                 <th><Button variant="info">Fecha</Button></th>
                                 <th><Button variant="primary">Importe</Button></th>
                                 <th><Button variant="warning">Pedido</Button></th>
@@ -97,12 +97,11 @@ function GestionAlbaranes() {
                             </tr>
                         </thead>
 
-
                         <tbody className="table-group-divider text-center">
                             {albaranesPaginados.map(albaran => (
                                 <tr key={albaran._id}>
                                     <td>{albaran.numero_de_albaran}</td>
-                                    <td>{albaran.cliente_id}</td>
+                                    <td>{albaran.empresa}</td>
                                     <td>{albaran.fecha_albaran}</td>
                                     <td>{albaran.importe}</td>
                                     <td>{albaran.pedido_id}</td>

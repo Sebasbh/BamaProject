@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+/*import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const pedidosSchema = new Schema (
@@ -16,5 +16,5 @@ const pedidosSchema = new Schema (
    {collection:'pedidos'}
 )
 
-export default mongoose.model ('PedidosModel',pedidosSchema )
+export default mongoose.model ('PedidosModel',pedidosSchema )*/
 

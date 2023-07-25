@@ -24,7 +24,8 @@ const PedidoSchema = new mongoose.Schema({
 
 const AlbaranSchema = new mongoose.Schema({
   numero_de_albaran: { type: Number, /* required: true, */ unique: true },
-  cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true */ },
+  //cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true */ },
+  empresa: { type: String, /* required: true, */ },
   fecha_albaran: { type: Date, default: Date.now },
   importe: { type: Number, /* required: true */ },
   pedido_id: { type: mongoose.Schema.Types.ObjectId, ref: 'pedidos', /* required: true */ },

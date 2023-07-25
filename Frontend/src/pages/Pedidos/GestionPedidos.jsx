@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
+import { Table, Button, InputGroup, FormControl, Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { PlusSquare, EyeFill, Trash, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare, faEye, faTrash, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 function GestionPedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -61,7 +62,7 @@ function GestionPedidos() {
       <Row>
         <Col lg={10} className="m-auto">
           <Card className="shadow">
-            <Card.Header as="h2" className="text-center bg-primary text-white">
+            <Card.Header as="h2" className="text-center" style={{ backgroundColor: '#343A40', color: 'white' }}>
               Lista de Pedidos
             </Card.Header>
             <Card.Body>
@@ -83,27 +84,25 @@ function GestionPedidos() {
                         <tr>
                           <th onClick={() => handleSort('numero_de_pedido')}>
                             Nº pedido
-                            {sortedField === 'numero_de_pedido' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
+                            {sortedField === 'numero_de_pedido' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
                           </th>
                           <th onClick={() => handleSort('fecha_de_pedido')}>
                             Fecha pedido
-                            {sortedField === 'fecha_de_pedido' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
+                            {sortedField === 'fecha_de_pedido' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
                           </th>
                           <th onClick={() => handleSort('empresa')}>
                             Empresa
-                            {sortedField === 'empresa' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
+                            {sortedField === 'empresa' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
                           </th>
                           <th onClick={() => handleSort('importe')}>
                             Importe
-                            {sortedField === 'importe' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
+                            {sortedField === 'importe' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
                           </th>
                           <th>% facturado</th>
                           <th onClick={() => handleSort('estado')}>
                             Estado
-                            {sortedField === 'estado' && (sortedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />)}
+                            {sortedField === 'estado' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
                           </th>
-                          <th>Nº Facturas correspondientes</th>
-                          <th>Nº Albaranes correspondientes</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
@@ -121,30 +120,12 @@ function GestionPedidos() {
                               </Badge>
                             </td>
                             <td>
-                              <ListGroup variant="flush">
-                                {pedido.facturas_id.map((factura) => (
-                                  <ListGroup.Item key={factura}>
-                                    ID Factura: <Badge variant="info">{factura}</Badge>
-                                  </ListGroup.Item>
-                                ))}
-                              </ListGroup>
-                            </td>
-                            <td>
-                              <ListGroup variant="flush">
-                                {pedido.albaranes_id.map((albaran) => (
-                                  <ListGroup.Item key={albaran}>
-                                    ID Albarán: <Badge variant="info">{albaran}</Badge>
-                                  </ListGroup.Item>
-                                ))}
-                              </ListGroup>
-                            </td>
-                            <td>
                               <div>
-                                <Link to={`/DetallePedido/${pedido._id}`} className="btn btn-primary btn-sm">
-                                  <EyeFill className="mb-1" /> Ver más
+                                <Link to={`/DetallePedido/${pedido._id}`} className="btn btn-info btn-sm">
+                                  <FontAwesomeIcon icon={faEye} /> Ver más
                                 </Link>
                                 <Button variant="danger" size="sm" onClick={() => eliminarPedido(pedido._id)}>
-                                  <Trash className="mb-1" /> Eliminar
+                                  <FontAwesomeIcon icon={faTrash} /> Eliminar
                                 </Button>
                               </div>
                             </td>
@@ -159,8 +140,8 @@ function GestionPedidos() {
               )}
             </Card.Body>
             <Card.Footer className="text-center">
-              <Link to="/CrearPedido" className="btn btn-primary btn-lg">
-                <PlusSquare className="mb-1" /> Nuevo Pedido
+              <Link to="/CrearPedido" className="btn btn-success btn-lg">
+                <FontAwesomeIcon icon={faPlusSquare} /> Nuevo Pedido
               </Link>
             </Card.Footer>
           </Card>
