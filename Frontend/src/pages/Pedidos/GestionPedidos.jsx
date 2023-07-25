@@ -62,9 +62,9 @@ function GestionPedidos() {
       <Row>
         <Col lg={10} className="m-auto">
           <Card className="shadow">
-            <Card.Header className="d-flex justify-content-between align-items-center" style={{ backgroundColor: '#343A40', color: 'white' }}>
-              <h2 className="mb-0">Lista de Pedidos</h2>
-              <Link to="/CrearPedido" className="btn btn-success">
+            <Card.Header as="h2" className="d-flex align-items-center justify-content-between" style={{ backgroundColor: '#343A40', color: 'white' }}>
+              Lista de Pedidos
+              <Link to="/CrearPedido" className="btn btn-success btn-lg">
                 <FontAwesomeIcon icon={faPlusSquare} /> Nuevo Pedido
               </Link>
             </Card.Header>
@@ -118,8 +118,8 @@ function GestionPedidos() {
                             <td>{pedido.importe}</td>
                             <td>{((pedido.total_facturado / pedido.importe) * 100).toFixed(2)}%</td>
                             <td>
-                              <Badge variant={pedido.estado === 'Completado' ? 'success' : 'danger'}>
-                                {pedido.estado === 'Completado' ? '✔️' : '❌'}
+                              <Badge variant={pedido.estado === 'Enviado' ? 'success' : 'danger'}>
+                                {pedido.estado}
                               </Badge>
                             </td>
                             <td>
