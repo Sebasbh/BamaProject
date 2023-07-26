@@ -5,7 +5,7 @@ const getAllAlbaranes = async (req, res) => {
   try {
     const albaranes = await Albaran.find()
     res.status(200).json(albaranes);
-   
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -23,7 +23,7 @@ const getAlbaran = async (req, res) => {
 };
 
 // Crear un albaran
- const createAlbaran = async (req, res) => {
+const createAlbaran = async (req, res) => {
   try {
      const ultimoAlbaran = await Albaran.findOne().sort({ numero_de_albaran: -1 }).exec();
      const numeroAlbaran = ultimoAlbaran ? ultimoAlbaran.numero_de_albaran + 1 : 1;
@@ -62,17 +62,19 @@ const getAlbaran = async (req, res) => {
   }
 
  };
-// Obtener el próximo número de albaran
- const getNextAlbaranNumber = async (req, res) => {
-  try {
-      const ultimoAlbaran = await Albaran.findOne().sort({ numero_de_albaran: -1 }).exec();
-      const nextAlbaranNumber = ultimoAlbaran ? ultimoAlbaran.numero_de_albaran + 1 : 1;
 
-      res.status(200).json({
-          nextAlbaranNumber
-      });
+
+// Obtener el próximo número de albaran
+const getNextAlbaranNumber = async (req, res) => {
+  try {
+    const ultimoAlbaran = await Albaran.findOne().sort({ numero_de_albaran: -1 }).exec();
+    const nextAlbaranNumber = ultimoAlbaran ? ultimoAlbaran.numero_de_albaran + 1 : 1;
+
+    res.status(200).json({
+      nextAlbaranNumber
+    });
   } catch (error) {
-      res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Alert, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
 
@@ -59,15 +59,15 @@ function FormularioAlbaranes() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!clienteSeleccionado || !importe || !pedidoSeleccionado || !estado || !fecha) {
       setError('Por favor, rellena todos los campos.');
       return;
     }
-  
+
     // Determine the value of isApproved based on some condition in your application
     const isApproved = true; // or false, depending on whether the Albaran is Firmado or No firmado
-  
+
     const newAlbaran = {
       numero_de_albaran: numeroAlbaran,
       empresa: clienteSeleccionado,
@@ -78,7 +78,7 @@ function FormularioAlbaranes() {
       fecha_albaran: new Date(fecha), // Convert the fecha to a Date object
       isApproved: isApproved, // Set the isApproved field to false by default
     };
-  
+
     setLoading(true);
     try {
       const { data: { albaran } } = await api.post('/albaranes', newAlbaran);
@@ -94,14 +94,21 @@ function FormularioAlbaranes() {
       setLoading(false);
     }
   };
-  
+
 
   return (
     <>
       <Header />
+
+      <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
+        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">GestionAlbaranes</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/DetalleAlbaranes/:id">DetalleAlbaranes</Breadcrumb.Item>
+        <Breadcrumb.Item active>FormularioAlbaranes</Breadcrumb.Item>
+      </Breadcrumb> <br />
+
       <Container className="d-flex align-items-center justify-content-center">
         <div>
-          <h3>Crear Nuevo Albaran</h3>
+          <h3>Crear Nuevo Albaran</h3> <br />
           {message && <Alert variant="success">{message}</Alert>}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={onSubmit}>
@@ -109,7 +116,9 @@ function FormularioAlbaranes() {
               <Col md={6}>
                 <Form.Group controlId="numeroAlbaran">
                   <Form.Label>Número de Albaran</Form.Label>
-                  <Form.Control type="text" value={numeroAlbaran} readOnly />
+                  <Form.Control type="text" value={numeroAlbaran} readOnly 
+                  style={{ width: '500px', height: '40px' }}
+                  />
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -163,7 +172,7 @@ function FormularioAlbaranes() {
               </Col>
               <Col md={6}>
                 <Form.Group controlId="fecha">
-                  <Form.Label>Fecha:</Form.Label>
+                  <Form.Label>Fecha</Form.Label>
                   <Form.Control
                     type="date"
                     value={fecha}
@@ -210,6 +219,8 @@ function FormularioAlbaranes() {
 }
 
 export default FormularioAlbaranes;
+
+
 
 
 
