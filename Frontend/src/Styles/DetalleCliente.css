@@ -1,0 +1,142 @@
+/* Estilos generales */
+.detalle-cliente {
+    display: flex;
+    gap: 20%;
+  }
+  
+  .imagenes {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    margin-left: 200px;
+    gap: 120px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .usuario {
+    width: 120px;
+    height: auto;
+    
+
+  }
+  
+  .empresa {
+    width: 120px;
+    height: auto;
+  }
+  
+  
+.botonesArriba{
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: end;
+}
+
+.botonFacturas{
+    background-color: rgb(93, 93, 247);
+    margin-right: 30px;
+    border-radius: 5px;
+    color: white;
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    font-size: large;
+    border: none;
+
+}
+
+.botonPedidos{
+    background-color: rgb(0, 0, 168);
+    border-radius: 5px;
+    color: white;
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    font-size: large;
+    border: none;
+
+}
+
+
+.contenido {
+    width: 40%;
+    margin-top: 80px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: flex-start;
+
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 30px;
+    margin-top: 40px;
+  }
+  
+  label {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos adicionales */
+ 
+  hr {
+    margin: 20px 0;
+  }
+
+  .botonesAbajo{
+    display: flex;
+    margin-top: 40px;
+    justify-content: end;
+    gap: 30px;
+  }
+  
+  .botonEditar{
+    background-color: rgb(206, 170, 8);
+    border-radius: 5px;
+    color: white;
+    width: 180px;
+    height: 30px;
+    font-size: large;
+    cursor: pointer;
+    border: none;
+
+  }
+
+  .botonEliminar{
+    background-color: rgb(218, 24, 24);
+    border-radius: 5px;
+    color: white;
+    width: 180px;
+    height: 30px;
+    font-size: large;
+    cursor: pointer;
+    border: none;
+  }

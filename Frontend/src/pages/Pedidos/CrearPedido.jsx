@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
+const URI = "http://localhost:8000/clientes/";
+
+
 // Define la instancia de axios con la URL base
 const api = axios.create({
   baseURL: 'http://localhost:8000'
