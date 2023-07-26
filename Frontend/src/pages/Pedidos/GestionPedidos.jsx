@@ -5,17 +5,33 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faEye, faTrash, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
+const api = axios.create({
+  baseURL: 'http://localhost:8000'
+});
+
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
 function GestionPedidos() {
+  // State initialization
   const [pedidos, setPedidos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortedField, setSortedField] = useState('');
   const [sortedOrder, setSortedOrder] = useState('asc');
   const [loading, setLoading] = useState(true);
 
+  // Functions definition
   const fetchPedidos = useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await axios.get('http://localhost:8000/pedidos', {
+      const response = await api.get('/pedidos', {
         params: {
           search: searchQuery,
           sortBy: sortedField,
@@ -23,9 +39,8 @@ function GestionPedidos() {
         }
       });
       setPedidos(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -37,10 +52,10 @@ function GestionPedidos() {
 
   const eliminarPedido = async (pedidoId) => {
     try {
-      await axios.delete(`http://localhost:8000/pedidos/${pedidoId}`);
+      await api.delete(`/pedidos/${pedidoId}`);
       fetchPedidos();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -49,16 +64,18 @@ function GestionPedidos() {
   };
 
   const handleSort = (field) => {
-    if (sortedField === field) {
-      setSortedOrder(sortedOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortedField(field);
-      setSortedOrder('asc');
-    }
+    setSortedField(field);
+    setSortedOrder(sortedField === field ? (sortedOrder === 'asc' ? 'desc' : 'asc') : 'asc');
   };
 
+  // Component rendering
   return (
     <Container fluid className="py-4">
+        <nav className="miga-de-pan">
+          <a href="/">Inicio de sesión </a> &raquo;
+          <a href="/Home"> Inicio</a> &raquo;
+          <a href="/GestionPedidos"> Gestión de Pedidos</a>
+        </nav>
       <Row>
         <Col lg={10} className="m-auto">
           <Card className="shadow">
@@ -77,76 +94,68 @@ function GestionPedidos() {
                   onChange={handleSearch}
                 />
               </InputGroup>
-              {loading ? (
-                <Spinner animation="border" className="mt-5" />
-              ) : (
-                <>
-                  {pedidos.length > 0 ? (
-                    <Table striped bordered hover responsive className="shadow-sm">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th onClick={() => handleSort('numero_de_pedido')}>
-                            Nº pedido
-                            {sortedField === 'numero_de_pedido' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
-                          </th>
-                          <th onClick={() => handleSort('fecha_de_pedido')}>
-                            Fecha pedido
-                            {sortedField === 'fecha_de_pedido' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
-                          </th>
-                          <th onClick={() => handleSort('empresa')}>
-                            Empresa
-                            {sortedField === 'empresa' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
-                          </th>
-                          <th onClick={() => handleSort('importe')}>
-                            Importe
-                            {sortedField === 'importe' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
-                          </th>
-                          <th>% facturado</th>
-                          <th onClick={() => handleSort('estado')}>
-                            Estado
-                            {sortedField === 'estado' && (sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />)}
-                          </th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {pedidos.map((pedido) => (
-                          <tr key={pedido._id}>
-                            <td>{pedido.numero_de_pedido}</td>
-                            <td>{new Date(pedido.fecha_de_pedido).toLocaleDateString()}</td>
-                            <td>{pedido.empresa}</td>
-                            <td>{pedido.importe}</td>
-                            <td>{((pedido.total_facturado / pedido.importe) * 100).toFixed(2)}%</td>
-                            <td>
-                              <Badge variant={pedido.estado === 'Enviado' ? 'success' : 'danger'}>
-                                {pedido.estado}
-                              </Badge>
-                            </td>
-                            <td>
-                              <div>
-                                <Link to={`/DetallePedido/${pedido._id}`} className="btn btn-info btn-sm">
-                                  <FontAwesomeIcon icon={faEye} /> Ver más
-                                </Link>
-                                <Button variant="danger" size="sm" onClick={() => eliminarPedido(pedido._id)}>
-                                  <FontAwesomeIcon icon={faTrash} /> Eliminar
-                                </Button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  ) : (
-                    <p>No se encontraron pedidos que coincidan con la búsqueda.</p>
-                  )}
-                </>
-              )}
+              {loading ? <Spinner animation="border" className="mt-5" /> : <PedidosTable />}
             </Card.Body>
           </Card>
         </Col>
       </Row>
     </Container>
   );
+
+  // Sub components
+  function PedidosTable() {
+    if (pedidos.length === 0) {
+      return <p>No se encontraron pedidos que coincidan con la búsqueda.</p>;
+    }
+    return (
+      <Table striped bordered hover responsive className="shadow-sm">
+        <thead className="thead-dark">
+          <tr>
+            <th onClick={() => handleSort('numero_de_pedido')}>Nº pedido{sortIcon('numero_de_pedido')}</th>
+            <th onClick={() => handleSort('fecha_de_pedido')}>Fecha pedido{sortIcon('fecha_de_pedido')}</th>
+            <th onClick={() => handleSort('empresa')}>Empresa{sortIcon('empresa')}</th>
+            <th onClick={() => handleSort('importe')}>Importe{sortIcon('importe')}</th>
+            <th>% facturado</th>
+            <th onClick={() => handleSort('estado')}>Estado{sortIcon('estado')}</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pedidos.map(pedido => <PedidoRow key={pedido._id} pedido={pedido} />)}
+        </tbody>
+      </Table>
+    );
+  }
+
+  function PedidoRow({ pedido }) {
+    return (
+      <tr>
+        <td>{pedido.numero_de_pedido}</td>
+        <td>{new Date(pedido.fecha_de_pedido).toLocaleDateString()}</td>
+        <td>{pedido.empresa}</td>
+        <td>{pedido.importe}</td>
+        <td>{((pedido.total_facturado / pedido.importe) * 100).toFixed(2)}%</td>
+        <td><Badge variant={pedido.estado === 'Enviado' ? 'success' : 'danger'}>{pedido.estado}</Badge></td>
+        <td>
+          <div>
+            <Link to={`/DetallePedido/${pedido._id}`} className="btn btn-info btn-sm">
+              <FontAwesomeIcon icon={faEye} /> Ver más
+            </Link>
+            <Button variant="danger" size="sm" onClick={() => eliminarPedido(pedido._id)}>
+              <FontAwesomeIcon icon={faTrash} /> Eliminar
+            </Button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  function sortIcon(field) {
+    if (sortedField === field) {
+      return sortedOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />;
+    }
+    return null;
+  }
 }
 
 export default GestionPedidos;

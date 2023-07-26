@@ -1,8 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { FaSave, FaArrowLeft, FaEdit } from 'react-icons/fa'; 
+
+// Define la instancia de axios con la URL base
+const api = axios.create({
+  baseURL: 'http://localhost:8000'
+});
+
+// Set the Authorization header with token from LocalStorage
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
 
 function DetallePedido() {
   let { id } = useParams();
@@ -20,29 +36,29 @@ function DetallePedido() {
   const [editMode, setEditMode] = useState(false);
   const [clientes, setClientes] = useState([]);
 
-  useEffect(() => {
-    axios.get(`http://localhost:8000/pedidos/${id}`)
-      .then(res => {
-        const pedidoData = res.data;
-        setPedido(pedidoData);
-      })
-      .catch(err => console.log(err));
-
-    axios.get(`http://localhost:8000/clientes`)
-      .then(res => {
-        const clientesData = res.data;
-        setClientes(clientesData);
-      })
-      .catch(err => console.log(err));
+  const fetchPedidoAndClientes = useCallback(async () => {
+    try {
+      const pedidoResponse = await api.get(`/pedidos/${id}`);
+      const clientesResponse = await api.get(`/clientes`);
+      setPedido(pedidoResponse.data);
+      setClientes(clientesResponse.data);
+    } catch (err) {
+      console.error(err);
+    }
   }, [id]);
 
-  const handleEdit = (e) => {
+  useEffect(() => {
+    fetchPedidoAndClientes();
+  }, [fetchPedidoAndClientes]);
+
+  const handleEdit = async (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8000/pedidos/${id}`, pedido)
-      .then(res => {
-        setEditMode(false);
-      })
-      .catch(err => console.log(err));
+    try {
+      await api.put(`/pedidos/${id}`, pedido);
+      setEditMode(false);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const handleChange = (e) => {
@@ -54,64 +70,78 @@ function DetallePedido() {
       <Row className="justify-content-md-center">
         <Col xs lg="8">
           <h1 className="mb-4">Detalle del Pedido</h1>
-          <Card className="mb-5 border-0 shadow-lg">
-            <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
-            <Card.Body className="py-5">
-              <Form onSubmit={handleEdit} className="mt-4">
-                <Form.Group controlId="formNumeroDePedido">
-                  <Form.Label>Número de Pedido</Form.Label>
-                  <Form.Control type="number" name="numero_de_pedido" value={pedido.numero_de_pedido} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formFechaDePedido">
-                  <Form.Label>Fecha de Pedido</Form.Label>
-                  <Form.Control type="date" name="fecha_de_pedido" value={pedido.fecha_de_pedido} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formEmpresa">
-                  <Form.Label>Empresa</Form.Label>
-                  <Form.Control as="select" name="empresa" value={pedido.empresa || ''} onChange={handleChange} readOnly={!editMode}>
-                    {clientes.map((cliente) =>
-                      <option key={cliente._id} value={cliente.empresa}>{cliente.empresa}</option>
-                    )}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formImporte">
-                  <Form.Label>Importe</Form.Label>
-                  <Form.Control type="number" name="importe" value={pedido.importe || 0} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formEstado">
-                  <Form.Label>Estado</Form.Label>
-                  <Form.Control as="select" name="estado" value={pedido.estado || 'Abierto'} onChange={handleChange} readOnly={!editMode}>
-                    <option>Abierto</option>
-                    <option>Cerrado</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formTotalFacturado">
-                  <Form.Label>Total Facturado</Form.Label>
-                  <Form.Control type="number" name="total_facturado" value={pedido.total_facturado || 0} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formArchivoAdjunto">
-                  <Form.Label>Archivo Adjunto</Form.Label>
-                  <Form.Control type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-          <Card className="my-5 border-0 shadow-lg">
-            <Card.Body className="py-5 d-flex justify-content-between">
-              <Link to="/GestionPedidos">
-                <Button variant="info" className="me-2">
-                  <FaArrowLeft /> Ir a gestión de pedidos
-                </Button>
-              </Link>
-              <Button variant="danger" onClick={() => setEditMode(!editMode)}>
-                {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
-              </Button>
-            </Card.Body>
-          </Card>
+          <PedidoForm />
+          <CardControls />
         </Col>
       </Row>
     </Container>
   );
+
+  function PedidoForm() {
+    return (
+      <Card className="mb-5 border-0 shadow-lg">
+        <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
+        <Card.Body className="py-5">
+          <Form onSubmit={handleEdit} className="mt-4">
+            <PedidoFields />
+          </Form>
+        </Card.Body>
+      </Card>
+    );
+  }
+
+  function PedidoFields() {
+    return (
+      <>
+        <FormField controlId="formNumeroDePedido" label="Número de Pedido" type="number" name="numero_de_pedido" value={pedido.numero_de_pedido} />
+        <FormField controlId="formFechaDePedido" label="Fecha de Pedido" type="date" name="fecha_de_pedido" value={pedido.fecha_de_pedido} />
+        <FormSelect controlId="formEmpresa" label="Empresa" name="empresa" value={pedido.empresa || ''} options={clientes.map(cliente => ({ value: cliente.empresa, text: cliente.empresa }))} />
+        <FormField controlId="formImporte" label="Importe" type="number" name="importe" value={pedido.importe || 0} />
+        <FormSelect controlId="formEstado" label="Estado" name="estado" value={pedido.estado || 'Abierto'} options={[{ value: 'Abierto', text: 'Abierto' }, { value: 'Cerrado', text: 'Cerrado' }]} />
+        <FormField controlId="formTotalFacturado" label="Total Facturado" type="number" name="total_facturado" value={pedido.total_facturado || 0} />
+        <FormField controlId="formArchivoAdjunto" label="Archivo Adjunto" type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} />
+      </>
+    );
+  }
+
+  function FormField({ controlId, label, type, name, value }) {
+    return (
+      <Form.Group controlId={controlId}>
+        <Form.Label>{label}</Form.Label>
+        <Form.Control type={type} name={name} value={value} onChange={handleChange} readOnly={!editMode} />
+      </Form.Group>
+    );
+  }
+
+  function FormSelect({ controlId, label, name, value, options }) {
+    return (
+      <Form.Group controlId={controlId}>
+        <Form.Label>{label}</Form.Label>
+        <Form.Control as="select" name={name} value={value} onChange={handleChange} readOnly={!editMode}>
+          {options.map((option, index) => 
+            <option key={index} value={option.value}>{option.text}</option>
+          )}
+        </Form.Control>
+      </Form.Group>
+    );
+  }
+
+  function CardControls() {
+    return (
+      <Card className="my-5 border-0 shadow-lg">
+        <Card.Body className="py-5 d-flex justify-content-between">
+          <Link to="/GestionPedidos">
+            <Button variant="info" className="me-2">
+              <FaArrowLeft /> Ir a gestión de pedidos
+            </Button>
+          </Link>
+          <Button variant="danger" onClick={() => setEditMode(!editMode)}>
+            {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
+          </Button>
+        </Card.Body>
+      </Card>
+    );
+  }
 }
 
 export default DetallePedido;

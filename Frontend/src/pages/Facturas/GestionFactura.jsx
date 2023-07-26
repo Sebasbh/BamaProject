@@ -3,7 +3,7 @@ import { Table, Button, InputGroup, FormControl, ListGroup, Container, Row, Col,
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { PlusSquare, EyeFill, Trash } from 'react-bootstrap-icons';
-import Footer from '../../Components/footer/Footer';
+
 
 function GestionFactura() {
   const [facturas, setFacturas] = useState([]);
@@ -105,7 +105,6 @@ function GestionFactura() {
         </Col>
       </Row>
     </Container>
-    <Footer/>
     </div>
   );
 }
