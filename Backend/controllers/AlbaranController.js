@@ -1,19 +1,6 @@
 import { Albaran } from '../models/AllModels.js';
-import multer from 'multer';
-import path from 'path';
-import express from 'express';
 
 
-//Guardar con storage el archivo
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Lo guarda en la carpeta uploads
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  },
-});
 
 const fileFilter = (req, file, cb) => {
   // Accept only specific file types, if needed (e.g., accept only images)
