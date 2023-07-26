@@ -41,8 +41,8 @@ function CrearFactura() {
         navigate('/GestionFactura');
       })
       .catch((error) => {
-        console.log(error);
-        setError('Ocurrió un error al crear la factura.');
+        console.error(error);
+        /* setError('Ocurrió un error al crear la factura.'); */
       })
       .finally(() => {
         setIsLoading(false);
