@@ -17,7 +17,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
     ]);
 
     const clientes = response[0].data;
-    const pedidos = response[1].data.pedidos;
+    const pedidos = response[1].data;
     const nextAlbaranNumber = response[2].data.nextAlbaranNumber;
 
     return { clientes, pedidos, nextAlbaranNumber };
@@ -28,8 +28,7 @@ const fetchClientesPedidosAlbaranNumber = async () => {
 
 function FormularioAlbaranes() {
   const [clientes, setClientes] = useState([]);
-  const [pedidos, setPedidos] = useState([]);
-  const [pedido, setPedido] = useState([]);
+  const [pedidos, setPedidos] = useState(null);
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
   const [numeroAlbaran, setNumeroAlbaran] = useState('');
@@ -38,7 +37,7 @@ function FormularioAlbaranes() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [fecha, setFecha] = useState('');
-  const [estado, setEstado] = useState('boleano');
+  const [estado, setEstado] = useState('');
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
 
   useEffect(() => {
@@ -61,37 +60,42 @@ function FormularioAlbaranes() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('archivo', file); // Añade el archivo
-
-    const formData = new FormData();
-    formData.append('archivo', file); // Añade el archivo
-
-    if (!clienteSeleccionado || !importe || !pedidoSeleccionado) {
+  
+    if (!clienteSeleccionado || !importe || !pedidoSeleccionado || !estado || !fecha) {
       setError('Por favor, rellena todos los campos.');
       return;
     }
-
+  
+    // Determine the value of isApproved based on some condition in your application
+    const isApproved = true; // or false, depending on whether the Albaran is Firmado or No firmado
+  
     const newAlbaran = {
+      numero_de_albaran: numeroAlbaran,
       empresa: clienteSeleccionado,
       importe: parseFloat(importe),
-      pedido: pedidoSeleccionado
+      numero_de_pedido: parseInt(pedidoSeleccionado),
+      archivo_de_entrega: '', // Add the value for the archivo_de_entrega field
+      estado: estado,
+      fecha_albaran: new Date(fecha), // Convert the fecha to a Date object
+      isApproved: isApproved, // Set the isApproved field to false by default
     };
-
+  
     setLoading(true);
     try {
       const { data: { albaran } } = await api.post('/albaranes', newAlbaran);
       setMessage('¡Albaran creado correctamente!');
       setClienteSeleccionado('');
       setImporte('');
+      setEstado('');
+      setFecha('');
       setError(null);
-    } catch {
-      setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
+    } catch (error) {
+      setError('Error al crear el albaran. Por favor, inténtelo nuevamente.');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
@@ -126,6 +130,7 @@ function FormularioAlbaranes() {
                     ))}
                   </Form.Control>
                 </Form.Group>
+
               </Col>
             </Row>
             <Row className="mb-3">
@@ -156,7 +161,8 @@ function FormularioAlbaranes() {
               <Col md={6}>
                 <Form.Group controlId="estado">
                   <Form.Label>Estado</Form.Label>
-                  <Form.Select
+                  <Form.Control
+                    as="select"
                     value={estado}
                     onChange={(e) => setEstado(e.target.value)}
                     required
@@ -165,7 +171,7 @@ function FormularioAlbaranes() {
                     <option value="">Seleccione una opción</option>
                     <option value="Firmado">Firmado</option>
                     <option value="No firmado">No firmado</option>
-                  </Form.Select>
+                  </Form.Control>
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -202,21 +208,25 @@ function FormularioAlbaranes() {
                     style={{ width: '500px', height: '40px' }}
                   >
                     <option value="">Selecciona un pedido</option>
-                    {pedidos && pedidos.map((pedido) => ( // Verificación para evitar el error
-                      <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
-                        {pedido.numero_de_pedido}
-                      </option>
-                    ))}
+                    {/* Check if pedidos is not null before mapping through it */}
+                    {pedidos !== null &&
+                      pedidos.map((pedido) => (
+                        <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
+                          {pedido.numero_de_pedido}
+                        </option>
+                      ))}
                   </Form.Control>
                 </Form.Group>
+                {/* ... (rest of the code) */}
+                <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
+                  {loading ? 'Creando Albaran...' : 'Crear Albaran'}
+                </Button>
+                {/* Fix: Add the 'to' prop for the Link component */}
+                <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
+                  Cancelar
+                </Link>
               </Col>
             </Row>
-            <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
-              {loading ? 'Creando Albaran...' : 'Crear Albaran'}
-            </Button>
-            <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
-              Cancelar
-            </Link>
           </Form>
         </div>
       </Container>
@@ -225,6 +235,9 @@ function FormularioAlbaranes() {
 }
 
 export default FormularioAlbaranes;
+
+
+
 
 
 
