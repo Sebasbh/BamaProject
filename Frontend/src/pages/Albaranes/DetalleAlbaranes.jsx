@@ -183,10 +183,10 @@ function DetalleAlbaranes() {
                             <div>
                               <p>ID: {albaran._id}</p>
                               <p>NºAlbarán: {albaran.numero_de_albaran}</p>
-                              <p>Cliente: {albaran.cliente_id}</p>
+                              <p>Cliente: {albaran.empresa}</p>
                               <p>Fecha: {albaran.fecha_albaran}</p>
                               <p>Importe: {albaran.importe}</p>
-                              <p>Pedido: {albaran.pedido_id}</p>
+                              <p>Pedido: {albaran.numero_de_pedido}</p>
                               <p>Entrega: {albaran.archivo_de_entrega}</p>
                               <p>Factura: {albaran.factura_id}</p>
                               <p>

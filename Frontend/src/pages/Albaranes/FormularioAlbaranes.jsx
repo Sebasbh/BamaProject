@@ -59,31 +59,42 @@ function FormularioAlbaranes() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    if (!clienteSeleccionado || !importe || !pedidoSeleccionado) {
+  
+    if (!clienteSeleccionado || !importe || !pedidoSeleccionado || !estado || !fecha) {
       setError('Por favor, rellena todos los campos.');
       return;
     }
-
+  
+    // Determine the value of isApproved based on some condition in your application
+    const isApproved = true; // or false, depending on whether the Albaran is Firmado or No firmado
+  
     const newAlbaran = {
+      numero_de_albaran: numeroAlbaran,
       empresa: clienteSeleccionado,
       importe: parseFloat(importe),
-      pedido: pedidoSeleccionado
+      numero_de_pedido: parseInt(pedidoSeleccionado),
+      archivo_de_entrega: '', // Add the value for the archivo_de_entrega field
+      estado: estado,
+      fecha_albaran: new Date(fecha), // Convert the fecha to a Date object
+      isApproved: isApproved, // Set the isApproved field to false by default
     };
-
+  
     setLoading(true);
     try {
       const { data: { albaran } } = await api.post('/albaranes', newAlbaran);
       setMessage('¡Albaran creado correctamente!');
       setClienteSeleccionado('');
       setImporte('');
+      setEstado('');
+      setFecha('');
       setError(null);
     } catch (error) {
-      setError('Error al crear el pedido. Por favor, inténtelo nuevamente.');
+      setError('Error al crear el albaran. Por favor, inténtelo nuevamente.');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
@@ -118,6 +129,7 @@ function FormularioAlbaranes() {
                     ))}
                   </Form.Control>
                 </Form.Group>
+
               </Col>
             </Row>
             <Row className="mb-3">
@@ -199,7 +211,8 @@ function FormularioAlbaranes() {
 
 export default FormularioAlbaranes;
 
-        
+
+
 
 
 

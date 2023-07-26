@@ -30,14 +30,15 @@ function GestionAlbaranes() {
     };
 
     const filtrarAlbaranes = (albaran) => {
-        const { cliente_id, importe, fecha_albaran } = albaran;
+        const { empresa, importe, fecha_albaran, numero_de_albaran} = albaran;
 
         // Filtrar por cliente_id, Importe y fecha_albaran
         return (
-            cliente_id?.toLowerCase().includes(consulta.toLowerCase()) ||
+            empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
             (importe && String(importe).toLowerCase().includes(consulta.toLowerCase())) ||
-            (fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase()))
-        );
+            (fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase()))||
+            (numero_de_albaran && String(numero_de_albaran).toLowerCase().includes(consulta.toLowerCase()))
+            );
     };
 
     // Verificar si albaran es un array antes de filtrar
@@ -92,7 +93,7 @@ function GestionAlbaranes() {
                                 <th><Button variant="danger">Empresa</Button></th>
                                 <th><Button variant="info">Fecha</Button></th>
                                 <th><Button variant="primary">Importe</Button></th>
-                                <th><Button variant="warning">Pedido</Button></th>
+                                <th><Button variant="warning">Pedidos</Button></th>
                                 <th><Button variant="danger">Estado</Button></th>
                             </tr>
                         </thead>
@@ -104,7 +105,7 @@ function GestionAlbaranes() {
                                     <td>{albaran.empresa}</td>
                                     <td>{albaran.fecha_albaran}</td>
                                     <td>{albaran.importe}</td>
-                                    <td>{albaran.pedido_id}</td>
+                                    <td>{albaran.numero_de_pedido}</td>
                                     <td>{albaran.estado}</td>
 
                                     <td>
