@@ -15,10 +15,6 @@ function HomePage() {
             <button className='albaranes'><h1 className='albrns'>ALBARANES<img src={arrow} className='arrow'/></h1></button>
             <button className='pedidos'><h1 className='pdds'>PEDIDOS<img src={arrow} className='arrow'/></h1></button>
         </div>
-
-        <div className='footer'>
-          <h1 className='frase-footer'><img src={logoPelota} alt="logoBama" className='logoPelota'/>"Generamos la ventaja competitiva que necesitas."</h1>
-        </div>
     </div>
   );
 }

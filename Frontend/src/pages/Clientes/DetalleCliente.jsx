@@ -6,6 +6,8 @@ import axios from 'axios';
 function DetalleCliente() {
   const [cliente, setCliente] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false); // Nuevo estado para habilitar la edición
+  const [updatedCliente, setUpdatedCliente] = useState(null); // Nuevo estado para almacenar los datos editados
 
   const { id } = useParams();
 
@@ -37,6 +39,40 @@ function DetalleCliente() {
     }
   };
 
+  const handleEditarCliente = () => {
+    setEditing(true); // Habilitar la edición
+    setUpdatedCliente({
+      ...cliente,
+    });
+  };
+
+  const handleGuardarCambios = async () => {
+    try {
+      await axios.put(`http://localhost:8000/clientes/${id}`, updatedCliente);
+      // Mostrar mensaje de éxito
+      alert('Cliente editado correctamente.');
+      // Deshabilitar la edición y recargar los datos del cliente
+      setEditing(false);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setUpdatedCliente({
+      ...updatedCliente,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleActivoChange = (e) => {
+    setUpdatedCliente({
+      ...updatedCliente,
+      activo: e.target.checked,
+    });
+  };
+
   if (loading) {
     return <p>Cargando detalles del cliente...</p>;
   }
@@ -44,7 +80,7 @@ function DetalleCliente() {
   return (
     <>
       <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
-        <Breadcrumb.Item href="#">GestiónClientes</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/gestionclientes">GestiónClientes</Breadcrumb.Item>
         <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
         <Breadcrumb.Item active>DetalleCliente</Breadcrumb.Item>
       </Breadcrumb>
@@ -61,19 +97,48 @@ function DetalleCliente() {
           <Col xs={12} md={9}>
             <Container className="detalle-cliente">
               <Row className="botonesArriba" style={{ marginTop: '50px' }}>
+                {/* Buttons for editing and deleting the client */}
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
-                  <Button variant="warning" className="botonEditar" size="sm" style={{ width: '180px' }}>
-                    🖊️ Editar Cliente
-                  </Button>
-                  <Button
-                    variant="danger"
-                    className="botonEliminar"
-                    size="sm"
-                    style={{ width: '180px' }}
-                    onClick={handleEliminarCliente}
-                  >
-                    🗑️ Eliminar Cliente
-                  </Button>
+                  {!editing ? ( // Show Edit and Delete buttons when not in edit mode
+                    <>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Button
+                          variant="warning"
+                          className="botonEditar"
+                          size="sm"
+                          style={{ width: '180px' }}
+                          onClick={handleEditarCliente}
+                        >
+                          🖊️ Editar Cliente
+                        </Button>
+                        {/* Otros elementos de la tabla van aquí */}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Button
+                          variant="danger"
+                          className="botonEliminar"
+                          size="sm"
+                          style={{ width: '180px' }}
+                          onClick={handleEliminarCliente}
+                        >
+                          🗑️ Eliminar Cliente
+                        </Button>
+                        {/* Otros elementos de la tabla van aquí */}
+                      </div>
+                      {/* ... Otros contenedores de tablas ... */}
+                    </>
+                  ) : (
+                    // Show Save Changes button when in edit mode
+                    <Button
+                      variant="primary"
+                      className="botonGuardarCambios"
+                      size="sm"
+                      style={{ width: '180px' }}
+                      onClick={handleGuardarCambios}
+                    >
+                      💾 Guardar Cambios
+                    </Button>
+                  )}
                 </div>
               </Row>
 
@@ -83,18 +148,87 @@ function DetalleCliente() {
                     <h1>Detalle del cliente</h1>
                     {cliente ? (
                       <div>
-                        <p>ID del Cliente: {cliente._id}</p>
-                        <p>Nombre empresa: {cliente.empresa}</p>
-                        <p>Direccion Social: {cliente.direccion_social}</p>
-                        <p>CIF: {cliente.CIF}</p>
-                        <p>Forma de pago: {cliente.forma_de_pago}</p>
-                        <p>Fecha: {cliente.fecha_creacion}</p>
+                        {/* Show a table of client details */}
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>Nombre empresa:</td>
+                              <td>
+                                {editing ? ( // Show an input field if in edit mode
+                                  <input
+                                    type="text"
+                                    name="empresa"
+                                    value={updatedCliente.empresa}
+                                    onChange={handleInputChange}
+                                  />
+                                ) : (
+                                  cliente.empresa // Show the normal value if not in edit mode
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Direccion Social:</td>
+                              <td>
+                                {editing ? (
+                                  <input
+                                    type="text"
+                                    name="direccion_social"
+                                    value={updatedCliente.direccion_social}
+                                    onChange={handleInputChange}
+                                  />
+                                ) : (
+                                  cliente.direccion_social
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>CIF:</td>
+                              <td>
+                                {editing ? (
+                                  <input
+                                    type="text"
+                                    name="CIF"
+                                    value={updatedCliente.CIF}
+                                    onChange={handleInputChange}
+                                  />
+                                ) : (
+                                  cliente.CIF
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Forma de pago:</td>
+                              <td>
+                                {editing ? (
+                                  <input
+                                    type="text"
+                                    name="forma_de_pago"
+                                    value={updatedCliente.forma_de_pago}
+                                    onChange={handleInputChange}
+                                  />
+                                ) : (
+                                  cliente.forma_de_pago
+                                )}
+                              </td>
+                            </tr>
+                            {/* Add other rows for additional client details */}
+                          </tbody>
+                        </table>
                         <p>
                           Activo:{' '}
-                          {cliente.activo ? (
-                            <span style={{ color: 'green' }}>🟢</span>
+                          {editing ? (
+                            <input
+                              type="checkbox"
+                              name="activo"
+                              checked={updatedCliente.activo}
+                              onChange={handleActivoChange}
+                            />
                           ) : (
-                            <span style={{ color: 'red' }}>🔴</span>
+                            cliente.activo ? (
+                              <span style={{ color: 'green' }}>🟢</span>
+                            ) : (
+                              <span style={{ color: 'red' }}>🔴</span>
+                            )
                           )}
                         </p>
                         <p>pedidos ID: {cliente.pedidos_id}</p>
@@ -107,6 +241,7 @@ function DetalleCliente() {
               </Row>
 
               <Row className="botonesAbajo">
+                {/* Buttons for invoices and orders */}
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
                   <Button variant="primary" className="botonFacturas" size="sm" style={{ width: '120px' }}>
                     🧾 Facturas
@@ -125,4 +260,3 @@ function DetalleCliente() {
 }
 
 export default DetalleCliente;
-

@@ -1,16 +1,49 @@
 import { Cliente } from "../models/AllModels.js";
 
-// Métodos para el CRUD de clientes
-
-// Mostrar todos los clientes
+// Mostrar todos los clientes con filtros
 export const getAllClientes = async (req, res) => {
-   try {
-      const clientes = await Cliente.find();
-      res.status(200).json(clientes);
-   } catch (error) {
-      res.json({ message: error.message });
-   }
+  try {
+    const { consulta, formaPago, activo } = req.query;
+    
+    // Filtros iniciales
+    const filters = {};
+
+    if (consulta) {
+      // Agregar filtro de consulta para empresa y CIF
+      filters.$or = [
+        { empresa: { $regex: consulta, $options: "i" } },
+        { CIF: { $regex: consulta, $options: "i" } }
+      ];
+    }
+
+    if (formaPago && formaPago !== 'all') {
+      // Agregar filtro de forma de pago
+      filters.forma_de_pago = formaPago;
+    }
+
+    if (activo !== undefined && activo !== 'all') {
+      // Agregar filtro de estado activo
+      filters.activo = activo === 'true';
+    }
+
+    const clientes = await Cliente.find(filters);
+    res.status(200).json(clientes);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 };
+
+// // Métodos para el CRUD de clientes
+
+// // Mostrar todos los clientes
+// export const getAllClientes = async (req, res) => {
+//    try {
+//       const clientes = await Cliente.find();
+//       res.status(200).json(clientes);
+//    } catch (error) {
+//       res.json({ message: error.message });
+//    }
+// };
 
 // Mostrar un cliente
 export const getCliente = async (req, res) => {
