@@ -75,11 +75,11 @@ function DetalleAlbaranes() {
       .then(response => {
         setAlbaran(null);
         alert('Albarán eliminado correctamente.');
-         navigate('/GestionAlbaranes');
+        navigate('/GestionAlbaranes');
       })
       .catch(error => console.log(error));
   };
-  
+
   return (
     <>
       <Container>
@@ -92,17 +92,31 @@ function DetalleAlbaranes() {
 
         <Container fluid>
           <Row className="align-items-center" style={{ height: '50vh' }}>
+          <Col xs={12} md={3} className="d-flex flex-column align-items-center justify-content-center">
+            <img
+              src="https://tse4.mm.bing.net/th?id=OIP.gaInIGLRaOjETjvVoAOtqgAAAA&pid=Api&P=0&h=180"
+              className="empresa"
+              alt="empresa"
+              style={{ width: '100px', height: 'auto', marginBottom: '20px', marginRight: '10px' }}
+            />
+          </Col>
             <Col xs={12} md={9}>
               <Container className="detalle-albaran">
-                <Row className="botonesArriba">
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
-                    <Button variant="primary" className="botonPDF" size="sm" style={{ width: '120px' }}>
-                      🧾 PDF
-                    </Button>
-                    <Button variant="success" className="botonDescargar" size="sm" style={{ width: '120px' }}>
-                      📋 Descargar
-                    </Button>
+                <Row className="botonesArriba" style={{ marginTop: '50px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
+                  <Button variant="warning" className="botonEditar" size="sm" onClick={editarDetalleAlbaran}>
+                    🖊️ Editar Albarán
+                  </Button>
+                  <Button
+                    variant="danger"
+                    className="botonEliminar"
+                    size="sm"
+                    onClick={deleteAlbaranes}
+                  >
+                    🗑️ Eliminar Albarán
+                  </Button>
                   </div>
+
                 </Row>
                 <Row>
                   <Col>
@@ -201,17 +215,14 @@ function DetalleAlbaranes() {
                           ) : (
                             <p>No se encontró el albarán.</p>
                           )}
-                          <Button variant="warning" className="botonEditar" size="sm" onClick={editarDetalleAlbaran}>
-                            🖊️ Editar Albarán
-                          </Button>
-                          <Button
-                            variant="danger"
-                            className="botonEliminar"
-                            size="sm"
-                            onClick={deleteAlbaranes}
-                          >
-                            🗑️ Eliminar Albarán
-                          </Button>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
+                            <Button variant="primary" className="botonPDF" size="sm" style={{ width: '120px' }}>
+                              🧾 PDF
+                            </Button>
+                            <Button variant="success" className="botonDescargar" size="sm" style={{ width: '120px' }}>
+                              📋 Descargar
+                            </Button>
+                          </div>
                         </>
                       )}
                     </div>

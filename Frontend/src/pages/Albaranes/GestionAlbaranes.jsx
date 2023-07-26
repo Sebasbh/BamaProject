@@ -73,11 +73,6 @@ function GestionAlbaranes() {
                                 onChange={handleInputChange}
                             />
                         </Col>
-                        <Col md="auto">
-                            <Button variant="primary" onClick={buscarAlbaranes}>
-                               Filtrar
-                            </Button>
-                        </Col>
 
                         <div className="d-flex justify-content-end align-items-end mt-3 mr-4">
                             <Link to="/FormularioAlbaranes">

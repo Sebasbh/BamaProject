@@ -52,7 +52,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/Home" element={<ProtectedHomePage />} />
-            <Route path="/DetalleCliente" element={<ProtectedDetalleCliente />} />
+            <Route path="/DetalleCliente/:id" element={<ProtectedDetalleCliente />} />
             <Route path="/GestionClientes" element={<ProtectedGestionClientes />} />
             <Route path="/FormularioClientes" element={<ProtectedFormularioClientes />} />
             <Route path="/CrearPedido" element={<ProtectedCrearPedido />} />
