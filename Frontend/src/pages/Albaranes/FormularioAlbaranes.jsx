@@ -32,6 +32,7 @@ function FormularioAlbaranes() {
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
   const [numeroAlbaran, setNumeroAlbaran] = useState('');
+  const [fecha_albaran, setFechaAlbaran] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
