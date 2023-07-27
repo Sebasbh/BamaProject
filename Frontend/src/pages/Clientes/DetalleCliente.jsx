@@ -6,8 +6,9 @@ import axios from 'axios';
 function DetalleCliente() {
   const [cliente, setCliente] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState(false); // Nuevo estado para habilitar la edición
-  const [updatedCliente, setUpdatedCliente] = useState(null); // Nuevo estado para almacenar los datos editados
+  const [editing, setEditing] = useState(false); // New state to enable editing
+  const [updatedCliente, setUpdatedCliente] = useState(null); // New state to store edited data
+  const [originalCliente, setOriginalCliente] = useState(null); // New state to store original client data
 
   const { id } = useParams();
 
@@ -30,28 +31,34 @@ function DetalleCliente() {
   const handleEliminarCliente = async () => {
     try {
       await axios.delete(`http://localhost:8000/clientes/${id}`);
-      // Mostrar mensaje de éxito
+      // Show success message
       alert('Cliente eliminado exitosamente.');
-      // Redirigir a la página de gestión de clientes
+      // Redirect to the clients management page
       window.location.href = '/GestionClientes';
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleCancelarEdicion = () => {
+    setEditing(false);
+    setUpdatedCliente(originalCliente);
+  };
+
   const handleEditarCliente = () => {
-    setEditing(true); // Habilitar la edición
-    setUpdatedCliente({
-      ...cliente,
-    });
+    setEditing(true); // Enable editing mode
+    setUpdatedCliente({ ...cliente });
+
+    // Save the original client data for later use in the cancel operation
+    setOriginalCliente({ ...cliente });
   };
 
   const handleGuardarCambios = async () => {
     try {
       await axios.put(`http://localhost:8000/clientes/${id}`, updatedCliente);
-      // Mostrar mensaje de éxito
+      // Show success message
       alert('Cliente editado correctamente.');
-      // Deshabilitar la edición y recargar los datos del cliente
+      // Disable editing and reload client data
       setEditing(false);
       window.location.reload();
     } catch (error) {
@@ -129,15 +136,29 @@ function DetalleCliente() {
                     </>
                   ) : (
                     // Show Save Changes button when in edit mode
-                    <Button
-                      variant="primary"
-                      className="botonGuardarCambios"
-                      size="sm"
-                      style={{ width: '180px' }}
-                      onClick={handleGuardarCambios}
-                    >
-                      💾 Guardar Cambios
-                    </Button>
+                    <div>
+                <Button
+                  variant="primary"
+                  className="botonGuardarCambios"
+                  size="sm"
+                  style={{ width: '180px' }}
+                  onClick={handleGuardarCambios}
+                >
+                  💾 Guardar Cambios
+                </Button>
+
+                {/* Add some margin or padding to separate the buttons */}
+                <Button
+                  variant="secondary"
+                  className="botonCancelarEdicion"
+                  size="sm"
+                  style={{ width: '180px', marginLeft: '10px' }}
+                  onClick={handleCancelarEdicion}
+                >
+                  ❌ Cancelar
+                </Button>
+              </div>
+
                   )}
                 </div>
               </Row>
@@ -260,3 +281,4 @@ function DetalleCliente() {
 }
 
 export default DetalleCliente;
+

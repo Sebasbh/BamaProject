@@ -67,7 +67,7 @@ function GestionClientes() {
 
   const filtrarClientesPorFormaPago = (cliente) => {
     if (formaPagoFilter === 'all') {
-      return true; // Mostrar todos si no hay filtro por forma de pago
+      return true; 
     }
 
     return cliente.forma_de_pago === formaPagoFilter;
@@ -93,32 +93,32 @@ function GestionClientes() {
         </Breadcrumb>
         <Container>
 
-          <Row className="align-items-center">
-            <Col xs={12} lg={6} className="mb-3">
-              <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
-              <Col>
-                <Form.Select onChange={handleActivosFilterChange} value={activosFilter} size="sm" style={{ width: '200px' }}>
-                  <option value="all">Todos</option>
-                  <option value="true">Activo</option>
-                  <option value="false">Inactivo</option>
-                </Form.Select>
+            <Row className="align-items-center">
+              <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
+                <div>
+                  <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
+                  <Form.Select onChange={handleActivosFilterChange} value={activosFilter} size="sm" style={{ width: '200px' }}>
+                    <option value="all">Todos</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                  </Form.Select>
+                </div>
+                <div>
+                  <Form.Label column style={{ marginTop: '30px' }}>Forma de Pago:</Form.Label>
+                  <Form.Select onChange={handleFormaPagoFilterChange} value={formaPagoFilter} size="sm" style={{ width: '200px' }}>
+                    <option value="all">Todas</option>
+                    <option value="Transferencia">Transferencia</option>
+                    <option value="Confirming">Confirming</option>
+                    <option value="Giro Bancario">Giro Bancario</option>
+                  </Form.Select>
+                </div>
               </Col>
-              <Form.Label column style={{ marginTop: '20px' }}>Forma de Pago:</Form.Label>
-              <Col>
-                <Form.Select onChange={handleFormaPagoFilterChange} value={formaPagoFilter} size="sm" style={{ width: '200px' }}>
-                  <option value="all">Todas</option>
-                  <option value="Transferencia">Transferencia</option>
-                  <option value="Confirming">Confirming</option>
-                  <option value="Giro Bancario">Giro Bancario</option>
-                </Form.Select>
+              <Col xs={12} lg={6} className="d-flex justify-content-end align-items-center" style={{ marginTop: '20px' }}>
+                <Link to={`/FormularioClientes`} className="ml-auto">
+                  <Button variant="outline-success">Crear cliente</Button>
+                </Link>
               </Col>
-            </Col>
-            <Col xs={12} lg={6} className="d-flex justify-content-end" style={{ marginTop: '20px' }}>
-              <Link to={`/FormularioClientes`}>
-                <Button variant="outline-success">Crear cliente</Button>
-              </Link>
-            </Col>
-          </Row>
+            </Row>
 
         </Container>
 
