@@ -99,22 +99,23 @@ function GestionPedidos() {
       <Table striped hover className="mt-5">
         <thead className="text-center">
           <tr>
-            <th onClick={() => sortPedidos('numero_de_pedido')}>
+         
+            <th onClick={() => sortPedidos('numero_de_pedido')}><Button variant="warning">
               Nº pedido {sortedField === 'numero_de_pedido' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => sortPedidos('fecha_de_pedido')}>
+              </Button></th>
+            <th onClick={() => sortPedidos('fecha_de_pedido')}><Button variant="danger">
               Fecha pedido {sortedField === 'fecha_de_pedido' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => sortPedidos('empresa')}>
+              </Button></th>
+            <th onClick={() => sortPedidos('empresa')}><Button variant="info">
               Empresa {sortedField === 'empresa' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => sortPedidos('importe')}>
+              </Button> </th>
+            <th onClick={() => sortPedidos('importe')}><Button variant="info">
               Importe {sortedField === 'importe' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => sortPedidos('estado')}>
+              </Button></th>
+            <th onClick={() => sortPedidos('estado')}><Button variant="warning">
               Estado {sortedField === 'estado' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-            </th>
-            <th>Acciones</th>
+              </Button></th>
+            <th><Button variant="danger">Acciones</Button></th>
           </tr>
         </thead>
         <tbody className="table-group-divider text-center">

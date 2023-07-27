@@ -86,9 +86,9 @@ function GestionAlbaranes() {
                             <tr>
                                 <th><Button variant="warning">NºAlbaran</Button></th>
                                 <th><Button variant="danger">Empresa</Button></th>
-                                <th><Button variant="info">Fecha</Button></th>
+                                <th><Button variant="info">Fecha albaran</Button></th> 
                                 <th><Button variant="primary">Importe</Button></th>
-                                <th><Button variant="warning">Pedidos</Button></th>
+                                <th><Button variant="warning">NºPedido</Button></th>
                                 <th><Button variant="danger">Estado</Button></th>
                             </tr>
                         </thead>

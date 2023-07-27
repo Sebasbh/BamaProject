@@ -195,7 +195,6 @@ function DetalleAlbaranes() {
                         <>
                           {albaran ? (
                             <div>
-                              <p>ID: {albaran._id}</p>
                               <p>NºAlbarán: {albaran.numero_de_albaran}</p>
                               <p>Empresa: {albaran.empresa}</p>
                               <p>Fecha: {albaran.fecha_albaran}</p>

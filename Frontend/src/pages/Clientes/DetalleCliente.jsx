@@ -236,7 +236,7 @@ function DetalleCliente() {
                             )
                           )}
                         </p>
-                        <p>pedidos ID: {cliente.pedidos_id}</p>
+                 
                       </div>
                     ) : (
                       <p>No se encontró el cliente con el ID proporcionado.</p>

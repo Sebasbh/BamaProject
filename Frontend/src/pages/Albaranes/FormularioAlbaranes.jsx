@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Button, Form, Alert, Breadcrumb } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
 
 const api = axios.create({
@@ -38,6 +38,7 @@ function FormularioAlbaranes() {
   const [fecha, setFecha] = useState('');
   const [estado, setEstado] = useState('');
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,7 +95,6 @@ function FormularioAlbaranes() {
       setLoading(false);
     }
   };
-
 
   return (
     <>

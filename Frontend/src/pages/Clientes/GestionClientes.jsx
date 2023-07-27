@@ -40,7 +40,6 @@ function GestionClientes() {
       // Manejar el error de forma adecuada
     }
   };
-  
 
   const handleInputChange = (e) => {
     setConsulta(e.target.value);
@@ -53,9 +52,10 @@ function GestionClientes() {
   const handleFormaPagoFilterChange = (e) => {
     setFormaPagoFilter(e.target.value);
   };
+
   const filtrarClientes = (cliente) => {
     const { empresa, CIF, forma_de_pago, activo } = cliente;
-  
+
     // Filtrar por empresa, CIF y activo
     const empresaMatches = empresa?.toLowerCase().includes(consulta.toLowerCase());
     const CIFMatches = CIF?.toLowerCase().includes(consulta.toLowerCase());
@@ -64,7 +64,6 @@ function GestionClientes() {
 
     return empresaMatches || CIFMatches || formaDePagoMatches || activoMatches;
   };
- 
 
   const filtrarClientesPorFormaPago = (cliente) => {
     if (formaPagoFilter === 'all') {
@@ -85,92 +84,97 @@ function GestionClientes() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    
-        <Container>
-        <Header />
-      <Container style={{ flex: 1 }}>
-        <Breadcrumb>
-          <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
-        </Breadcrumb>
-        <Container>
+    <>
+      <Header />
 
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Container style={{ flex: 1 }}>
+          <Breadcrumb>
+            <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
+            <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
+          </Breadcrumb>
+          <Container>
           <Row className="align-items-center">
-            <Col xs={12} lg={6} className="mb-3">
-              <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
-              <Col>
-                <Form.Select onChange={handleActivosFilterChange} value={activosFilter} size="sm" style={{ width: '200px' }}>
-                  <option value="all">Todos</option>
-                  <option value="true">Activo</option>
-                  <option value="false">Inactivo</option>
-                </Form.Select>
+              <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
+                <div>
+                  <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
+                  <Form.Select onChange={handleActivosFilterChange} value={activosFilter} size="sm" style={{ width: '200px' }}>
+                    <option value="all">Todos</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                  </Form.Select>
+                </div>
+                <div>
+                  <Form.Label column style={{ marginTop: '30px' }}>Forma de Pago:</Form.Label>
+                  <Form.Select onChange={handleFormaPagoFilterChange} value={formaPagoFilter} size="sm" style={{ width: '200px' }}>
+                    <option value="all">Todas</option>
+                    <option value="Transferencia">Transferencia</option>
+                    <option value="Confirming">Confirming</option>
+                    <option value="Giro Bancario">Giro Bancario</option>
+                  </Form.Select>
+                </div>
               </Col>
-              <Form.Label column style={{ marginTop: '20px' }}>Forma de Pago:</Form.Label>
-              <Col>
-                <Form.Select onChange={handleFormaPagoFilterChange} value={formaPagoFilter} size="sm" style={{ width: '200px' }}>
-                  <option value="all">Todas</option>
-                  <option value="Transferencia">Transferencia</option>
-                  <option value="Confirming">Confirming</option>
-                  <option value="Giro Bancario">Giro Bancario</option>
-                </Form.Select>
+              <Col xs={12} lg={6} className="d-flex justify-content-end align-items-center" style={{ marginTop: '20px' }}>
+                <Link to={`/FormularioClientes`} className="ml-auto">
+                  <Button variant="outline-success">Crear cliente</Button>
+                </Link>
               </Col>
-            </Col>
-            <Col xs={12} lg={6} className="d-flex justify-content-end" style={{ marginTop: '20px' }}>
-              <Link to={`/FormularioClientes`}>
-                <Button variant="outline-success">Crear cliente</Button>
-              </Link>
-            </Col>
-          </Row>
+            </Row>
 
-        </Container>
+          </Container>
 
-        <Table striped hover className="mt-5">
-          <thead className="text-center">
-            <tr>
-              <th>Empresa</th>
-              <th>CIF</th>
-              <th>Forma de pago</th>
-              <th>Activo</th>
-            </tr>
-          </thead>
-          <tbody className="table-group-divider text-center">
-            {clientesPaginados.map((cliente, index) => (
-              <tr key={index}>
-                <td> {cliente.empresa}</td>
-                <td> {cliente.CIF} </td>
-                <td> {cliente.forma_de_pago} </td>
-                <td>
-                  {' '}
-                  {cliente.activo ? (
-                    <span style={{ color: 'green' }}>🟢</span>
-                  ) : (
-                    <span style={{ color: 'red' }}>🔴</span>
-                  )}
-                </td>
-                <td>
-                  <Link to={`/DetalleCliente/${cliente._id}`} className="btn btn-secondary">
-                    Ver Detalles
-                  </Link>
-                </td>
+          <Table striped hover className="mt-5">
+            <thead className="text-center">
+              <tr>
+              <th><Button variant="warning">Empresa</Button></th>
+              <th><Button variant="danger">CIF</Button></th>
+              <th><Button variant="info">Forma de pago</Button></th>
+              <th><Button variant="primary">Activo</Button></th>
+               
               </tr>
+            </thead>
+            <tbody className="table-group-divider text-center">
+              {clientesPaginados.map((cliente, index) => (
+                <tr key={index}>
+                  
+                  <td> {cliente.empresa}</td>
+                  <td> {cliente.CIF} </td>
+                  <td> {cliente.forma_de_pago} </td>
+                  <td>
+                    {' '}
+                    {cliente.activo ? (
+                      <span style={{ color: 'green' }}>🟢</span>
+                    ) : (
+                      <span style={{ color: 'red' }}>🔴</span>
+                    )}
+                  </td>
+                  <td>
+                    <Link to={`/DetalleCliente/${cliente._id}`} className="btn btn-secondary">
+                      Ver Detalles
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Pagination className="mt-3 justify-content-center">
+            <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+            {[...Array(Math.ceil(clientesFiltrados.length / clientesPerPage)).keys()].map((number) => (
+              <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                {number + 1}
+              </Pagination.Item>
             ))}
-          </tbody>
-        </Table>
-        <Pagination className="mt-3 justify-content-center">
-          <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
-          {[...Array(Math.ceil(clientesFiltrados.length / clientesPerPage)).keys()].map((number) => (
-            <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
-              {number + 1}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(clientesFiltrados.length / clientesPerPage)}
-          />
-        </Pagination>
-      </Container>
-    
+            <Pagination.Next
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === Math.ceil(clientesFiltrados.length / clientesPerPage)}
+            />
+          </Pagination>
+        </Container>
+      </div>
+
+    </>
   );
 }
 
 export default GestionClientes;
+
