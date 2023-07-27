@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Button, Form, Alert, Breadcrumb } from 'react-bootstrap';
-import { Link, Navigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
 
 const api = axios.create({
@@ -38,7 +38,7 @@ function FormularioAlbaranes() {
   const [fecha, setFecha] = useState('');
   const [estado, setEstado] = useState('');
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
-
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,8 +116,8 @@ function FormularioAlbaranes() {
               <Col md={6}>
                 <Form.Group controlId="numeroAlbaran">
                   <Form.Label>Número de Albaran</Form.Label>
-                  <Form.Control type="text" value={numeroAlbaran} readOnly 
-                  style={{ width: '500px', height: '40px' }}
+                  <Form.Control type="text" value={numeroAlbaran} readOnly
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
               </Col>
@@ -201,16 +201,16 @@ function FormularioAlbaranes() {
                       ))}
                   </Form.Control>
                 </Form.Group>
-                {/* ... (rest of the code) */}
-                <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
-                  {loading ? 'Creando Albaran...' : 'Crear Albaran'}
-                </Button>
-                {/* Fix: Add the 'to' prop for the Link component */}
-                <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
-                  Cancelar
-                </Link>
               </Col>
             </Row>
+
+            <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
+              {loading ? 'Creando Albaran...' : 'Crear Albaran'}
+            </Button>
+
+            <Link to="/GestionAlbaranes" className="btn btn-secondary mt-3 ms-3">
+              Aceptar
+            </Link>
           </Form>
         </div>
       </Container>
