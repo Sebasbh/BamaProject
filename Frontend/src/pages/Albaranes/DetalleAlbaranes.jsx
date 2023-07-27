@@ -10,9 +10,9 @@ function DetalleAlbaranes() {
   const [loading, setLoading] = useState(true);
   const [editarModo, setEditarModo] = useState(false);
   const [numero_de_albaran, setNumeroDeAlbaran] = useState('');
-  const [cliente_id, setClienteId] = useState('');
+  const [empresa, setEmpresa] = useState('');
   const [fecha_albaran, setFechaAlbaran] = useState('');
-  const [pedido_id, setPedidoId] = useState('');
+  const [numero_de_pedido, setNumeroDePedido] = useState('');
   const [importe, setImporte] = useState('');
   const [estado, setEstado] = useState('');
   const [actualizacionExitosa, setActualizacionExitosa] = useState(true);
@@ -36,9 +36,9 @@ function DetalleAlbaranes() {
   const editarDetalleAlbaran = () => {
     setEditarModo(true);
     setNumeroDeAlbaran(albaran.numero_de_albaran);
-    setClienteId(albaran.cliente_id);
+    setEmpresa(albaran.empresa);
     setFechaAlbaran(albaran.fecha_albaran);
-    setPedidoId(albaran.pedido_id);
+    setNumeroDePedido(albaran.numero_de_pedido);
     setImporte(albaran.importe);
     setEstado(albaran.estado);
     setActualizacionExitosa(false);
@@ -54,10 +54,10 @@ function DetalleAlbaranes() {
 
     const albaranActualizado = {
       numero_de_albaran,
-      cliente_id,
+      empresa,
       fecha_albaran,
       importe,
-      pedido_id,
+      numero_de_pedido,
       estado,
     };
 
@@ -102,7 +102,7 @@ function DetalleAlbaranes() {
           </Col>
             <Col xs={12} md={9}>
               <Container className="detalle-albaran">
-                <Row className="botonesArriba" style={{ marginTop: '50px' }}>
+                <Row className="botonesArriba">
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
                   <Button variant="warning" className="botonEditar" size="sm" onClick={editarDetalleAlbaran}>
                     🖊️ Editar Albarán
@@ -135,12 +135,12 @@ function DetalleAlbaranes() {
                                 style={{ width: '500px', height: '40px' }}
                               />
                             </Form.Group>
-                            <Form.Group controlId="clientes">
-                              <Form.Label>cliente_id</Form.Label>
+                            <Form.Group controlId="empresa">
+                              <Form.Label>empresa</Form.Label>
                               <Form.Control
                                 type="text"
-                                value={cliente_id}
-                                onChange={(e) => setClienteId(e.target.value)}
+                                value={empresa}
+                                onChange={(e) => setEmpresa(e.target.value)}
                                 style={{ width: '500px', height: '40px' }}
                               />
                             </Form.Group>
@@ -197,10 +197,10 @@ function DetalleAlbaranes() {
                             <div>
                               <p>ID: {albaran._id}</p>
                               <p>NºAlbarán: {albaran.numero_de_albaran}</p>
-                              <p>Cliente: {albaran.empresa}</p>
+                              <p>Empresa: {albaran.empresa}</p>
                               <p>Fecha: {albaran.fecha_albaran}</p>
                               <p>Importe: {albaran.importe}</p>
-                              <p>Pedido: {albaran.numero_de_pedido}</p>
+                              <p>Pedidos: {albaran.numero_de_pedido}</p>
                               <p>Entrega: {albaran.archivo_de_entrega}</p>
                               <p>Factura: {albaran.factura_id}</p>
                               <p>
