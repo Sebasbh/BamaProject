@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
-import { FaSave, FaArrowLeft, FaEdit } from 'react-icons/fa'; 
+import { Container, Row, Col, Card, Button, Form, Breadcrumb } from 'react-bootstrap';
+import { FaSave, FaArrowLeft, FaEdit } from 'react-icons/fa';
+import Header from '../../Components/Header/Header';
 
 function DetallePedido() {
   let { id } = useParams();
@@ -50,67 +51,76 @@ function DetallePedido() {
   }
 
   return (
-    <Container className="my-5">
-      <Row className="justify-content-md-center">
-        <Col xs lg="8">
-          <h1 className="mb-4">Detalle del Pedido</h1>
-          <Card className="mb-5 border-0 shadow-lg">
-            <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
-            <Card.Body className="py-5">
-              <Form onSubmit={handleEdit} className="mt-4">
-                <Form.Group controlId="formNumeroDePedido">
-                  <Form.Label>Número de Pedido</Form.Label>
-                  <Form.Control type="number" name="numero_de_pedido" value={pedido.numero_de_pedido} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formFechaDePedido">
-                  <Form.Label>Fecha de Pedido</Form.Label>
-                  <Form.Control type="date" name="fecha_de_pedido" value={pedido.fecha_de_pedido} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formEmpresa">
-                  <Form.Label>Empresa</Form.Label>
-                  <Form.Control as="select" name="empresa" value={pedido.empresa || ''} onChange={handleChange} readOnly={!editMode}>
-                    {clientes.map((cliente) =>
-                      <option key={cliente._id} value={cliente.empresa}>{cliente.empresa}</option>
-                    )}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formImporte">
-                  <Form.Label>Importe</Form.Label>
-                  <Form.Control type="number" name="importe" value={pedido.importe || 0} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formEstado">
-                  <Form.Label>Estado</Form.Label>
-                  <Form.Control as="select" name="estado" value={pedido.estado || 'Abierto'} onChange={handleChange} readOnly={!editMode}>
-                    <option>Abierto</option>
-                    <option>Cerrado</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formTotalFacturado">
-                  <Form.Label>Total Facturado</Form.Label>
-                  <Form.Control type="number" name="total_facturado" value={pedido.total_facturado || 0} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-                <Form.Group controlId="formArchivoAdjunto">
-                  <Form.Label>Archivo Adjunto</Form.Label>
-                  <Form.Control type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} onChange={handleChange} readOnly={!editMode} />
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-          <Card className="my-5 border-0 shadow-lg">
-            <Card.Body className="py-5 d-flex justify-content-between">
-              <Link to="/GestionPedidos">
-                <Button variant="info" className="me-2">
-                  <FaArrowLeft /> Ir a gestión de pedidos
+    <>
+      <Header />
+      <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
+        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/GestionPedido">Pedidos</Breadcrumb.Item>
+        <Breadcrumb.Item active>DetallePedido</Breadcrumb.Item>
+      </Breadcrumb>
+
+      <Container className="my-5">
+        <Row className="justify-content-md-center">
+          <Col xs lg="8">
+            <h1 className="mb-4">Detalle del Pedido</h1>
+            <Card className="mb-5 border-0 shadow-lg">
+              <Card.Header className="bg-success text-white">{`Pedido No: ${pedido.numero_de_pedido}`}</Card.Header>
+              <Card.Body className="py-5">
+                <Form onSubmit={handleEdit} className="mt-4">
+                  <Form.Group controlId="formNumeroDePedido">
+                    <Form.Label>Número de Pedido</Form.Label>
+                    <Form.Control type="number" name="numero_de_pedido" value={pedido.numero_de_pedido} onChange={handleChange} readOnly={!editMode} />
+                  </Form.Group>
+                  <Form.Group controlId="formFechaDePedido">
+                    <Form.Label>Fecha de Pedido</Form.Label>
+                    <Form.Control type="date" name="fecha_de_pedido" value={pedido.fecha_de_pedido} onChange={handleChange} readOnly={!editMode} />
+                  </Form.Group>
+                  <Form.Group controlId="formEmpresa">
+                    <Form.Label>Empresa</Form.Label>
+                    <Form.Control as="select" name="empresa" value={pedido.empresa || ''} onChange={handleChange} readOnly={!editMode}>
+                      {clientes.map((cliente) =>
+                        <option key={cliente._id} value={cliente.empresa}>{cliente.empresa}</option>
+                      )}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="formImporte">
+                    <Form.Label>Importe</Form.Label>
+                    <Form.Control type="number" name="importe" value={pedido.importe || 0} onChange={handleChange} readOnly={!editMode} />
+                  </Form.Group>
+                  <Form.Group controlId="formEstado">
+                    <Form.Label>Estado</Form.Label>
+                    <Form.Control as="select" name="estado" value={pedido.estado || 'Abierto'} onChange={handleChange} readOnly={!editMode}>
+                      <option>Abierto</option>
+                      <option>Cerrado</option>
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="formTotalFacturado">
+                    <Form.Label>Total Facturado</Form.Label>
+                    <Form.Control type="number" name="total_facturado" value={pedido.total_facturado || 0} onChange={handleChange} readOnly={!editMode} />
+                  </Form.Group>
+                  <Form.Group controlId="formArchivoAdjunto">
+                    <Form.Label>Archivo Adjunto</Form.Label>
+                    <Form.Control type="text" name="archivo_adjunto" value={pedido.archivo_adjunto || ''} onChange={handleChange} readOnly={!editMode} />
+                  </Form.Group>
+                </Form>
+              </Card.Body>
+            </Card>
+            <Card className="my-5 border-0 shadow-lg">
+              <Card.Body className="py-5 d-flex justify-content-between">
+                <Link to="/GestionPedidos">
+                  <Button variant="info" className="me-2">
+                    <FaArrowLeft /> Ir a gestión de pedidos
+                  </Button>
+                </Link>
+                <Button variant="danger" onClick={() => setEditMode(!editMode)}>
+                  {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
                 </Button>
-              </Link>
-              <Button variant="danger" onClick={() => setEditMode(!editMode)}>
-                {editMode ? <><FaSave /> Guardar Cambios</> : <><FaEdit /> Editar Pedido</>}
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Form, Button, Alert, Spinner, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert, Spinner, Card, Breadcrumb } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import Header from '../../Components/Header/Header';
 
 const URI = "http://localhost:8000/clientes/";
 
@@ -97,58 +98,68 @@ const CrearPedido = () => {
   }
 
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col xs lg="6">
-          <Card className="my-4">
-            <Card.Header><h2>Crear Pedido</h2></Card.Header>
-            <Card.Body>
-              {message && <Alert variant="success">{message}</Alert>}
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={onSubmit}>
-                <Form.Group controlId="numeroPedido">
-                  <Form.Label>Número de Pedido</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={numeroPedido}
-                    onChange={(e) => setNumeroPedido(parseInt(e.target.value))}
-                    placeholder="Ingrese el número de pedido"
-                  />
-                </Form.Group>
-                <Form.Group controlId="fechaPedido">
-                  <Form.Label>Fecha de Pedido</Form.Label>
-                  <Form.Control type="date" value={fechaPedido} onChange={(e) => setFechaPedido(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="cliente">
-                  <Form.Label>Empresa</Form.Label>
-                  <Form.Control as="select" value={clienteSeleccionado} onChange={(e) => setClienteSeleccionado(e.target.value)}>
-                    <option value="">Selecciona una empresa</option>
-                    {clientes.map((cliente) =>
-                      <option key={cliente.CIF} value={cliente.empresa}>{cliente.empresa}</option>
-                    )}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="importe">
-                  <Form.Label>Importe</Form.Label>
-                  <Form.Control type="number" value={importe} onChange={(e) => setImporte(e.target.value)} />
-                </Form.Group>
-                <Button variant="info" type="submit" disabled={loading} className="me-2">
-                  <FontAwesomeIcon icon={faPlus} /> Crear Pedido
-                </Button>
-                <Link to="/GestionPedidos" className="btn btn-secondary">
-                  <FontAwesomeIcon icon={faArrowLeft} /> Volver a la gestión de pedidos
-                </Link>
-                {pedidoCreado && (
-                  <Link to={`/DetallePedido/${pedidoCreado._id}`} className="btn btn-success ml-2">
-                    Ver detalles
+    <>
+      <Header />
+
+      <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
+        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/GestionPedido">Pedidos</Breadcrumb.Item>
+        <Breadcrumb.Item active>CrearPedido</Breadcrumb.Item>
+      </Breadcrumb>
+
+      <Container>
+        <Row className="justify-content-md-center">
+          <Col xs lg="6">
+            <Card className="my-4">
+              <Card.Header><h2>Crear Pedido</h2></Card.Header>
+              <Card.Body>
+                {message && <Alert variant="success">{message}</Alert>}
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Form onSubmit={onSubmit}>
+                  <Form.Group controlId="numeroPedido">
+                    <Form.Label>Número de Pedido</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={numeroPedido}
+                      onChange={(e) => setNumeroPedido(parseInt(e.target.value))}
+                      placeholder="Ingrese el número de pedido"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="fechaPedido">
+                    <Form.Label>Fecha de Pedido</Form.Label>
+                    <Form.Control type="date" value={fechaPedido} onChange={(e) => setFechaPedido(e.target.value)} />
+                  </Form.Group>
+                  <Form.Group controlId="cliente">
+                    <Form.Label>Empresa</Form.Label>
+                    <Form.Control as="select" value={clienteSeleccionado} onChange={(e) => setClienteSeleccionado(e.target.value)}>
+                      <option value="">Selecciona una empresa</option>
+                      {clientes.map((cliente) =>
+                        <option key={cliente.CIF} value={cliente.empresa}>{cliente.empresa}</option>
+                      )}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="importe">
+                    <Form.Label>Importe</Form.Label>
+                    <Form.Control type="number" value={importe} onChange={(e) => setImporte(e.target.value)} />
+                  </Form.Group>
+                  <Button variant="info" type="submit" disabled={loading} className="me-2">
+                    <FontAwesomeIcon icon={faPlus} /> Crear Pedido
+                  </Button>
+                  <Link to="/GestionPedidos" className="btn btn-secondary">
+                    <FontAwesomeIcon icon={faArrowLeft} /> Volver a la gestión de pedidos
                   </Link>
-                )}
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                  {pedidoCreado && (
+                    <Link to={`/DetallePedido/${pedidoCreado._id}`} className="btn btn-success ml-2">
+                      Ver detalles
+                    </Link>
+                  )}
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

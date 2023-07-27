@@ -101,8 +101,8 @@ function FormularioAlbaranes() {
       <Header />
 
       <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
-        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">GestionAlbaranes</Breadcrumb.Item>
-        <Breadcrumb.Item href="http://localhost:3000/DetalleAlbaranes/:id">DetalleAlbaranes</Breadcrumb.Item>
+        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">Albaranes</Breadcrumb.Item>
         <Breadcrumb.Item active>FormularioAlbaranes</Breadcrumb.Item>
       </Breadcrumb> <br />
 

@@ -30,15 +30,15 @@ function GestionAlbaranes() {
     };
 
     const filtrarAlbaranes = (albaran) => {
-        const { empresa, importe, fecha_albaran, numero_de_albaran} = albaran;
+        const { empresa, importe, fecha_albaran, numero_de_albaran } = albaran;
 
         // Filtrar por cliente_id, Importe y fecha_albaran
         return (
             empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
             (importe && String(importe).toLowerCase().includes(consulta.toLowerCase())) ||
-            (fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase()))||
+            (fecha_albaran && String(fecha_albaran).toLowerCase().includes(consulta.toLowerCase())) ||
             (numero_de_albaran && String(numero_de_albaran).toLowerCase().includes(consulta.toLowerCase()))
-            );
+        );
     };
 
     // Verificar si albaran es un array antes de filtrar
@@ -104,7 +104,7 @@ function GestionAlbaranes() {
                                     <td>{albaran.estado}</td>
 
                                     <td>
-                                        <Link to={`/DetalleAlbaranes/${albaran._id}`} className="info">
+                                        <Link to={`/DetalleAlbaranes/${albaran._id}`} className="btn btn-secondary">
                                             Ver Detalles
                                         </Link>
                                     </td>
