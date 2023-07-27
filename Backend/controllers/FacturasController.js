@@ -28,7 +28,7 @@ export const createFactura = async (req, res) => {
    try {
       await Factura.create(req.body);
       res.status(200).json({
-         message: "¡Pedido creado correctamente!"
+         message: "¡Factura creada correctamente!"
       });
    } catch (error) {
       res.json({ message: error.message });

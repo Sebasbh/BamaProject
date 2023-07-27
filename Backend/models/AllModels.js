@@ -22,6 +22,7 @@ const PedidoSchema = new mongoose.Schema({
   facturas_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'facturas' }]
 });
 
+
 const AlbaranSchema = new mongoose.Schema({
   numero_de_albaran: { type: Number, /* required: true, */ unique: true },
   empresa: { type: String, /* required: true, */ },
@@ -36,15 +37,17 @@ const AlbaranSchema = new mongoose.Schema({
 
 const FacturaSchema = new mongoose.Schema({
   numero_de_factura: { type: Number, /* required: true, */ unique: true },
-  cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true */ },
-  fecha_de_factura: { type: Date, default: Date.now },
+  empresa: { type: String, /* required: true, */ },
+  //fecha_de_factura: { type: Date, default: Date.now },
+  fecha_de_factura: { type: String, /* required: true, */ },
   vencimiento: { type: String, enum: ['Al contado', '30 días fecha factura', '60 días fecha factura'], /* required: true */ },
   base_imponible: { type: Number, /* required: true */ },
   tipo_de_IVA: { type: String, enum: ['21%', '10%', '4%', 'Sin IVA'], /* required: true*/ },
   importe_IVA: { type: Number },
   total_factura: { type: Number },
   estado_factura: { type: String, enum: ['En trámite', 'Cerrada'], default: 'En trámite' },
-  fecha_de_cobro: { type: Date },
+  //fecha_de_cobro: { type: Date },
+  fecha_de_cobro: { type: String, /* required: true, */ },
   pedido_id: { type: mongoose.Schema.Types.ObjectId, ref: 'pedidos', /* required: true */ },
   albaran_id: { type: mongoose.Schema.Types.ObjectId, ref: 'albaranes' },
   archivo_de_factura: { type: String }

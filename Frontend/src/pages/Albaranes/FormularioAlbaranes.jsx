@@ -32,8 +32,6 @@ function FormularioAlbaranes() {
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [importe, setImporte] = useState('');
   const [numeroAlbaran, setNumeroAlbaran] = useState('');
-  const [fecha_albaran, setFechaAlbaran] = useState('');
-  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
@@ -103,8 +101,8 @@ function FormularioAlbaranes() {
       <Header />
 
       <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
-        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">GestionAlbaranes</Breadcrumb.Item>
-        <Breadcrumb.Item href="http://localhost:3000/DetalleAlbaranes/:id">DetalleAlbaranes</Breadcrumb.Item>
+        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">Albaranes</Breadcrumb.Item>
         <Breadcrumb.Item active>FormularioAlbaranes</Breadcrumb.Item>
       </Breadcrumb> <br />
 
@@ -145,18 +143,6 @@ function FormularioAlbaranes() {
             </Row>
             <Row className="mb-3">
               <Col md={6}>
-                <Form.Group controlId="fecha">
-                  <Form.Label>fecha_albaran</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={fecha_albaran}
-                    onChange={(e) => setFechaAlbaran(e.target.value)}
-                    required
-                    style={{ width: "500px", height: "40px" }}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
                 <Form.Group controlId="importe">
                   <Form.Label>Importe</Form.Label>
                   <Form.Control
@@ -164,7 +150,7 @@ function FormularioAlbaranes() {
                     value={importe}
                     onChange={(e) => setImporte(e.target.value)}
                     required
-                    style={{ width: "500px", height: "40px" }}
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
               </Col>
@@ -176,7 +162,7 @@ function FormularioAlbaranes() {
                     value={estado}
                     onChange={(e) => setEstado(e.target.value)}
                     required
-                    style={{ width: "500px", height: "40px" }}
+                    style={{ width: '500px', height: '40px' }}
                   >
                     <option value="">Seleccione una opción</option>
                     <option value="Firmado">Firmado</option>
@@ -192,22 +178,10 @@ function FormularioAlbaranes() {
                     value={fecha}
                     onChange={(e) => setFecha(e.target.value)}
                     required
-                    style={{ width: "500px", height: "40px" }}
+                    style={{ width: '500px', height: '40px' }}
                   />
                 </Form.Group>
               </Col>
-              <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="adjuntarArchivo">
-                  <Form.Label>Adjuntar Archivo</Form.Label>
-                  <Form.Control
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    style={{ width: '500px' }}
-                 />
-                </Form.Group>
-              </Col>
-              </Row>
               <Col md={6}>
                 <Form.Group controlId="pedidos">
                   <Form.Label>Pedidos</Form.Label>
@@ -245,15 +219,3 @@ function FormularioAlbaranes() {
 }
 
 export default FormularioAlbaranes;
-
-
-
-
-
-
-
-
-
-
-
-
