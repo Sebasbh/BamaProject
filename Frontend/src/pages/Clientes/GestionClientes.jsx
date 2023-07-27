@@ -12,7 +12,6 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import Header from '../../Components/Header/Header';
 
-
 const URI = 'http://localhost:8000/clientes/';
 
 function GestionClientes() {
@@ -20,17 +19,26 @@ function GestionClientes() {
   const [consulta, setConsulta] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [clientesPerPage] = useState(15);
+  const [activosFilter, setActivosFilter] = useState('all');
+  const [formaPagoFilter, setFormaPagoFilter] = useState('all');
 
   useEffect(() => {
     getClientes();
-  }, []);
-  useEffect(() => {
-    getClientes();
-  }, []);
+  }, [consulta, activosFilter, formaPagoFilter, currentPage]);
 
   const getClientes = async () => {
-    const res = await axios.get(URI);
-    setClientes(res.data);
+    try {
+      const res = await axios.get(URI, {
+        params: {
+          consulta,
+          formaPago: formaPagoFilter,
+          activo: activosFilter
+        }
+      });
+      setClientes(res.data);
+    } catch (error) {
+      // Manejar el error de forma adecuada
+    }
   };
   
 
@@ -38,25 +46,35 @@ function GestionClientes() {
     setConsulta(e.target.value);
   };
 
+  const handleActivosFilterChange = (e) => {
+    setActivosFilter(e.target.value);
+  };
 
-  const buscarClientes = async () => {
-    const res = await axios.get(`${URI}?consulta=${consulta}`);
-    setClientes(res.data);
+  const handleFormaPagoFilterChange = (e) => {
+    setFormaPagoFilter(e.target.value);
   };
   const filtrarClientes = (cliente) => {
     const { empresa, CIF, forma_de_pago, activo } = cliente;
   
     // Filtrar por empresa, CIF y activo
-    return (
-      empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
-      CIF?.toLowerCase().includes(consulta.toLowerCase()) ||
-      forma_de_pago?.toLowerCase().includes(consulta.toLowerCase()) ||
-      String(activo)?.toLowerCase().includes(consulta.toLowerCase())
-    );
+    const empresaMatches = empresa?.toLowerCase().includes(consulta.toLowerCase());
+    const CIFMatches = CIF?.toLowerCase().includes(consulta.toLowerCase());
+    const formaDePagoMatches = forma_de_pago?.toLowerCase().includes(consulta.toLowerCase());
+    const activoMatches = activosFilter === 'all' || activo === (activosFilter === 'true');
+
+    return empresaMatches || CIFMatches || formaDePagoMatches || activoMatches;
   };
  
 
-  const clientesFiltrados = clientes.filter(filtrarClientes);
+  const filtrarClientesPorFormaPago = (cliente) => {
+    if (formaPagoFilter === 'all') {
+      return true; // Mostrar todos si no hay filtro por forma de pago
+    }
+
+    return cliente.forma_de_pago === formaPagoFilter;
+  };
+
+  const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
 
   // Obtener los índices de los clientes actuales
   const indexOfLastCliente = currentPage * clientesPerPage;
@@ -72,31 +90,38 @@ function GestionClientes() {
         <Header />
       <Container style={{ flex: 1 }}>
         <Breadcrumb>
-          <Breadcrumb.Item href="/">Login</Breadcrumb.Item>
-          <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
           <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
         </Breadcrumb>
-          <Row>
-            <Col md lg="4">
-              <Form.Control
-                className="me-auto"
-                placeholder="Buscar cliente ..."
-                value={consulta}
-                onChange={handleInputChange}
-              />
+        <Container>
+
+          <Row className="align-items-center">
+            <Col xs={12} lg={6} className="mb-3">
+              <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
+              <Col>
+                <Form.Select onChange={handleActivosFilterChange} value={activosFilter} size="sm" style={{ width: '200px' }}>
+                  <option value="all">Todos</option>
+                  <option value="true">Activo</option>
+                  <option value="false">Inactivo</option>
+                </Form.Select>
+              </Col>
+              <Form.Label column style={{ marginTop: '20px' }}>Forma de Pago:</Form.Label>
+              <Col>
+                <Form.Select onChange={handleFormaPagoFilterChange} value={formaPagoFilter} size="sm" style={{ width: '200px' }}>
+                  <option value="all">Todas</option>
+                  <option value="Transferencia">Transferencia</option>
+                  <option value="Confirming">Confirming</option>
+                  <option value="Giro Bancario">Giro Bancario</option>
+                </Form.Select>
+              </Col>
             </Col>
-            <Col md="auto">
-              <Button variant="primary" onClick={buscarClientes}>
-                Buscar
-              </Button>
-            </Col>
-            <Col lg="4"></Col>
-            <Col xs lg="2">
+            <Col xs={12} lg={6} className="d-flex justify-content-end" style={{ marginTop: '20px' }}>
               <Link to={`/FormularioClientes`}>
                 <Button variant="outline-success">Crear cliente</Button>
               </Link>
             </Col>
           </Row>
+
         </Container>
 
         <Table striped hover className="mt-5">
