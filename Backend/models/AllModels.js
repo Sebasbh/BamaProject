@@ -44,8 +44,8 @@ const FacturaSchema = new mongoose.Schema({
   total_factura: { type: Number },
   estado_factura: { type: String, enum: ['En trámite', 'Cerrada'], default: 'En trámite' },
   fecha_de_cobro: {type: Date},
-  numero_de_albaran: { type: mongoose.Schema.Types.ObjectId, ref: 'pedidos', /* required: true */ },
-  numero_de_pedido: { type: mongoose.Schema.Types.ObjectId, ref: 'albaranes' },
+  numero_de_albaran: { type: Number, /* required: true, */ unique: true },
+  numero_de_pedido: { type: Number, /* required: true, */ unique: true },
   archivo_de_factura: { type: String }
 });
 
