@@ -21,6 +21,8 @@ function GestionClientes() {
   const [clientesPerPage] = useState(15);
   const [activosFilter, setActivosFilter] = useState('all');
   const [formaPagoFilter, setFormaPagoFilter] = useState('all');
+  const [sortedField, setSortedField] = useState('');
+  const [sortedOrder, setSortedOrder] = useState('asc');
 
   useEffect(() => {
     getClientes();
@@ -73,15 +75,26 @@ function GestionClientes() {
     return cliente.forma_de_pago === formaPagoFilter;
   };
 
-  const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
-
   // Obtener los índices de los clientes actuales
   const indexOfLastCliente = currentPage * clientesPerPage;
   const indexOfFirstCliente = indexOfLastCliente - clientesPerPage;
+  const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
   const clientesPaginados = clientesFiltrados.slice(indexOfFirstCliente, indexOfLastCliente);
 
   // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const sortClientes = (field) => {
+    const sortedClientes = [...clientesFiltrados].sort((a, b) => {
+      if (a[field] < b[field]) return sortedOrder === 'asc' ? -1 : 1;
+      if (a[field] > b[field]) return sortedOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    setClientes(sortedClientes);
+    setSortedField(field);
+    setSortedOrder(sortedField === field ? (sortedOrder === 'asc' ? 'desc' : 'asc') : 'asc');
+  };
 
   return (
     <>
@@ -93,8 +106,9 @@ function GestionClientes() {
             <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
             <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
           </Breadcrumb>
+
           <Container>
-          <Row className="align-items-center">
+            <Row className="align-items-center">
               <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
                 <div>
                   <Form.Label column style={{ marginTop: '30px' }}>Estado:</Form.Label>
@@ -120,23 +134,39 @@ function GestionClientes() {
                 </Link>
               </Col>
             </Row>
-
           </Container>
 
           <Table striped hover className="mt-5">
             <thead className="text-center">
               <tr>
-              <th><Button variant="warning">Empresa</Button></th>
-              <th><Button variant="danger">CIF</Button></th>
-              <th><Button variant="info">Forma de pago</Button></th>
-              <th><Button variant="primary">Activo</Button></th>
-               
+                <th onClick={() => sortClientes('empresa')}>
+                  <Button variant="warning">
+                    Empresa {sortedField === 'empresa' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('CIF')}>
+                  <Button variant="danger">
+                    CIF {sortedField === 'CIF' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('forma_de_pago')}>
+                  <Button variant="info">
+                    Forma de pago{sortedField === 'forma_de_pago' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('activo')}>
+                  <Button variant="primary">
+                    Estado {sortedField === 'activo' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th>
+                  <Button variant="warning">Acciones</Button>
+                </th>
               </tr>
             </thead>
             <tbody className="table-group-divider text-center">
               {clientesPaginados.map((cliente, index) => (
                 <tr key={index}>
-                  
                   <td> {cliente.empresa}</td>
                   <td> {cliente.CIF} </td>
                   <td> {cliente.forma_de_pago} </td>
@@ -171,10 +201,10 @@ function GestionClientes() {
           </Pagination>
         </Container>
       </div>
-
     </>
   );
 }
 
 export default GestionClientes;
+
 
