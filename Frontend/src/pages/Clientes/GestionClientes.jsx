@@ -21,6 +21,8 @@ function GestionClientes() {
   const [clientesPerPage] = useState(15);
   const [activosFilter, setActivosFilter] = useState('all');
   const [formaPagoFilter, setFormaPagoFilter] = useState('all');
+  const [sortedField, setSortedField] = useState('');
+  const [sortedOrder, setSortedOrder] = useState('asc');
 
   useEffect(() => {
     getClientes();
@@ -73,26 +75,39 @@ function GestionClientes() {
     return cliente.forma_de_pago === formaPagoFilter;
   };
 
-  const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
-
   // Obtener los índices de los clientes actuales
   const indexOfLastCliente = currentPage * clientesPerPage;
   const indexOfFirstCliente = indexOfLastCliente - clientesPerPage;
+  const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
   const clientesPaginados = clientesFiltrados.slice(indexOfFirstCliente, indexOfLastCliente);
 
   // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      {/* <Header /> */}
-      <Container style={{ flex: 1 }}>
-        <Breadcrumb>
-          <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
-        </Breadcrumb>
-        <Container>
+  const sortClientes = (field) => {
+    const sortedClientes = [...clientesFiltrados].sort((a, b) => {
+      if (a[field] < b[field]) return sortedOrder === 'asc' ? -1 : 1;
+      if (a[field] > b[field]) return sortedOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
 
+    setClientes(sortedClientes);
+    setSortedField(field);
+    setSortedOrder(sortedField === field ? (sortedOrder === 'asc' ? 'desc' : 'asc') : 'asc');
+  };
+
+  return (
+    <>
+      <Header />
+
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Container style={{ flex: 1 }}>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/Home">Home</Breadcrumb.Item>
+            <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
+          </Breadcrumb>
+
+          <Container>
             <Row className="align-items-center">
               <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
                 <div>
@@ -119,56 +134,77 @@ function GestionClientes() {
                 </Link>
               </Col>
             </Row>
+          </Container>
 
-        </Container>
-
-        <Table striped hover className="mt-5">
-          <thead className="text-center">
-            <tr>
-              <th>Empresa</th>
-              <th>CIF</th>
-              <th>Forma de pago</th>
-              <th>Activo</th>
-            </tr>
-          </thead>
-          <tbody className="table-group-divider text-center">
-            {clientesPaginados.map((cliente, index) => (
-              <tr key={index}>
-                <td> {cliente.empresa}</td>
-                <td> {cliente.CIF} </td>
-                <td> {cliente.forma_de_pago} </td>
-                <td>
-                  {' '}
-                  {cliente.activo ? (
-                    <span style={{ color: 'green' }}>🟢</span>
-                  ) : (
-                    <span style={{ color: 'red' }}>🔴</span>
-                  )}
-                </td>
-                <td>
-                  <Link to={`/DetalleCliente/${cliente._id}`} className="btn btn-secondary">
-                    Ver Detalles
-                  </Link>
-                </td>
+          <Table striped hover className="mt-5">
+            <thead className="text-center">
+              <tr>
+                <th onClick={() => sortClientes('empresa')}>
+                  <Button variant="warning">
+                    Empresa {sortedField === 'empresa' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('CIF')}>
+                  <Button variant="danger">
+                    CIF {sortedField === 'CIF' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('forma_de_pago')}>
+                  <Button variant="info">
+                    Forma de pago{sortedField === 'forma_de_pago' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th onClick={() => sortClientes('activo')}>
+                  <Button variant="primary">
+                    Estado {sortedField === 'activo' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+                  </Button>
+                </th>
+                <th>
+                  <Button variant="warning">Acciones</Button>
+                </th>
               </tr>
+            </thead>
+            <tbody className="table-group-divider text-center">
+              {clientesPaginados.map((cliente, index) => (
+                <tr key={index}>
+                  <td> {cliente.empresa}</td>
+                  <td> {cliente.CIF} </td>
+                  <td> {cliente.forma_de_pago} </td>
+                  <td>
+                    {' '}
+                    {cliente.activo ? (
+                      <span style={{ color: 'green' }}>🟢</span>
+                    ) : (
+                      <span style={{ color: 'red' }}>🔴</span>
+                    )}
+                  </td>
+                  <td>
+                    <Link to={`/DetalleCliente/${cliente._id}`} className="btn btn-secondary">
+                      Ver Detalles
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Pagination className="mt-3 justify-content-center">
+            <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+            {[...Array(Math.ceil(clientesFiltrados.length / clientesPerPage)).keys()].map((number) => (
+              <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                {number + 1}
+              </Pagination.Item>
             ))}
-          </tbody>
-        </Table>
-        <Pagination className="mt-3 justify-content-center">
-          <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
-          {[...Array(Math.ceil(clientesFiltrados.length / clientesPerPage)).keys()].map((number) => (
-            <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
-              {number + 1}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(clientesFiltrados.length / clientesPerPage)}
-          />
-        </Pagination>
-      </Container>
-    </div>
+            <Pagination.Next
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === Math.ceil(clientesFiltrados.length / clientesPerPage)}
+            />
+          </Pagination>
+        </Container>
+      </div>
+    </>
   );
 }
 
 export default GestionClientes;
+
+

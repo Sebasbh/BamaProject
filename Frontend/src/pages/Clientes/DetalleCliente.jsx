@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Breadcrumb } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Header from '../../Components/Header/Header';
+
 
 function DetalleCliente() {
   const [cliente, setCliente] = useState(null);
@@ -86,11 +88,14 @@ function DetalleCliente() {
 
   return (
     <>
+    <Container>
+      <Header/>
       <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
         <Breadcrumb.Item href="http://localhost:3000/gestionclientes">GestiónClientes</Breadcrumb.Item>
         <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
         <Breadcrumb.Item active>DetalleCliente</Breadcrumb.Item>
       </Breadcrumb>
+      <Container>
       <Container fluid>
         <Row className="align-items-center" style={{ height: '50vh' }}>
           <Col xs={12} md={3} className="d-flex flex-column align-items-center justify-content-center">
@@ -252,7 +257,7 @@ function DetalleCliente() {
                             )
                           )}
                         </p>
-                        <p>pedidos ID: {cliente.pedidos_id}</p>
+                 
                       </div>
                     ) : (
                       <p>No se encontró el cliente con el ID proporcionado.</p>
@@ -275,7 +280,9 @@ function DetalleCliente() {
             </Container>
           </Col>
         </Row>
+        </Container>
       </Container>
+    </Container>
     </>
   );
 }

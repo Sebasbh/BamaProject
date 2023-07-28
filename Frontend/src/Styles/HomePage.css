@@ -1,9 +1,8 @@
 .Logo {
-    width: 200px;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 750px;
 }
 
 .btns {
@@ -21,7 +20,6 @@
     grid-row-start: 1; 
     grid-row-end: 80;
     border: none;
-    color: white;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(255,115,0,0.8855917366946778) 56%, rgba(255,255,255,0) 100%);
 }
@@ -38,7 +36,6 @@
     grid-row-start: 1; 
     grid-row-end: 80;
     border: none;
-    color: white;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(227,39,24,1) 57%, rgba(255,255,255,0) 100%);
 }
@@ -54,7 +51,6 @@
     grid-row-start: 1; 
     grid-row-end: 80;
     border: none;
-    color: white;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(17,72,153,1) 57%, rgba(255,255,255,0) 100%);
 }
@@ -70,7 +66,6 @@
     grid-row-start: 1; 
     grid-row-end: 80;
     border: none;
-    color: white;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(46,44,132,1) 57%, rgba(255,255,255,0) 100%);
 }
@@ -84,15 +79,8 @@
     margin-top: 5px;
 }
 
-.frase-footer {
-    display: flex;
-    justify-content: center;
-    font-family: inria sans;
-    color: white;
-}
 
-.logoPelota {
-    display: flex;
-    width: 100px;
-    
+.hovered {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
 }

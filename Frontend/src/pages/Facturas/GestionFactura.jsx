@@ -18,14 +18,24 @@ function GestionFactura() {
   const [consulta, setConsulta] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [facturasPerPage] = useState(15);
+  const [sortedField, setSortedField] = useState('');
+  const [sortedOrder, setSortedOrder] = useState('asc');
 
   useEffect(() => {
     getFacturas();
-  }, []);
+  }, [consulta]);
 
   const getFacturas = async () => {
-    const res = await axios.get(URI);
-    setFacturas(res.data);
+    try {
+      const res = await axios.get(URI, {
+        params: {
+          consulta,
+        }
+      });
+      setFacturas(res.data);
+    } catch (error) {
+      // Manejar el error de forma adecuada
+    }
   };
 
   const handleInputChange = (e) => {
@@ -33,8 +43,24 @@ function GestionFactura() {
   };
 
   const buscarFacturas = async () => {
-    const res = await axios.get(`${URI}?consulta=${consulta}`);
-    setFacturas(res.data);
+    try {
+      const res = await axios.get(`${URI}?consulta=${consulta}`);
+      setFacturas(res.data);
+    } catch (error) {
+      // Manejar el error de forma adecuada
+    }
+  };
+
+  const sortFacturas = (field) => {
+    const sortedFacturas = [...facturas].sort((a, b) => {
+      if (a[field] < b[field]) return sortedOrder === 'asc' ? -1 : 1;
+      if (a[field] > b[field]) return sortedOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    setFacturas(sortedFacturas);
+    setSortedField(field);
+    setSortedOrder(sortedField === field ? (sortedOrder === 'asc' ? 'desc' : 'asc') : 'asc');
   };
 
   const filtrarFacturas = (factura) => {
@@ -82,7 +108,7 @@ function GestionFactura() {
           </Col>
           <Col lg="4"></Col>
           <Col xs lg="2">
-            <Link to={`/FormularioFacturas`}>
+            <Link to={`/CrearFactura`}>
               <Button variant="outline-success">Crear factura</Button>
             </Link>
           </Col>
@@ -92,13 +118,34 @@ function GestionFactura() {
       <Table striped hover className="mt-5">
         <thead className="text-center">
           <tr>
-          <th><Button variant="warning">Nº factura</Button></th>
-            <th><Button variant="danger">Empresa</Button></th>
-            <th><Button variant="info">Fecha factura</Button></th>
-            <th><Button variant="primary">Vencimiento</Button></th>
-            <th><Button variant="warning">Estado</Button></th>
-           
-         
+            <th onClick={() => sortFacturas('numero_de_factura')}>
+              <Button variant="warning">
+                Nº factura {sortedField === 'numero_de_factura' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('empresa')}>
+              <Button variant="danger">
+                Empresa {sortedField === 'empresa' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('fecha_de_factura')}>
+              <Button variant="info">
+                Fecha factura{sortedField === 'fecha_de_factura' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('vencimiento')}>
+              <Button variant="primary">
+                Vencimiento {sortedField === 'vencimiento' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('estado')}>
+              <Button variant="warning">
+                Estado{sortedField === 'estado' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th>
+              <Button variant="danger">Acciones</Button>
+            </th>
           </tr>
         </thead>
         <tbody className="table-group-divider text-center">
