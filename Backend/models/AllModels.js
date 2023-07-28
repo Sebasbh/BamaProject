@@ -31,29 +31,29 @@ const AlbaranSchema = new mongoose.Schema({
   archivo_de_entrega: { type: String },
   archivo_firmado: { type: String },
   estado: { type: String, enum: ['Firmado', 'No firmado'], default: 'No firmado' },
-  factura_id: { type: mongoose.Schema.Types.ObjectId, ref: 'facturas' }
+  numero_de_factura: { type: Number, /* required: true, */ unique: true },
 });
 
 const FacturaSchema = new mongoose.Schema({
   numero_de_factura: { type: Number, /* required: true, */ unique: true },
-  cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true */ },
+  empresa: { type: String, /* required: true, */ },
   fecha_de_factura: { type: Date, default: Date.now },
   vencimiento: { type: String, enum: ['Al contado', '30 días fecha factura', '60 días fecha factura'], /* required: true */ },
   base_imponible: { type: Number, /* required: true */ },
   tipo_de_IVA: { type: String, enum: ['21%', '10%', '4%', 'Sin IVA'], /* required: true*/ },
   importe_IVA: { type: Number },
   total_factura: { type: Number },
-  estado_factura: { type: String, enum: ['En trámite', 'Cerrada'], default: 'En trámite' },
+  estado_factura: { type: String, default: 'en tramite' }, // Set the default value here
   fecha_de_cobro: { type: Date },
-  pedido_id: { type: mongoose.Schema.Types.ObjectId, ref: 'pedidos', /* required: true */ },
-  albaran_id: { type: mongoose.Schema.Types.ObjectId, ref: 'albaranes' },
+  numero_de_pedido: { type: Number, /* required: true, */ unique: true },
+  numero_de_albaran: { type: Number, /* required: true, */ unique: true },
   archivo_de_factura: { type: String }
 });
 
 const Cliente = mongoose.model('clientes', ClienteSchema);
 const Pedido = mongoose.model('pedidos', PedidoSchema);
 const Albaran = mongoose.model('albaranes', AlbaranSchema);
-const Factura = mongoose.model('factura', FacturaSchema);
+const Factura = mongoose.model('facturas', FacturaSchema);
 
 export { Cliente, Pedido, Albaran, Factura };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Table, Button, Breadcrumb } from 'react-bootstrap';
+import Header from '../../Components/Header/Header';
 
 const DetalleFactura = () => {
   // Datos de la factura (puedes reemplazarlos con tus propios datos)
@@ -23,14 +24,16 @@ const DetalleFactura = () => {
   return (
 
     <>
-    <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
-    <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
-    <Breadcrumb.Item href="#">ListaFacturas</Breadcrumb.Item>
-    <Breadcrumb.Item active>DetalleFactura</Breadcrumb.Item>
-  </Breadcrumb>
+
+    <Header/>
+    <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
+          <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="http://localhost:3000/GestionFactura">Facturas</Breadcrumb.Item>
+          <Breadcrumb.Item active>DetalleFactura</Breadcrumb.Item>
+        </Breadcrumb>
 
     <Container>
-      <div style={{ border: '1px solid black', padding: '10px', marginBottom: '50px', marginTop: '80px' }}>
+      <div style={{ border: '1px solid black', padding: '10px', marginBottom: '50px', marginTop: '40px' }}>
         <h4>Datos del cliente:</h4>
         <p>
           <strong>Cliente:</strong> {cliente.nombre}

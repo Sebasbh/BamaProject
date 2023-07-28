@@ -110,7 +110,7 @@ function GestionFactura() {
           </Col>
           <Col lg="4"></Col>
           <Col xs lg="2">
-            <Link to={`/FormularioFacturas`}>
+            <Link to={`/CrearFactura`}>
               <Button variant="outline-success">Crear factura</Button>
             </Link>
           </Col>

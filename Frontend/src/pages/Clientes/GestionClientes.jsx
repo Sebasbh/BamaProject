@@ -103,7 +103,7 @@ function GestionClientes() {
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Container style={{ flex: 1 }}>
           <Breadcrumb>
-            <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
+            <Breadcrumb.Item href="/Home">Home</Breadcrumb.Item>
             <Breadcrumb.Item active>Clientes</Breadcrumb.Item>
           </Breadcrumb>
 
