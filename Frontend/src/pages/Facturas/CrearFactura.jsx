@@ -15,7 +15,7 @@ const fetchClientesPedidosAlbaranFacturaNumber = async () => {
       api.get('/clientes'),
       api.get('/pedidos'),
       api.get('/albaranes'),
-      api.get('/facturas/next/number')
+      api.get('/facturas/next-number')
     ]);
 
     const clientes = response[0].data;
@@ -25,6 +25,7 @@ const fetchClientesPedidosAlbaranFacturaNumber = async () => {
 
     return { clientes, pedidos, albaran, nextFacturaNumber };
   } catch (error) {
+    console.error(error); 
     throw new Error('Error al cargar los datos.');
   }
 };
