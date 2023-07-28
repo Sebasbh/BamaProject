@@ -1,20 +1,20 @@
 .Logo {
-    padding-left: 850px;
-    width: 1000px;
-    padding-bottom: 10px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btns {
     display: grid;
     grid-template-rows: 100px 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 6px;
-    column-gap: 20px;
-    padding-left: 30px;
+    grid-gap: 5px;
+    padding: 20px;
 }
 
 .clientes {
-    width: 400px;
+    font-family: inria sans;
     grid-column-start: 1; 
     grid-column-end: 2; 
     grid-row-start: 1; 
@@ -22,19 +22,15 @@
     border: none;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(255,115,0,0.8855917366946778) 56%, rgba(255,255,255,0) 100%);
-    cursor: pointer;
 }
 
-.clientes h1 {
+.clnts {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    padding-top: 450px;
-    color: white;
 }
 
 .facturas {
-    width: 400px;
+    font-family: inria sans;
     grid-column-start: 2; 
     grid-column-end: 3; 
     grid-row-start: 1; 
@@ -42,19 +38,14 @@
     border: none;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(227,39,24,1) 57%, rgba(255,255,255,0) 100%);
-    cursor: pointer;
 }
 
-.facturas h1 {
+.facts {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    padding-top: 450px;
-    color: white;
 }
 
 .albaranes {
-    width: 400px;
     grid-column-start: 3; 
     grid-column-end: 4; 
     grid-row-start: 1; 
@@ -62,19 +53,14 @@
     border: none;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(17,72,153,1) 57%, rgba(255,255,255,0) 100%);
-    cursor: pointer;
 }
 
-.albaranes h1 {
+.albrns {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    padding-top: 450px;
-    color: white;
 }
 
 .pedidos {
-    width: 400px;
     grid-column-start: 4; 
     grid-column-end: 5; 
     grid-row-start: 1; 
@@ -82,16 +68,17 @@
     border: none;
     background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,1) 5%, rgba(46,44,132,1) 57%, rgba(255,255,255,0) 100%);
-    cursor: pointer;
 }
 
-.pedidos h1 {
+.pdds {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    padding-top: 450px;
-    color: white;
 }
+
+.arrow {
+    margin-top: 5px;
+}
+
 
 .hovered {
     transform: translateY(-5px);

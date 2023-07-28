@@ -1,14 +1,17 @@
-import mongoose from "mongoose";
+/*import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const clienteSchema = new Schema (
    {
-      nombre:{type:String},
+      empresa:{ type: String},
       direccion_social:{type:String},
       CIF:{type:String},
-      forma_de_pago:{type:String},
+      forma_pago:{type:String},
+      activo: { type: Boolean, default: true },
+      pedidos_id: { type: mongoose.Schema.Types.ObjectId, ref: 'PedidosModel' }
+
    }, 
    {collection:'clientes'}
 )
 
-export default mongoose.model ('ClienteModel',clienteSchema )
+export default mongoose.model ('ClienteModel',clienteSchema ) */

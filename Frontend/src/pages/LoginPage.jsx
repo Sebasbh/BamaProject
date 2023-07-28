@@ -1,4 +1,3 @@
-//LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/LoginPage.css';
@@ -35,11 +34,12 @@ function LoginPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
-        });        
-        
+        });
+
         const data = await response.json();
 
         if (response.ok) {
+          localStorage.setItem('jwt', data.token); 
           alert('Credenciales válidas');
           navigate('/Home');
         } else {
@@ -88,7 +88,6 @@ function LoginPage() {
             <button type="submit" className="submit-button">Enviar</button>
           </form>
         </div>
-        <div className='footer'></div>
       </div>
 
       <div className="image-container" style={{ backgroundImage: `url(${imagen})`, backgroundSize: 'cover' }}></div>

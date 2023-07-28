@@ -1,27 +1,56 @@
 //importamos el metodo
-import ClienteModel from "../models/ClienteModel.js";
+import { Cliente } from "../models/AllModels.js";
 
-// Metodos para el CRUD
+// Mostrar todos los clientes con filtros
+export const getAllClientes = async (req, res) => {
+  try {
+    const { consulta, formaPago, activo } = req.query;
+    
+    // Filtros iniciales
+    const filters = {};
 
-//Mostrar todos los clientes
+    if (consulta) {
+      // Agregar filtro de consulta para empresa y CIF
+      filters.$or = [
+        { empresa: { $regex: consulta, $options: "i" } },
+        { CIF: { $regex: consulta, $options: "i" } }
+      ];
+    }
 
-export const getAllClientes = async(req, res) =>{
-   try {
-      const clientes = await ClienteModel.find()
-      res.status(200).json(clientes)
+    if (formaPago && formaPago !== 'all') {
+      // Agregar filtro de forma de pago
+      filters.forma_de_pago = formaPago;
+    }
 
-   }catch (error){
-      res.json ({message: error.message})
-   }
-} 
+    if (activo !== undefined && activo !== 'all') {
+      // Agregar filtro de estado activo
+      filters.activo = activo === 'true';
+    }
 
+    const clientes = await Cliente.find(filters);
+    res.status(200).json(clientes);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};
 
-//Mostrar un cliente
+// // Métodos para el CRUD de clientes
 
-export const getCliente = async(req, res) =>{
+// // Mostrar todos los clientes
+// export const getAllClientes = async (req, res) => {
+//    try {
+//       const clientes = await Cliente.find();
+//       res.status(200).json(clientes);
+//    } catch (error) {
+//       res.json({ message: error.message });
+//    }
+// };
+
+// Mostrar un cliente
+export const getCliente = async (req, res) => {
    try {
       const id = req.params.id
-      await ClienteModel.findById( {_id:id}).then ( (cliente) => {
+      await Cliente.findById( {_id:id}).then ( (cliente) => {
          res.status(200).json(cliente)
       })  
    }catch (error){
@@ -33,7 +62,7 @@ export const getCliente = async(req, res) =>{
 
 export const createCliente = async (req,res) => {
    try {
-      await  ClienteModel.create(req.body)
+      await  Cliente.create(req.body)
       res.status(200).json({
          "message":"¡Cliente creado correctamente"
       })
@@ -48,7 +77,7 @@ export const updateCliente = async (req,res) => {
    try {
       const id = req.params.id
 
-      await ClienteModel.updateOne( {_id:id}, req.body).then(res =>{
+      await Cliente.updateOne( {_id:id}, req.body).then(res =>{
          console.log(res)
       })
       res.status(200).json({
@@ -64,7 +93,7 @@ export const updateCliente = async (req,res) => {
 export const deleteCliente = async(req, res) => {
    try {
       const id = req.params.id
-      await ClienteModel.deleteOne ({_id:id}).then (res =>{
+      await Cliente.deleteOne ({_id:id}).then (res =>{
          console.log(res)
       })
       res.status(200).json({
