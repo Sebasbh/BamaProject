@@ -103,11 +103,7 @@ function GestionFactura() {
               onChange={handleInputChange}
             />
           </Col>
-          <Col md="auto">
-            <Button variant="primary" onClick={buscarFacturas}>
-              Buscar
-            </Button>
-          </Col>
+      
           <Col lg="4"></Col>
           <Col xs lg="2">
             <Link to={`/CrearFactura`}>
@@ -117,7 +113,7 @@ function GestionFactura() {
         </Row>
       </Container>
 
-      <Table striped hover className="mt-5">
+      <Table striped hover className="mt-5 text-center">
         <thead className="text-center">
           <tr>
             <th onClick={() => sortFacturas('numero_de_factura')}>
@@ -140,13 +136,28 @@ function GestionFactura() {
                 Vencimiento {sortedField === 'vencimiento' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
               </Button>
             </th>
-            <th onClick={() => sortFacturas('estado')}>
+            <th onClick={() => sortFacturas('base_imponible')}>
               <Button variant="warning">
+                Base Imponible {sortedField === 'base_imponible' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('importe_IVA')}>
+              <Button variant="danger">
+                Importe IVA {sortedField === 'importe_IVA' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('total_factura')}>
+              <Button variant="info">
+               Total Factura {sortedField === 'total_factura' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
+              </Button>
+            </th>
+            <th onClick={() => sortFacturas('estado')}>
+              <Button variant="primary">
                 Estado{sortedField === 'estado' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
               </Button>
             </th>
             <th>
-              <Button variant="danger">Acciones</Button>
+              <Button variant="warning">Acciones</Button>
             </th>
           </tr>
         </thead>
@@ -157,12 +168,25 @@ function GestionFactura() {
               <td> {factura.empresa} </td>
               <td> {factura.fecha_de_factura} </td>
               <td> {factura.vencimiento} </td>
-              <td> {factura.estado} </td>
+              <td> {factura.importe_IVA} </td>
+              <td> {factura.base_imponible} </td>
+              <td> {factura.total_factura} </td>
               <td>
-                <Link to={`/DetalleFactura`} className="btn btn-secondary">
+                    {' '}
+                    {factura.estado_factura ? (
+                      <span style={{ color: 'green' }}>🟢En tramite</span>
+                    ) : (
+                      <span style={{ color: 'red' }}>🔴 cerrado</span>
+                    )}
+                  </td>
+              <td>
+
+                <Link to={`/DetalleFactura/${factura._id}`} className="btn btn-secondary">
                   Ver Detalles
                 </Link>
               </td>
+
+              
             </tr>
           ))}
         </tbody>

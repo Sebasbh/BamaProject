@@ -59,7 +59,7 @@ const App = () => {
             <Route path="/GestionPedidos" element={<ProtectedGestionPedidos />} />
             <Route path="/DetallePedido/:id" element={<ProtectedDetallePedido />} />
             <Route path="/CrearFactura" element={<ProtectedCrearFactura />} />
-            <Route path="/DetalleFactura" element={<ProtectedDetalleFactura />} /> 
+            <Route path="/DetalleFactura/:id" element={<ProtectedDetalleFactura />} /> 
             <Route path="/GestionFactura" element={<ProtectedGestionFactura />} /> 
             <Route path="/GestionAlbaranes" element={<ProtectedGestionAlbaranes />} />
             <Route path="/DetalleAlbaranes/:id" element={<ProtectedDetalleAlbaranes />} /> 

@@ -34,21 +34,20 @@ const AlbaranSchema = new mongoose.Schema({
   numero_de_factura: { type: Number, /* required: true, */ unique: true },
 });
 
+
 const FacturaSchema = new mongoose.Schema({
   numero_de_factura: { type: Number, /* required: true, */ unique: true },
   empresa: { type: String, /* required: true, */ },
   fecha_de_factura: { type: Date, default: Date.now },
   vencimiento: { type: String, enum: ['Al contado', '30 días fecha factura', '60 días fecha factura'], /* required: true */ },
-  base_imponible: { type: Number, /* required: true */ },
-  tipo_de_IVA: { type: String, enum: ['21%', '10%', '4%', 'Sin IVA'], /* required: true*/ },
   importe_IVA: { type: Number },
   total_factura: { type: Number },
-  estado_factura: { type: String, default: 'en tramite' }, // Set the default value here
-  fecha_de_cobro: { type: Date },
-  numero_de_pedido: { type: Number, /* required: true, */ unique: true },
-  numero_de_albaran: { type: Number, /* required: true, */ unique: true },
+  estado_factura: { type: String, default: 'En tramite' }, 
+  numero_de_pedido: { type: Number, unique: true },
+  numero_de_albaran: { type: Number, unique: true },
   archivo_de_factura: { type: String }
 });
+
 
 const Cliente = mongoose.model('clientes', ClienteSchema);
 const Pedido = mongoose.model('pedidos', PedidoSchema);

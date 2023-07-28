@@ -36,18 +36,21 @@ function CrearFactura() {
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [pedidos, setPedidos] = useState(null);
   const [albaranes, setAlbaranes] = useState(null);
-  const [importe, setImporte] = useState('');
-  const [archivoAdjunto, setArchivoAdjunto] = useState(null);
+  const [importeIva, setImporteIva] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
   const [albaranSeleccionado, setAlbaranSeleccionado] = useState('');
-  const [estado, setEstado] = useState('');
-  const [fechaCobro, setFechaCobro] = useState('');
-  const [numeroFactura, setNumeroFactura] = useState('');
+  const [estadoFactura, setEstadoFactura] = useState('');
+  const [totalFactura, setTotalFactura] = useState('');
+  const [vencimiento, setVencimiento] = useState('');
+  const [archivoDeFactura, setArchivoDeFactura] = useState('');
+
+
 
   const navigate = useNavigate();
+  const enumValues = ['Al contado', '30 días fecha factura', '60 días fecha factura'];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,23 +74,24 @@ function CrearFactura() {
     e.preventDefault();
 
     // Validar campos requeridos antes de enviar el formulario
-    if (!numeroDeFactura || !fechaDeFactura || !clienteSeleccionado || !importe || !fechaCobro) {
+    if (!numeroDeFactura || !fechaDeFactura || !clienteSeleccionado || !pedidoSeleccionado || !importeIva || !totalFactura || !vencimiento || !albaranSeleccionado) {
       setError('Por favor, complete todos los campos obligatorios.');
       return;
     }
 
-    // Determine the value of isApproved based on some condition in your application
-    const isApproved = true; // or false, depending on whether the factura is Firmado or No firmado
 
     const newFactura = {
       numero_de_factura: numeroDeFactura,
       empresa: clienteSeleccionado,
-      importe: parseFloat(importe),
+      vencimiento: vencimiento,
+      importe_IVA: parseFloat(importeIva),
       numero_de_pedido: parseInt(pedidoSeleccionado),
-      archivo_de_entrega: '', // Add the value for the archivo_de_entrega field
-      estado: estado,
+      numero_de_albaran: parseInt(albaranSeleccionado),
+      estado_factura: estadoFactura,
       fecha_factura: new Date(fechaDeFactura), // Convert the fecha to a Date object
-      isApproved: isApproved, // Set the isApproved field to false by default
+      total_factura: parseFloat(totalFactura),
+      archivo_de_factura: '', // Set this to the correct value or remove it if not needed
+
     };
 
     setLoading(true);
@@ -97,13 +101,16 @@ function CrearFactura() {
       setNumeroDeFactura('');
       setFechaDeFactura('');
       setClienteSeleccionado('');
-      setImporte('');
+      setImporteIva('');
+      setVencimiento('');
       setPedidoSeleccionado('');
       setAlbaranSeleccionado('');
-      setEstado('');
-      setFechaCobro('');
-      setArchivoAdjunto(null);
+      setEstadoFactura('');
+      setArchivoDeFactura(''); // Check if you need to set the value for this state variable or remove it
+
       setLoading(false);
+
+      console.log(factura);
 
       navigate('/GestionFactura');
 
@@ -113,161 +120,164 @@ function CrearFactura() {
     }
   };
 
-  if (loading) {
-    // Render a loading message or spinner while data is being fetched
-    return <div>Loading...</div>;
-  }
-
-
 
   return (
-    <div>
-      <Header />
-      <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
-        <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item href="http://localhost:3000/GestionFactura">Facturas</Breadcrumb.Item>
-        <Breadcrumb.Item active>CrearFactura</Breadcrumb.Item>
-      </Breadcrumb>
-      <Container className='justify-content-center mt-3'>
-        <h3>Crear Factura</h3>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group controlId="numeroFactura">
-                <Form.Label>Numero de Factura</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={numeroDeFactura}
-                  readOnly
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="clientes">
-                <Form.Label className='mt-3'>Empresa</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={clienteSeleccionado}
-                  onChange={(e) => setClienteSeleccionado(e.target.value)}
-                >
-                  <option value="">Selecciona una empresa</option>
-                  {clientes.map((cliente) => (
-                    <option key={cliente.CIF} value={cliente.empresa}>
-                      {cliente.empresa}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="estado">
-                <Form.Label className='mt-3'>Estado</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={estado}
-                  onChange={(e) => setEstado(e.target.value)}
-                  required
-                >
-                  <option value="">Seleccione una opción</option>
-                  <option value="en tramite">En tramite</option>
-                  <option value="cerrado">Cerrado</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="fecha_de_factura">
-                <Form.Label className='mt-3'>Fecha de Factura:</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={fechaDeFactura}
-                  onChange={(e) => setFechaDeFactura(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="vencimiento">
-                <Form.Label className='mt-3'>Vencimiento</Form.Label>
-                <Form.Control
-                  type="date" // Use type="date" for date fields
-                  value={fechaCobro}
-                  onChange={(e) => setFechaCobro(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="importe">
-                <Form.Label className='mt-3'>Importe</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={importe}
-                  onChange={(e) => setImporte(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="pedidos">
-                <Form.Label className='mt-3'>NºPedido</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={pedidoSeleccionado}
-                  onChange={(e) => setPedidoSeleccionado(e.target.value)}
-                >
-                  <option value="">Selecciona un pedido</option>
-                  {/* Check if pedidos is not null before mapping through it */}
-                  {pedidos !== null &&
-                    pedidos.map((pedido) => (
-                      <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
-                        {pedido.numero_de_pedido}
+    <>
+      <Container>
+        <Header />
+        <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
+          <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="http://localhost:3000/GestionFactura">Facturas</Breadcrumb.Item>
+          <Breadcrumb.Item active>CrearFactura</Breadcrumb.Item>
+        </Breadcrumb>
+        <Container className='justify-content-center mt-3'>
+          <h3>Crear Factura</h3>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="numeroFactura">
+                  <Form.Label>Numero de Factura</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={numeroDeFactura}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="clientes">
+                  <Form.Label className='mt-3'>Empresa</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={clienteSeleccionado}
+                    onChange={(e) => setClienteSeleccionado(e.target.value)}
+                  >
+                    <option value="">Selecciona una empresa</option>
+                    {clientes.map((cliente) => (
+                      <option key={cliente.CIF} value={cliente.empresa}>
+                        {cliente.empresa}
                       </option>
                     ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="albaran">
-                <Form.Label className='mt-3'>NºAlbaran</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={albaranSeleccionado}
-                  onChange={(e) => setAlbaranSeleccionado(e.target.value)}
-                >
-                  <option value="">Selecciona un albaran</option>
-                  {/* Check if pedidos is not null before mapping through it */}
-                  {albaranes !== null &&
-                    albaranes.map((albaran) => (
-                      <option key={albaran.numero_de_albaran} value={albaran.numero_de_albaran}>
-                        {albaran.numero_de_albaran}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="estadoFactura">
+                  <Form.Label className='mt-3'>Estado Factura</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={estadoFactura}
+                    onChange={(e) => setEstadoFactura(e.target.value)}
+                    required
+                  >
+                    <option value="">Seleccione una opción</option>
+                    <option value="en tramite">En tramite</option>
+                    <option value="cerrado">Cerrado</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="fecha_de_factura">
+                  <Form.Label className='mt-3'>Fecha de Factura:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={fechaDeFactura}
+                    onChange={(e) => setFechaDeFactura(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="vencimiento">
+                  <Form.Label className="mt-3">Vencimiento</Form.Label>
+                  <Form.Control
+                    as="select" // Use as="select" for a select dropdown
+                    value={vencimiento}
+                    onChange={(e) => setVencimiento(e.target.value)}
+                    required
+                  >
+                    <option value="">Seleccione un vencimiento</option>
+                    {enumValues.map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
                       </option>
                     ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-        
-            <Col md={6}>
-              <Form.Group controlId="fecha_cobro">
-                <Form.Label className='mt-3'>Fecha Cobro</Form.Label>
-                <Form.Control
-                  type="date" // Use type="date" for date fields
-                  value={fechaCobro}
-                  onChange={(e) => setFechaCobro(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Button className='mt-3' variant="primary" type="submit" disabled={isLoading}>
-            {isLoading ? 'Cargando...' : 'Crear Factura'}
-          </Button>
-          <Link to="/GestionFactura" className="btn btn-secondary mt-3 ms-3">
-            Aceptar
-          </Link>
-        </Form>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="importeIva">
+                  <Form.Label className='mt-3'>Importe IVA</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={importeIva}
+                    onChange={(e) => setImporteIva(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="pedidos">
+                  <Form.Label className='mt-3'>NºPedido</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={pedidoSeleccionado}
+                    onChange={(e) => setPedidoSeleccionado(e.target.value)}
+                  >
+                    <option value="">Selecciona un pedido</option>
+                    {/* Check if pedidos is not null before mapping through it */}
+                    {pedidos !== null &&
+                      pedidos.map((pedido) => (
+                        <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
+                          {pedido.numero_de_pedido}
+                        </option>
+                      ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="albaran">
+                  <Form.Label className='mt-3'>NºAlbaran</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={albaranSeleccionado}
+                    onChange={(e) => setAlbaranSeleccionado(e.target.value)}
+                  >
+                    <option value="">Selecciona un albaran</option>
+                    {/* Check if pedidos is not null before mapping through it */}
+                    {albaranes !== null &&
+                      albaranes.map((albaran) => (
+                        <option key={albaran.numero_de_albaran} value={albaran.numero_de_albaran}>
+                          {albaran.numero_de_albaran}
+                        </option>
+                      ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group controlId="totalFactura">
+                  <Form.Label className='mt-3'>Total Factura</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={totalFactura}
+                    onChange={(e) => setTotalFactura(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button className='mt-3' variant="primary" type="submit" disabled={isLoading}>
+              {isLoading ? 'Cargando...' : 'Crear Factura'}
+            </Button>
+            <Link to="/GestionFactura" className="btn btn-secondary mt-3 ms-3">
+              Aceptar
+            </Link>
+          </Form>
+        </Container>
       </Container>
-    </div>
+    </>
   );
 }
 

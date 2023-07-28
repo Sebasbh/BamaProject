@@ -33,57 +33,37 @@ export const createFactura = async (req, res) => {
       empresa,
       fecha_de_factura,
       vencimiento,
-      base_imponible,
-      tipo_de_IVA,
       importe_IVA,
       total_factura,
+      estado_factura,
       numero_de_pedido,
       numero_de_albaran,
-      archivo_de_factura,
+      archivo_de_factura
     } = req.body;
 
-    // Validate the required fields
-    if (
-      !empresa ||
-      !fecha_de_factura ||
-      !vencimiento ||
-      !base_imponible ||
-      !tipo_de_IVA ||
-      !importe_IVA ||
-      !total_factura ||
-      !numero_de_pedido ||
-      !numero_de_albaran ||
-      !archivo_de_factura
-    ) {
-      return res.status(400).json({ error: 'empresa, fecha de factura, vencimiento, base imponible, tipo de IVA, importe IVA, total factura, numero de pedido, numero de albaran y archivo de factura son campos requeridos.' });
-    }
+  
 
     // Validate the format of numeric fields
     if (
-      typeof base_imponible !== 'number' ||
       typeof importe_IVA !== 'number' ||
-      typeof total_factura !== 'number' ||
-      base_imponible <= 0 ||
       importe_IVA <= 0 ||
+      typeof total_factura !== 'number' ||
       total_factura <= 0
     ) {
       return res.status(400).json({ error: 'Los campos numéricos deben ser mayores que cero.' });
     }
-
 
     const facturaData = {
       numero_de_factura: numeroFactura,
       empresa,
       fecha_de_factura,
       vencimiento,
-      base_imponible,
-      tipo_de_IVA,
       importe_IVA,
       total_factura,
-      fecha_de_cobro: null, // Set to null initially
+      estado_factura,
       numero_de_pedido,
       numero_de_albaran,
-      archivo_de_factura,
+      archivo_de_factura
     };
 
     const factura = await Factura.create(facturaData);
@@ -97,7 +77,6 @@ export const createFactura = async (req, res) => {
     res.status(500).json({ error: 'Error al crear la factura. Por favor, inténtelo nuevamente.' });
   }
 };
-
 
 
 
