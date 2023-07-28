@@ -34,18 +34,6 @@ export const getAllClientes = async (req, res) => {
   }
 };
 
-// // Métodos para el CRUD de clientes
-
-// // Mostrar todos los clientes
-// export const getAllClientes = async (req, res) => {
-//    try {
-//       const clientes = await Cliente.find();
-//       res.status(200).json(clientes);
-//    } catch (error) {
-//       res.json({ message: error.message });
-//    }
-// };
-
 // Mostrar un cliente
 export const getCliente = async (req, res) => {
    try {
