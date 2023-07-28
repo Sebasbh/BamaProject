@@ -1,52 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Footer from '../../Components/footer/Footer';
+import React from 'react';
+import { Container, Row, Col, Table, Button, Breadcrumb } from 'react-bootstrap';
 
-function DetalleFactura() {
-  const [factura, setFactura] = useState(null);
-  const [loading, setLoading] = useState(true);
+const DetalleFactura = () => {
+  // Datos de la factura (puedes reemplazarlos con tus propios datos)
+  const factura = {
+    formaPago: 'Tarjeta de crédito',
+    fechaVencimiento: '15 de julio de 2023',
+    subtotal: 50,
+    iva: 10,
+    irpf: 5,
+    total: 55,
+  };
 
-  // Obtiene el id del URL
-  const { id } = useParams();
-
-  useEffect(() => {
-    const fetchFactura = async () => {
-      try {
-        const response = await axios.get(`${id}`);
-        setFactura(response.data.data);
-        setLoading(false);
-        console.log(response.data.data.cliente)
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchFactura();
-  }, [id]);
-
-  if (loading) {
-    return <p>Cargando detalles de la factura...</p>;
-  }
+  // Datos del cliente (puedes reemplazarlos con tus propios datos)
+  const cliente = {
+    nombre: 'John Doe',
+    direccion: 'Calle Principal 123',
+    email: 'johndoe@example.com',
+    telefono: '123456789',
+  };
 
   return (
-    <div>
-      <h1>Detalle de la Factura</h1>
-      {factura ? (
-        <div>
-          <p>ID de la Factura: {factura.numero}</p>
-          <p>Fecha: {factura.fecha}</p>
-          <p>Cliente: {factura.cliente}</p>
-          <p>Importe: {factura.importe}</p>
-          <p>Estado: {factura.estado}</p>
+
+    <>
+    <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
+    <Breadcrumb.Item href="http://localhost:3000/Home">Home</Breadcrumb.Item>
+    <Breadcrumb.Item href="#">ListaFacturas</Breadcrumb.Item>
+    <Breadcrumb.Item active>DetalleFactura</Breadcrumb.Item>
+  </Breadcrumb>
+
+    <Container>
+      <div style={{ border: '1px solid black', padding: '10px', marginBottom: '50px', marginTop: '80px' }}>
+        <h4>Datos del cliente:</h4>
+        <p>
+          <strong>Cliente:</strong> {cliente.nombre}
+        </p>
+        <p>
+          <strong>Dirección:</strong> {cliente.direccion}
+        </p>
+        <p>
+          <strong>Email:</strong> {cliente.email}
+        </p>
+        <p>
+          <strong>Teléfono:</strong> {cliente.telefono}
+        </p>
+      </div>
+      <h1>Detalle de Factura</h1>
+      <Table striped bordered>
+        <tbody>
+          <tr>
+            <td><strong>Forma de pago:</strong></td>
+            <td>{factura.formaPago}</td>
+          </tr>
+          <tr>
+            <td><strong>Fecha de vencimiento:</strong></td>
+            <td>{factura.fechaVencimiento}</td>
+          </tr>
+          <tr>
+            <td><strong>Subtotal:</strong></td>
+            <td>${factura.subtotal}</td>
+          </tr>
+          <tr>
+            <td><strong>IVA:</strong></td>
+            <td>${factura.iva}</td>
+          </tr>
+          <tr>
+            <td><strong>IRPF:</strong></td>
+            <td>${factura.irpf}</td>
+          </tr>
+          <tr>
+            <td><strong>Total:</strong></td>
+            <td>${factura.total}</td>
+          </tr>
+        </tbody>
+      </Table>
+      <p><strong>Nota:</strong> El servicio tiene una validez de 30 días.</p>
+
+      <Row className="botonesDescarga">
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
+             <Button variant="primary" className="botonPDF" size="sm" style={{ width: "120px" }}>📂 PDF</Button>
+             <Button variant="primary" className="botonDescargas" size="sm" style={{ width: "120px", backgroundColor: "#00468b" }}>⬇️ Descargar</Button>
         </div>
-      ) : (
-        <p>No se encontró la factura con el ID proporcionado.</p>
-      )}
-      <Footer/>
-    </div>
+      </Row>
+    </Container>
+    </>
   );
-}
+};
 
 export default DetalleFactura;

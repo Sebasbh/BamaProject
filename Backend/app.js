@@ -3,7 +3,10 @@ import cors from 'cors';
 import db from './database/db.js';
 import router from './routes/routes.js';
 import PedidoRouter from './routes/PedidoRoutes.js';
+import ClientesRouter from './routes/ClientesRoutes.js'
 import FacturaRouter from './routes/FacturasRoutes.js';
+import AlbaranRouter from './routes/albaranRoutes.js';
+
 
 const app = express();
 
@@ -15,11 +18,13 @@ const corsOptions = {
 console.log('Debug: El archivo app.js se está ejecutando.');
 
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json());;
 
 app.use('/', router);
+app.use('/clientes', ClientesRouter);
 app.use('/pedidos', PedidoRouter);
 app.use('/facturas', FacturaRouter);
+app.use('/albaranes', AlbaranRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

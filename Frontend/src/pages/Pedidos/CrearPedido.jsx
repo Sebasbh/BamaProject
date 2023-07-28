@@ -1,107 +1,174 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert, Breadcrumb } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../../Components/footer/Footer';
+import Header from '../../Components/Header/Header';
 
-const CrearPedidos = () => {
-  const [numeroDePedido, setNumeroDePedido] = useState('');
-  const [fechaDePedido, setFechaDePedido] = useState('');
-  const [cliente, setCliente] = useState('');
-  const [importe, setImporte] = useState('');
-  const [archivoAdjunto, setArchivoAdjunto] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+const api = axios.create({
+  baseURL: 'http://localhost:8000'
+});
 
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
+const fetchClientes = async () => {
+  try {
+    const [{ data: clientes }] = await Promise.all([
+      api.get('/clientes'),
+    ]);
+    return { clientes };
+  } catch (error) {
+    throw new Error('Error al cargar los datos.');
+  }
+};
+
+const CrearPedido = () => {
   const navigate = useNavigate();
+  const [clientes, setClientes] = useState([]);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState('');
+  const [importe, setImporte] = useState('');
+  const [numeroPedido, setNumeroPedido] = useState();
+  const [pedidoCreado, setPedidoCreado] = useState(false);
+  const [fechaPedido, setFechaPedido] = useState(new Date().toISOString().substring(0, 10));
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { clientes } = await fetchClientes();
+        setClientes(clientes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar campos requeridos antes de enviar el formulario
-    if (!numeroDePedido || !fechaDePedido || !cliente || !importe) {
-      setError('Por favor, complete todos los campos obligatorios.');
+    if (!clienteSeleccionado || !importe || isNaN(numeroPedido)) {
+      alert('Por favor, rellena todos los campos y asegúrate de ingresar un número de pedido válido.');
       return;
     }
 
-    setError('');
-    setIsLoading(true);
+    const newPedido = {
+      numero_de_pedido: parseInt(numeroPedido),
+      fecha_de_pedido: fechaPedido,
+      empresa: clienteSeleccionado,
+      importe: parseFloat(importe),
+    };
 
-    const pedido = new FormData();
-    pedido.append('numero_de_pedido', numeroDePedido);
-    pedido.append('fecha_de_pedido', fechaDePedido);
-    pedido.append('cliente', cliente);
-    pedido.append('importe', importe);
-    pedido.append('archivo_adjunto', archivoAdjunto);
+    try {
+      await api.post('/pedidos', newPedido);
+      setPedidoCreado(true);
+    } catch {
+      alert('Error al crear el pedido. Por favor, inténtelo nuevamente.');
+    }
+  };
 
-    axios
-      .post('http://localhost:8000/pedidos', pedido)
-      .then((response) => {
-        console.log(response.data);
-        navigate('/GestionPedidos');
-      })
-      .catch((error) => {
-        console.log(error);
-        setError('Ocurrió un error al crear el pedido.');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const handleAceptarClick = () => {
+    setPedidoCreado(false);
+    navigate('/gestionpedidos');
   };
 
   return (
-    <div>
-    <Container>
-      <h3>Registrar Pedido</h3>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="numero_de_pedido">
-          <Form.Label>Número de Pedido:</Form.Label>
-          <Form.Control
-            type="number"
-            onChange={(e) => setNumeroDePedido(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="fecha_de_pedido">
-          <Form.Label>Fecha de Pedido:</Form.Label>
-          <Form.Control
-            type="date"
-            onChange={(e) => setFechaDePedido(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="cliente">
-          <Form.Label>Cliente:</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={(e) => setCliente(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="importe">
-          <Form.Label>Importe:</Form.Label>
-          <Form.Control
-            type="number"
-            onChange={(e) => setImporte(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Adjuntar Archivo:</Form.Label>
-          <Form.Control
-            type="file"
-            onChange={(e) => setArchivoAdjunto(e.target.files[0])}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled={isLoading}>
-          {isLoading ? 'Cargando...' : 'Registrar Pedido'}
-        </Button>
-      </Form>
-    </Container>
-    <Footer />
-    </div>
+    <>
+      <Container>
+        <Header />
+        <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
+          <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="/GestionPedidos">Pedidos</Breadcrumb.Item>
+          <Breadcrumb.Item active>Crear Pedido</Breadcrumb.Item>
+        </Breadcrumb>
+      </Container>
+
+      <div style={{ marginTop: '20px', marginBottom: '50px' }}>
+        <Container className="d-flex align-items-center justify-content-center">
+          <div>
+            <h3 style={{ marginBottom: '30px' }}>Nuevo Pedido</h3>
+            {pedidoCreado && (
+              <Alert variant="success" className="mt-3">
+                Pedido creado correctamente.
+              </Alert>
+            )}
+            <Form onSubmit={onSubmit}>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="numeroPedido">
+                    <Form.Label>Número de Pedido</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={numeroPedido}
+                      onChange={(e) => setNumeroPedido(e.target.value)}
+                      required
+                      style={{ width: '500px', height: '40px' }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="fechaPedido">
+                    <Form.Label>Fecha de Pedido</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={fechaPedido}
+                      onChange={(e) => setFechaPedido(e.target.value)}
+                      required
+                      style={{ width: '500px', height: '40px' }}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="cliente">
+                    <Form.Label>Empresa</Form.Label>
+                    <Form.Select
+                      value={clienteSeleccionado}
+                      onChange={(e) => setClienteSeleccionado(e.target.value)}
+                      required
+                      style={{ width: '500px', height: '40px' }}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {clientes.map((cliente) =>
+                        <option key={cliente.CIF} value={cliente.empresa}>{cliente.empresa}</option>
+                      )}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="importe">
+                    <Form.Label>Importe</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={importe}
+                      onChange={(e) => setImporte(e.target.value)}
+                      required
+                      style={{ width: '500px', height: '40px' }}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Button variant="primary" type="submit" className="mt-3">
+                Crear Pedido
+              </Button>
+            </Form>
+            {pedidoCreado && (
+              <Button variant="success" className="mt-3" onClick={handleAceptarClick}>
+                Aceptar
+              </Button>
+            )}
+          </div>
+        </Container>
+      </div>
+    </>
   );
 };
 
-export default CrearPedidos;
+export default CrearPedido;

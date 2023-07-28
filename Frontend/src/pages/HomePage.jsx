@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/HomePage.css';
 import logo from '../Components/assets/Images/logo.png';
-import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
+import {Container, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import { ChevronCompactUp, Person } from 'react-bootstrap-icons';
-import Footer from '../Components/footer/Footer';
+
 
 function HomePage() {
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -36,10 +36,13 @@ function HomePage() {
     } else if (option === 'FACTURAS') {
       navigate('/GestionFactura')
     }
+  else if (option === 'ALBARANES') {
+    navigate('/GestionAlbaranes')
+  }
   };
 
   return (
-    <div>
+    <Container>
       <header className="d-flex align-items-center justify-content-between">
         <img src={logo} alt="logo" className="Logo" style={{ marginTop: '20px' }} />
         <OverlayTrigger
@@ -132,9 +135,7 @@ function HomePage() {
           />
         </Button>
       </div>
-
-      <Footer />
-    </div>
+    </Container>
   );
 }
 
