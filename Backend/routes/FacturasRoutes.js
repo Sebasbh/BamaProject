@@ -1,4 +1,5 @@
 import express from 'express';
+
 import {
   createFactura,
   deleteFactura,
@@ -6,11 +7,12 @@ import {
   getFactura,
   getNextFacturaNumber,
   updateFactura,
+
 } from '../controllers/FacturasController.js';
 
 const FacturaRouter = express.Router();
 
-// Rutas para el CRUD de Facturas
+
 FacturaRouter.get('/', getAllFacturas);
 FacturaRouter.get('/:id', getFactura);
 FacturaRouter.get('/next/number', getNextFacturaNumber);

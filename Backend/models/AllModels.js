@@ -1,20 +1,19 @@
 import mongoose from 'mongoose';
 
 const ClienteSchema = new mongoose.Schema({
-  empresa: { type: String, /* required: true, */ },
-  direccion_social: { type: String, /* required: true, */ },
-  CIF: { type: String, /* required: true, */ unique: true },
-  forma_de_pago: { type: String, enum: ['Transferencia', 'Confirming', 'Giro Bancario'], /* required: true, */ },
+  empresa: { type: String },
+  direccion_social: { type: String },
+  CIF: { type: String, unique: true },
+  forma_de_pago: { type: String, enum: ['Transferencia', 'Confirming', 'Giro Bancario'] },
   activo: { type: Boolean, default: true },
   pedidos_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'pedidos' }]
 });
 
 const PedidoSchema = new mongoose.Schema({
-  numero_de_pedido: { type: Number, /* required: true, */ unique: true },
+  numero_de_pedido: { type: Number, unique: true },
   fecha_de_pedido: { type: Date, default: Date.now },
-  //cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'clientes', /* required: true, */ },
-  empresa: { type: String, /* required: true, */ },
-  importe: { type: Number, /* required: true, */ },
+  empresa: { type: String },
+  importe: { type: Number },
   archivo_adjunto: { type: String },
   estado: { type: String, enum: ['Abierto', 'Cerrado'], default: 'Abierto' },
   total_facturado: { type: Number, default: 0 },
@@ -23,16 +22,15 @@ const PedidoSchema = new mongoose.Schema({
 });
 
 const AlbaranSchema = new mongoose.Schema({
-  numero_de_albaran: { type: Number, /* required: true, */ unique: true },
-  empresa: { type: String, /* required: true, */ },
+  numero_de_albaran: { type: Number, unique: true },
+  empresa: { type: String },
   fecha_albaran: { type: Date, default: Date.now },
-  importe: { type: Number, /* required: true */ },
-  numero_de_pedido: { type: Number, /* required: true, */ unique: true },
+  importe: { type: Number },
+  numero_de_pedido: { type: Number, unique: true },
   archivo_firmado: { type: String },
   estado: { type: String, enum: ['Firmado', 'No firmado'], default: 'No firmado' },
-  filePath: { type: String, default:"Albaran.pdf"} // añadimos el filePath
+  filePath: { type: String, default:"Albaran.pdf"}
 });
-
 
 const FacturaSchema = new mongoose.Schema({
   numero_de_factura: { type: Number, /* required: true, */ unique: true },
@@ -46,6 +44,7 @@ const FacturaSchema = new mongoose.Schema({
   numero_de_albaran: { type: Number, unique: true },
   archivo_de_factura: { type: String }
 });
+
 
 
 const Cliente = mongoose.model('clientes', ClienteSchema);

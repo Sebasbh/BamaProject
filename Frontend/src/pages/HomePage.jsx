@@ -24,10 +24,8 @@ function HomePage() {
   };
 
   const handleButtonClick = (option) => {
-    console.log(`Se hizo clic en el botón "${option}"`);
-    // Realiza la lógica adicional que desees aquí
+   
     if (option === 'Cerrar Sesión') {
-      // Redirige al usuario a la página de inicio de sesión
       navigate('/');
       window.localStorage.removeItem('jwt');
     } else if (option === 'CLIENTES') {

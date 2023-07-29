@@ -73,7 +73,6 @@ function CrearFactura() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar campos requeridos antes de enviar el formulario
     if (!numeroDeFactura || !fechaDeFactura || !clienteSeleccionado || !pedidoSeleccionado || !importeIva || !totalFactura || !vencimiento || !albaranSeleccionado) {
       setError('Por favor, complete todos los campos obligatorios.');
       return;
@@ -88,9 +87,9 @@ function CrearFactura() {
       numero_de_pedido: parseInt(pedidoSeleccionado),
       numero_de_albaran: parseInt(albaranSeleccionado),
       estado_factura: estadoFactura,
-      fecha_factura: new Date(fechaDeFactura), // Convert the fecha to a Date object
+      fecha_factura: new Date(fechaDeFactura), 
       total_factura: parseFloat(totalFactura),
-      archivo_de_factura: '', // Set this to the correct value or remove it if not needed
+      archivo_de_factura: '', 
 
     };
 
@@ -106,11 +105,9 @@ function CrearFactura() {
       setPedidoSeleccionado('');
       setAlbaranSeleccionado('');
       setEstadoFactura('');
-      setArchivoDeFactura(''); // Check if you need to set the value for this state variable or remove it
+      setArchivoDeFactura(''); 
 
       setLoading(false);
-
-      console.log(factura);
 
       navigate('/GestionFactura');
 
@@ -127,7 +124,7 @@ function CrearFactura() {
         <Header />
         <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item href="http://localhost:3000/GestionFactura">Facturas</Breadcrumb.Item>
+          <Breadcrumb.Item href="/GestionFactura">Facturas</Breadcrumb.Item>
           <Breadcrumb.Item active>CrearFactura</Breadcrumb.Item>
         </Breadcrumb>
         <Container className='justify-content-center mt-3'>
@@ -192,7 +189,7 @@ function CrearFactura() {
                 <Form.Group controlId="vencimiento">
                   <Form.Label className="mt-3">Vencimiento</Form.Label>
                   <Form.Control
-                    as="select" // Use as="select" for a select dropdown
+                    as="select" 
                     value={vencimiento}
                     onChange={(e) => setVencimiento(e.target.value)}
                     required
@@ -226,7 +223,6 @@ function CrearFactura() {
                     onChange={(e) => setPedidoSeleccionado(e.target.value)}
                   >
                     <option value="">Selecciona un pedido</option>
-                    {/* Check if pedidos is not null before mapping through it */}
                     {pedidos !== null &&
                       pedidos.map((pedido) => (
                         <option key={pedido.numero_de_pedido} value={pedido.numero_de_pedido}>
@@ -245,7 +241,6 @@ function CrearFactura() {
                     onChange={(e) => setAlbaranSeleccionado(e.target.value)}
                   >
                     <option value="">Selecciona un albaran</option>
-                    {/* Check if pedidos is not null before mapping through it */}
                     {albaranes !== null &&
                       albaranes.map((albaran) => (
                         <option key={albaran.numero_de_albaran} value={albaran.numero_de_albaran}>

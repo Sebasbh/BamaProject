@@ -35,7 +35,6 @@ function GestionAlbaranes() {
   const filtrarAlbaranes = (albaran) => {
     const { empresa, importe, fecha_albaran, numero_de_albaran } = albaran;
 
-    // Filtrar por cliente_id, Importe y fecha_albaran
     return (
       empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
       (importe && String(importe).toLowerCase().includes(consulta.toLowerCase())) ||
@@ -56,15 +55,12 @@ function GestionAlbaranes() {
     setSortedOrder(sortedField === field ? (sortedOrder === 'asc' ? 'desc' : 'asc') : 'asc');
   };
 
-  // Verificar si albaran es un array antes de filtrar
   const albaranesFiltrados = Array.isArray(albaranes) ? albaranes.filter(filtrarAlbaranes) : [];
 
-  // Obtener los índices de los albaranes actuales
   const indexOfLastAlbaran = currentPage * albaranesPerPage;
   const indexOfFirstAlbaran = indexOfLastAlbaran - albaranesPerPage;
   const albaranesPaginados = albaranesFiltrados.slice(indexOfFirstAlbaran, indexOfLastAlbaran);
 
-  // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -73,7 +69,6 @@ function GestionAlbaranes() {
         <Header />
 
         <Breadcrumb className="p-4">
-          <Breadcrumb.Item href="/">Login</Breadcrumb.Item>
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>GestionAlbaranes</Breadcrumb.Item>
         </Breadcrumb>
@@ -81,8 +76,7 @@ function GestionAlbaranes() {
         <Container>
         <Row className="align-items-center">
               <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
-                
-              <Form.Control
+                 <Form.Control
                 className="me-auto"
                 placeholder="Buscar albaran ..."
                 value={consulta}

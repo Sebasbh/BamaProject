@@ -64,6 +64,7 @@ function DetalleAlbaranes() {
     try {
       await axios.put(`http://localhost:8000/albaranes/${id}`, albaranActualizado);
       setActualizacionExitosa(true);
+      navigate('/GestionAlbaranes');
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +87,7 @@ function DetalleAlbaranes() {
         <Header />
         <Breadcrumb style={{ marginLeft: '180px', marginTop: '50px' }}>
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">Albaranes</Breadcrumb.Item>
+          <Breadcrumb.Item href="/GestionAlbaranes">Albaranes</Breadcrumb.Item>
           <Breadcrumb.Item active>DetalleAlbaranes</Breadcrumb.Item>
         </Breadcrumb>
 
@@ -181,8 +182,9 @@ function DetalleAlbaranes() {
                             <Button variant="primary" type="submit">
                               Guardar cambios
                             </Button>
+
                             <Button variant="secondary" onClick={cancelarEdicion}>
-                              Cancelar
+                            Cancelar
                             </Button>
                           </Form>
                           {actualizacionExitosa && (

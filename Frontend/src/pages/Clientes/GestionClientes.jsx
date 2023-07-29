@@ -39,7 +39,7 @@ function GestionClientes() {
       });
       setClientes(res.data);
     } catch (error) {
-      // Manejar el error de forma adecuada
+     console.error(error)
     }
   };
 
@@ -58,7 +58,6 @@ function GestionClientes() {
   const filtrarClientes = (cliente) => {
     const { empresa, CIF, forma_de_pago, activo } = cliente;
 
-    // Filtrar por empresa, CIF y activo
     const empresaMatches = empresa?.toLowerCase().includes(consulta.toLowerCase());
     const CIFMatches = CIF?.toLowerCase().includes(consulta.toLowerCase());
     const formaDePagoMatches = forma_de_pago?.toLowerCase().includes(consulta.toLowerCase());
@@ -69,19 +68,17 @@ function GestionClientes() {
 
   const filtrarClientesPorFormaPago = (cliente) => {
     if (formaPagoFilter === 'all') {
-      return true; // Mostrar todos si no hay filtro por forma de pago
+      return true; 
     }
 
     return cliente.forma_de_pago === formaPagoFilter;
   };
 
-  // Obtener los índices de los clientes actuales
   const indexOfLastCliente = currentPage * clientesPerPage;
   const indexOfFirstCliente = indexOfLastCliente - clientesPerPage;
   const clientesFiltrados = clientes.filter(filtrarClientes).filter(filtrarClientesPorFormaPago);
   const clientesPaginados = clientesFiltrados.slice(indexOfFirstCliente, indexOfLastCliente);
 
-  // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const sortClientes = (field) => {

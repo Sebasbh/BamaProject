@@ -1,95 +1,83 @@
-//importamos el metodo
 import { Cliente } from "../models/AllModels.js";
 
-// Mostrar todos los clientes con filtros
 export const getAllClientes = async (req, res) => {
-  try {
-    const { consulta, formaPago, activo } = req.query;
-    
-    // Filtros iniciales
-    const filters = {};
+   try {
+      const { consulta, formaPago, activo } = req.query;
 
-    if (consulta) {
-      // Agregar filtro de consulta para empresa y CIF
-      filters.$or = [
-        { empresa: { $regex: consulta, $options: "i" } },
-        { CIF: { $regex: consulta, $options: "i" } }
-      ];
-    }
+      const filters = {};
+      if (consulta) {
+         filters.$or = [
+            { empresa: { $regex: consulta, $options: "i" } },
+            { CIF: { $regex: consulta, $options: "i" } }
+         ];
+      }
 
-    if (formaPago && formaPago !== 'all') {
-      // Agregar filtro de forma de pago
-      filters.forma_de_pago = formaPago;
-    }
+      if (formaPago && formaPago !== 'all') {
+         filters.forma_de_pago = formaPago;
+      }
 
-    if (activo !== undefined && activo !== 'all') {
-      // Agregar filtro de estado activo
-      filters.activo = activo === 'true';
-    }
+      if (activo !== undefined && activo !== 'all') {
+         filters.activo = activo === 'true';
+      }
 
-    const clientes = await Cliente.find(filters);
-    res.status(200).json(clientes);
-  } catch (error) {
-    res.json({ message: error.message });
-  }
+      const clientes = await Cliente.find(filters);
+      res.status(200).json(clientes);
+   } catch (error) {
+      res.json({ message: error.message });
+   }
 };
 
-
-// Mostrar un cliente
 export const getCliente = async (req, res) => {
    try {
       const id = req.params.id
-      await Cliente.findById( {_id:id}).then ( (cliente) => {
+      await Cliente.findById({ _id: id }).then((cliente) => {
          res.status(200).json(cliente)
-      })  
-   }catch (error){
-      res.json ({message: error.message})
-   }
-} 
-
-//Crear un cliente
-
-export const createCliente = async (req,res) => {
-   try {
-      await  Cliente.create(req.body)
-      res.status(200).json({
-         "message":"¡Cliente creado correctamente"
       })
    } catch (error) {
-      res.json ({message: error.message})
+      res.json({ message: error.message })
    }
 }
 
-//Actualizar un cliente
 
-export const updateCliente = async (req,res) => {
+
+export const createCliente = async (req, res) => {
    try {
-      const id = req.params.id
-
-      await Cliente.updateOne( {_id:id}, req.body).then(res =>{
-         console.log(res)
-      })
+      await Cliente.create(req.body)
       res.status(200).json({
-         "message":"¡Cliente actualizado correctamente!"
+         "message": "¡Cliente creado correctamente"
       })
    } catch (error) {
-      res.json({message: error.message})
+      res.json({ message: error.message })
    }
 }
 
-//Eliminar un cliente 
 
-export const deleteCliente = async(req, res) => {
+export const updateCliente = async (req, res) => {
    try {
       const id = req.params.id
-      await Cliente.deleteOne ({_id:id}).then (res =>{
+
+      await Cliente.updateOne({ _id: id }, req.body).then(res => {
          console.log(res)
       })
       res.status(200).json({
-         "message":"¡Cliente eliminado correctamente!"
+         "message": "¡Cliente actualizado correctamente!"
       })
-      
    } catch (error) {
-      res.json({message: error.message}) 
+      res.json({ message: error.message })
+   }
+}
+
+export const deleteCliente = async (req, res) => {
+   try {
+      const id = req.params.id
+      await Cliente.deleteOne({ _id: id }).then(res => {
+         console.log(res)
+      })
+      res.status(200).json({
+         "message": "¡Cliente eliminado correctamente!"
+      })
+
+   } catch (error) {
+      res.json({ message: error.message })
    }
 }

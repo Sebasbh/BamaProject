@@ -60,16 +60,16 @@ const DetalleFactura = () => {
       empresa,
       fecha_de_factura,
       vencimiento,
-      importe: importeIva, // Actualicé la propiedad importe
-      base_imponible: baseImponible, // Corregí el nombre de la propiedad
-      tipo_de_IVA: tipoDeIva, // Corregí el nombre de la propiedad
-      total_factura: totalFactura, // Corregí el nombre de la propiedad
-      estado: estadoFactura, // Actualicé la propiedad estado
+      importe: importeIva,
+      base_imponible: baseImponible, 
+      tipo_de_IVA: tipoDeIva, 
+      total_factura: totalFactura, 
+      estado: estadoFactura, 
     };
 
     try {
       await axios.put(`http://localhost:8000/facturas/${id}`, FacturaActualizado);
-      setActualizacionExitosa(true); // Establecer actualizacionExitosa en true
+      setActualizacionExitosa(true);
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +78,6 @@ const DetalleFactura = () => {
   const cancelarEdicion = () => {
     setEditarModo(false);
     setActualizacionExitosa(false);
-    // Restaurar los valores de la factura al estado original al cancelar la edición
     setNumeroDeFactura(factura.numero_de_factura);
     setEmpresa(factura.empresa);
     setFechaDeFactura(factura.fecha_de_factura);
@@ -96,7 +95,7 @@ const DetalleFactura = () => {
         <Header />
         <Breadcrumb style={{ marginLeft: '100px', marginTop: '20px' }}>
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item href="http://localhost:3000/GestionFactura">Facturas</Breadcrumb.Item>
+          <Breadcrumb.Item href="/GestionFactura">Facturas</Breadcrumb.Item>
           <Breadcrumb.Item active>DetalleFactura</Breadcrumb.Item>
         </Breadcrumb>
         <Container>
@@ -211,26 +210,6 @@ const DetalleFactura = () => {
                               </Col>
                               <Col md={6}>
                                 <Form onSubmit={handleSubmit}>
-                                  <Form.Group controlId="baseImponible">
-                                    <Form.Label>Base imponible</Form.Label>
-                                    <Form.Control
-                                      type="text"
-                                      value={baseImponible}
-                                      onChange={(e) => setBaseImponible(e.target.value)}
-                                      required
-                                      style={{ width: '500px', height: '40px' }}
-                                    />
-                                  </Form.Group>
-                                  <Form.Group controlId="tipoDeIva">
-                                    <Form.Label>Tipo de IVA</Form.Label>
-                                    <Form.Control
-                                      type="text"
-                                      value={tipoDeIva}
-                                      onChange={(e) => setTipoDeIva(e.target.value)}
-                                      required
-                                      style={{ width: '500px', height: '40px' }}
-                                    />
-                                  </Form.Group>
                                   <Form.Group controlId="totalFactura">
                                     <Form.Label>Total Factura</Form.Label>
                                     <Form.Control

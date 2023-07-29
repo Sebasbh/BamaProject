@@ -1,18 +1,16 @@
-// UsuarioModel.js
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import passwordValidator from 'password-validator';
 
-// Define a password schema
 var schema = new passwordValidator();
 schema
-  .is().min(8) // Minimum length 8
-  .is().max(100) // Maximum length 100
-  .has().uppercase() // Must have uppercase letters
-  .has().lowercase() // Must have lowercase letters
-  .has().digits(2) // Must have at least 2 digits
-  .has().not().spaces() // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+  .is().min(8)
+  .is().max(100)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits(2)
+  .has().not().spaces()
+  .is().not().oneOf(['Passw0rd', 'Password123']);
 
 const usuarioSchema = new mongoose.Schema({
   email: {
@@ -28,7 +26,6 @@ const usuarioSchema = new mongoose.Schema({
   }
 });
 
-// Hash the password before saving the user model
 usuarioSchema.pre('save', function (next) {
   const usuario = this;
 

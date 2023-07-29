@@ -1,4 +1,3 @@
-//UserController.js
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -11,7 +10,6 @@ export async function iniciarSesion(req, res) {
 
   try {
     const usuario = await Usuario.findOne({ email: email });
-
     if (!usuario) {
       return res.status(400).json({ mensaje: "Credenciales incorrectas" });
     }
@@ -19,13 +17,10 @@ export async function iniciarSesion(req, res) {
     bcrypt.compare(password, usuario.password, function (err, isMatch) {
       if (err) {
         return res.status(500).json({ mensaje: "Error al verificar la contraseña" });
-      }
-
-      if (!isMatch) {
+      } if (!isMatch) {
         return res.status(401).json({ mensaje: 'Credenciales inválidas' });
       }
 
-      // Crea un token
       let token;
       try {
         token = jwt.sign(
@@ -45,8 +40,6 @@ export async function iniciarSesion(req, res) {
       }
     });
   } catch (error) {
-    // Error en la base de datos
-    console.log(error);
     let errorCode = 500;
     let errorMessage = 'Error desconocido en la base de datos';
 
@@ -68,20 +61,16 @@ export async function registrarUsuario(req, res) {
   const { email, password } = req.body;
 
   try {
-    // Comprueba si el email ya está en uso
     let usuarioExistente = await Usuario.findOne({ email: email });
-
     if (usuarioExistente) {
       return res.status(400).json({ mensaje: 'El correo electrónico ya está en uso.' });
     }
-
-    // Crea un nuevo usuario
+o
     const usuario = new Usuario({
       email,
-      password, // esta será automáticamente encriptada por el middleware 'pre-save' en el modelo de Usuario
+      password,
     });
 
-    // Guarda el usuario en la base de datos
     await usuario.save();
 
     res.status(200).json({ mensaje: 'Registro exitoso' });

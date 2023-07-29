@@ -17,8 +17,6 @@ const NuevoClienteFormulario = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Crear el objeto cliente a enviar
     const cliente = {
       empresa,
       pedidos,

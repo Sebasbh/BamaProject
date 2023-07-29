@@ -1,8 +1,5 @@
 import { Factura } from "../models/AllModels.js";
 
-// Métodos para el CRUD de factura
-
-// Mostrar todos las Facturas
 export const getAllFacturas = async (req, res) => {
   try {
     const factura = await Factura.find();
@@ -12,7 +9,6 @@ export const getAllFacturas = async (req, res) => {
   }
 };
 
-// Mostrar una factura
 export const getFactura = async (req, res) => {
   try {
     const id = req.params.id;
@@ -23,7 +19,7 @@ export const getFactura = async (req, res) => {
   }
 };
 
-//crear facturas
+
 export const createFactura = async (req, res) => {
   try {
     const ultimoFactura = await Factura.findOne().sort({ numero_de_factura: -1 }).exec();
@@ -42,8 +38,6 @@ export const createFactura = async (req, res) => {
     } = req.body;
 
   
-
-    // Validate the format of numeric fields
     if (
       typeof importe_IVA !== 'number' ||
       importe_IVA <= 0 ||
@@ -79,8 +73,6 @@ export const createFactura = async (req, res) => {
 };
 
 
-
-// Obtener el próximo número de Factura
 export const getNextFacturaNumber = async (req, res) => {
   try {
     const ultimoFactura = await Factura.findOne().sort({ numero_de_factura: -1 }).exec();
@@ -94,7 +86,6 @@ export const getNextFacturaNumber = async (req, res) => {
   }
 };
 
-// Actualizar un factura
 export const updateFactura = async (req, res) => {
   try {
     const id = req.params.id;
@@ -107,7 +98,6 @@ export const updateFactura = async (req, res) => {
   }
 };
 
-// Eliminar un factura
 export const deleteFactura = async (req, res) => {
   try {
     const id = req.params.id;
@@ -119,4 +109,3 @@ export const deleteFactura = async (req, res) => {
     res.json({ message: error.message });
   }
 };
-

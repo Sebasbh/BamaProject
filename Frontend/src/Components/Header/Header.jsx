@@ -22,10 +22,8 @@ function Header() {
   };
 
   const handleButtonClick = (option) => {
-    console.log(`Se hizo clic en el botón "${option}"`);
-    // Realiza la lógica adicional que desees aquí
+
     if (option === 'Cerrar Sesión') {
-      // Redirige al usuario a la página de inicio de sesión
       window.localStorage.removeItem('jwt');
       navigate('/');
     }
@@ -52,35 +50,35 @@ function Header() {
           </Nav.Link>
         </Nav>
         <OverlayTrigger
-        trigger="click"
-        placement="bottom"
-        show={popoverOpen}
-        onToggle={togglePopover}
-        overlay={
-          <Popover id="popover-menu">
-            <Popover.Body>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li
-                  onClick={() => handleButtonClick('Cerrar Sesión')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Cerrar Sesión
-                </li>
-              </ul>
-            </Popover.Body>
-          </Popover>
-        }
-      >
-        <Button variant="link" onClick={togglePopover}>
-          <Person
-            size={40}
-            md={5}
-            className={hoveredButton === 'person' ? 'hovered' : ''}
-            onMouseEnter={() => handleMouseEnter('person')}
-            onMouseLeave={handleMouseLeave}
-          />
-        </Button>
-      </OverlayTrigger>
+          trigger="click"
+          placement="bottom"
+          show={popoverOpen}
+          onToggle={togglePopover}
+          overlay={
+            <Popover id="popover-menu">
+              <Popover.Body>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  <li
+                    onClick={() => handleButtonClick('Cerrar Sesión')}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Cerrar Sesión
+                  </li>
+                </ul>
+              </Popover.Body>
+            </Popover>
+          }
+        >
+          <Button variant="link" onClick={togglePopover}>
+            <Person
+              size={40}
+              md={5}
+              className={hoveredButton === 'person' ? 'hovered' : ''}
+              onMouseEnter={() => handleMouseEnter('person')}
+              onMouseLeave={handleMouseLeave}
+            />
+          </Button>
+        </OverlayTrigger>
       </Navbar>
 
     </>

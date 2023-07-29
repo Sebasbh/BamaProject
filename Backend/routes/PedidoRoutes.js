@@ -4,7 +4,6 @@ import { createPedido, deletePedido, getAllPedidos, getPedidos, updatePedido, } 
 const PedidoRouter = express.Router()
 
 PedidoRouter.get('/', getAllPedidos)
-
 PedidoRouter.get('/:id', getPedidos)
 PedidoRouter.post('/', createPedido)
 PedidoRouter.put('/:id', updatePedido)

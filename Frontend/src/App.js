@@ -6,22 +6,18 @@ import NotFound from './pages/NotFound';
 import Footer from './Components/footer/Footer';
 import withProtection from "./Components/withProtection.js"
 
-// Client Pages
 import FormularioClientes from "./pages/Clientes/FormularioClientes";
 import DetalleCliente from './pages/Clientes/DetalleCliente';
 import GestionClientes from './pages/Clientes/GestionClientes';
 
-// Pedidos Pages
 import CrearPedido from './pages/Pedidos/CrearPedido';
 import GestionPedidos from './pages/Pedidos/GestionPedidos';
 import DetallePedido from './pages/Pedidos/DetallePedido';
 
-// Facturas Pages
 import CrearFactura from './pages/Facturas/CrearFactura';
 import DetalleFactura from './pages/Facturas/DetalleFactura';
 import GestionFactura from './pages/Facturas/GestionFactura';
 
-// Albaranes Pages
 import GestionAlbaranes from "./pages/Albaranes/GestionAlbaranes";
 import DetalleAlbaranes from "./pages/Albaranes/DetalleAlbaranes";
 import FormularioAlbaranes from "./pages/Albaranes/FormularioAlbaranes";
@@ -30,7 +26,6 @@ import "./App.css"
 
 const App = () => {
   
-  // Protected Routes
   const ProtectedHomePage = withProtection(HomePage);
   const ProtectedFormularioClientes = withProtection(FormularioClientes);
   const ProtectedDetalleCliente = withProtection(DetalleCliente);

@@ -29,8 +29,6 @@ const fetchClientesPedidosAlbaranNumber = async () => {
   }
 };
 
-//toast.configure();
-
 function FormularioAlbaranes() {
   const [clientes, setClientes] = useState([]);
   const [pedidos, setPedidos] = useState(null);
@@ -43,8 +41,7 @@ function FormularioAlbaranes() {
   const [fecha, setFecha] = useState('');
   const [estado, setEstado] = useState('');
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState('');
-  const [filename, setFilename] = useState(''); // Agregar el estado para filename
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,39 +65,36 @@ function FormularioAlbaranes() {
     setSelectedFile(event.target.files[0]);
   };
 
-  
-
   const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!clienteSeleccionado || !importe || !pedidoSeleccionado || !estado || !fecha || !selectedFile) {
       setError('Por favor, rellena todos los campos y selecciona un archivo PDF.');
       return;
     }
-  
-    // Determine the value of isApproved based on some condition in your application
-    const isApproved = true; // or false, depending on whether the Albaran is Firmado or No firmado
-  
+
+    const isApproved = true;
+
     const formData = new FormData();
     formData.append('pdf', selectedFile);
-  
+
     const newAlbaran = {
       numero_de_albaran: numeroAlbaran,
       empresa: clienteSeleccionado,
       importe: parseFloat(importe),
       numero_de_pedido: parseInt(pedidoSeleccionado),
       estado: estado,
-      fecha_albaran: new Date(fecha), // Convert the fecha to a Date object
-      isApproved: isApproved // Set the isApproved field to false by default
+      fecha_albaran: new Date(fecha),
+      isApproved: isApproved
     };
-  
+
     formData.append('albaranData', JSON.stringify(newAlbaran));
-  
+
     setLoading(true);
     try {
       const { data: { albaran } } = await api.post('/albaranes', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data' // Set the content type to 'multipart/form-data' for file uploads
+          'Content-Type': 'multipart/form-data'
         }
       });
       setMessage('¡Albaran creado correctamente!');
@@ -108,7 +102,7 @@ function FormularioAlbaranes() {
       setImporte('');
       setEstado('');
       setFecha('');
-      setSelectedFile(null); // Reset selectedFile state
+      setSelectedFile(null);
       setError(null);
     } catch (error) {
       setError('Error al crear el albaran. Por favor, inténtelo nuevamente.');
@@ -116,14 +110,13 @@ function FormularioAlbaranes() {
       setLoading(false);
     }
   };
-  
 
   return (
     <>
       <Header />
       <Breadcrumb style={{ marginLeft: "100px", marginTop: "20px" }}>
         <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item href="http://localhost:3000/GestionAlbaranes">
+        <Breadcrumb.Item href="/GestionAlbaranes">
           Albaranes
         </Breadcrumb.Item>
         <Breadcrumb.Item active>FormularioAlbaranes</Breadcrumb.Item>
@@ -217,7 +210,6 @@ function FormularioAlbaranes() {
                     style={{ width: "500px", height: "40px" }}
                   >
                     <option value="">Selecciona un pedido</option>
-                    {/* Check if pedidos is not null before mapping through it */}
                     {pedidos !== null &&
                       pedidos.map((pedido) => (
                         <option
@@ -230,23 +222,21 @@ function FormularioAlbaranes() {
                   </Form.Control>
                 </Form.Group>
                 <Col md={6}>
-                <Form.Group controlId="formFile">
-                  <Form.Label>Subir archivo</Form.Label>
-                  <Form.Control type="file" name="pdf" onChange={handleFileChange}/>
-                  {selectedFile && (
-                    <div>
-                      {/* Renderizar la miniatura del PDF */}
-                      <iframe
-                        title="PDF Preview"
-                        src={URL.createObjectURL(selectedFile)}
-                        width="300"
-                        height="200"
-                      ></iframe>
-                    </div>
-                  )}
-                </Form.Group>
+                  <Form.Group controlId="formFile">
+                    <Form.Label>Subir archivo</Form.Label>
+                    <Form.Control type="file" name="pdf" onChange={handleFileChange} />
+                    {selectedFile && (
+                      <div>
+                        <iframe
+                          title="PDF Preview"
+                          src={URL.createObjectURL(selectedFile)}
+                          width="300"
+                          height="200"
+                        ></iframe>
+                      </div>
+                    )}
+                  </Form.Group>
                 </Col>
-                {/* ... (rest of the code) */}
                 <Button
                   variant="primary"
                   type="submit"
@@ -255,20 +245,18 @@ function FormularioAlbaranes() {
                 >
                   {loading ? "Creando Albaran..." : "Crear Albaran"}
                 </Button>
-                {/* Fix: Add the 'to' prop for the Link component */}
                 <Link
                   to="/GestionAlbaranes"
                   className="btn btn-secondary mt-3 ms-3"
                 >
-                  Cancelar
+                 Aceptar
                 </Link>
               </Col>
             </Row>
           </Form>
-     
         </div>
       </Container>
-      <ToastContainer />
+  
     </>
   );
 }

@@ -34,7 +34,6 @@ function GestionFactura() {
       });
       setFacturas(res.data);
     } catch (error) {
-      // Manejar el error de forma adecuada
     }
   };
 
@@ -65,8 +64,6 @@ function GestionFactura() {
 
   const filtrarFacturas = (factura) => {
     const { numero_de_factura, empresa, fecha_de_factura, vencimiento, total_facturado, estado } = factura;
-
-    // Filtrar por numero_de_factura, empresa, fecha_de_factura, vencimiento, total_facturado, estado
     return (
       String(numero_de_factura).toLowerCase().includes(consulta.toLowerCase()) ||
       empresa?.toLowerCase().includes(consulta.toLowerCase()) ||
@@ -136,11 +133,6 @@ function GestionFactura() {
                 Vencimiento {sortedField === 'vencimiento' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
               </Button>
             </th>
-            <th onClick={() => sortFacturas('base_imponible')}>
-              <Button variant="warning">
-                Base Imponible {sortedField === 'base_imponible' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
-              </Button>
-            </th>
             <th onClick={() => sortFacturas('importe_IVA')}>
               <Button variant="danger">
                 Importe IVA {sortedField === 'importe_IVA' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
@@ -169,7 +161,6 @@ function GestionFactura() {
               <td> {factura.fecha_de_factura} </td>
               <td> {factura.vencimiento} </td>
               <td> {factura.importe_IVA} </td>
-              <td> {factura.base_imponible} </td>
               <td> {factura.total_factura} </td>
               <td>
                     {' '}
