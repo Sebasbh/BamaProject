@@ -82,12 +82,8 @@ function GestionPedidos() {
               onChange={handleInputChange}
             />
           </Col>
-          <Col md="auto">
-            <Button variant="primary" onClick={buscarPedidos}>
-              Buscar
-            </Button>
-          </Col>
-          <Col lg="4"></Col>
+        
+          <Col lg="6"></Col>
           <Col xs lg="2">
             <Link to={`/CrearPedido`}>
               <Button variant="outline-success">Crear Pedido</Button>
@@ -109,7 +105,7 @@ function GestionPedidos() {
             <th onClick={() => sortPedidos('empresa')}><Button variant="info">
               Empresa {sortedField === 'empresa' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
               </Button> </th>
-            <th onClick={() => sortPedidos('importe')}><Button variant="info">
+            <th onClick={() => sortPedidos('importe')}><Button variant="primary">
               Importe {sortedField === 'importe' ? (sortedOrder === 'asc' ? '▲' : '▼') : ''}
               </Button></th>
             <th onClick={() => sortPedidos('estado')}><Button variant="warning">

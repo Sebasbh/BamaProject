@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 
 function GestionAlbaranes() {
   const [albaranes, setAlbaranes] = useState([]);
-  const [albaran, setAlbaran] = useState([]);
-  const [pedido, setPedido] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [albaranesPerPage] = useState(10);
   const [consulta, setConsulta] = useState('');
@@ -81,8 +79,9 @@ function GestionAlbaranes() {
         </Breadcrumb>
 
         <Container>
-          <Row>
-            <Col md lg="4">
+        <Row className="align-items-center">
+              <Col xs={12} lg={6} className="d-flex justify-content-around align-items-center mb-3">
+                
               <Form.Control
                 className="me-auto"
                 placeholder="Buscar albaran ..."
@@ -90,13 +89,14 @@ function GestionAlbaranes() {
                 onChange={handleInputChange}
               />
             </Col>
-
-            <div className="d-flex justify-content-end align-items-end mt-3 mr-4">
+          
+            <Col xs={12} lg={6} className="d-flex justify-content-end align-items-end mb-3">
               <Link to="/FormularioAlbaranes">
                 <Button variant="outline-success">Crear albaran</Button>
               </Link>
-            </div>
+            </Col>
           </Row>
+          </Container>
 
           <Table striped hover className="mt-5">
             <thead className="text-center">
@@ -173,7 +173,7 @@ function GestionAlbaranes() {
               disabled={currentPage === Math.ceil(albaranesFiltrados.length / albaranesPerPage)}
             />
           </Pagination>
-        </Container>
+        
       </Container>
     </>
   );
