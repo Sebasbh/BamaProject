@@ -29,10 +29,10 @@ const AlbaranSchema = new mongoose.Schema({
   fecha_albaran: { type: Date, default: Date.now },
   importe: { type: Number, /* required: true */ },
   numero_de_pedido: { type: Number, /* required: true, */ unique: true },
-  archivo_de_entrega: { type: String },
   archivo_firmado: { type: String },
   estado: { type: String, enum: ['Firmado', 'No firmado'], default: 'No firmado' },
-  factura_id: { type: mongoose.Schema.Types.ObjectId, ref: 'facturas' }
+  //factura_id: { type: mongoose.Schema.Types.ObjectId, ref: 'facturas' },
+  filePath: { type: String, default:"Albaran.pdf"} // añadimos el filePath
 });
 
 const FacturaSchema = new mongoose.Schema({

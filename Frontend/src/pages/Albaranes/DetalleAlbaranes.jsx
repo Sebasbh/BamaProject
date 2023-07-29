@@ -201,8 +201,7 @@ function DetalleAlbaranes() {
                               <p>Fecha: {albaran.fecha_albaran}</p>
                               <p>Importe: {albaran.importe}</p>
                               <p>Pedidos: {albaran.numero_de_pedido}</p>
-                              <p>Entrega: {albaran.archivo_de_entrega}</p>
-                              <p>Factura: {albaran.factura_id}</p>
+                              <p>Archivo adjunto: {albaran.filePath}</p>
                               <p>
                                 Estado:{' '}
                                 {albaran.estado === 'Firmado' ? (
