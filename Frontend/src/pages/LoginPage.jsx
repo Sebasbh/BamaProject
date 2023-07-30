@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/LoginPage.css';
 import logo from '../Components/assets/Images/logo.png';
 import imagen from '../Components/assets/Images/image.jpg';
@@ -8,6 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,19 +30,24 @@ function LoginPage() {
 
     if (email && password) {
       try {
-        const response = await fetch('http://backend-api.com/login', {//Cambiar la ruta
+        const response = await fetch('http://localhost:8000/user/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
 
+        const data = await response.json();
+
         if (response.ok) {
-          // Handle response from server
+          localStorage.setItem('jwt', data.token); 
+          alert('Credenciales válidas');
+          navigate('/Home');
         } else {
-          // Handle error response from server
+          alert(`Error: ${data.mensaje}`);
         }
       } catch (err) {
         console.error(err);
+        alert('Ocurrió un error al realizar la solicitud de inicio de sesión.');
       }
     }
   };
@@ -81,7 +88,6 @@ function LoginPage() {
             <button type="submit" className="submit-button">Enviar</button>
           </form>
         </div>
-        <div className='footer'></div>
       </div>
 
       <div className="image-container" style={{ backgroundImage: `url(${imagen})`, backgroundSize: 'cover' }}></div>

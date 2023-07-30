@@ -1,0 +1,21 @@
+.one:hover {
+    text-decoration: underline;
+    color: #FF7300;
+}
+
+.two:hover {
+    text-decoration: underline;
+    color: #E32718;
+}
+
+.three:hover {
+    text-decoration: underline;
+    color: #114899;
+}
+
+.four:hover {
+    text-decoration: underline;
+    color: #2E2C84;
+}
+
+  
