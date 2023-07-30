@@ -22,7 +22,7 @@ Customer associated with the order
 Order amount
 Possibility to attach a file (PDF) related to the order.
 
-# Create Delivery Note (AlbarÃ¡n)
+# Create Delivery Note (Albaran)
 Allows registering delivery notes generated when delivering the requested service/product from the order. The required data are:
 
 Delivery note number (automatically generated as a consecutive number)
