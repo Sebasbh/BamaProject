@@ -87,7 +87,6 @@ function GestionFactura() {
       <Header />
       <Container>
         <Breadcrumb>
-          <Breadcrumb.Item href="/">Login</Breadcrumb.Item>
           <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Facturas</Breadcrumb.Item>
         </Breadcrumb>

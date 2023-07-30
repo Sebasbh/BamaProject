@@ -21,4 +21,3 @@ FacturaRouter.put('/:id', updateFactura);
 FacturaRouter.delete('/:id', deleteFactura);
 
 export default FacturaRouter;
-

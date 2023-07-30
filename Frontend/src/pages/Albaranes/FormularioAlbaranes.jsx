@@ -113,12 +113,11 @@ function FormularioAlbaranes() {
 
   return (
     <>
+    <Container>
       <Header />
       <Breadcrumb style={{ marginLeft: "100px", marginTop: "20px" }}>
         <Breadcrumb.Item href="/Home">Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item href="/GestionAlbaranes">
-          Albaranes
-        </Breadcrumb.Item>
+        <Breadcrumb.Item href="/GestionAlbaranes">Albaranes</Breadcrumb.Item>
         <Breadcrumb.Item active>FormularioAlbaranes</Breadcrumb.Item>
       </Breadcrumb>{" "}
       <br />
@@ -256,7 +255,7 @@ function FormularioAlbaranes() {
           </Form>
         </div>
       </Container>
-  
+    </Container>
     </>
   );
 }

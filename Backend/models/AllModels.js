@@ -6,7 +6,6 @@ const ClienteSchema = new mongoose.Schema({
   CIF: { type: String, unique: true },
   forma_de_pago: { type: String, enum: ['Transferencia', 'Confirming', 'Giro Bancario'] },
   activo: { type: Boolean, default: true },
-  pedidos_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'pedidos' }]
 });
 
 const PedidoSchema = new mongoose.Schema({
@@ -33,10 +32,10 @@ const AlbaranSchema = new mongoose.Schema({
 });
 
 const FacturaSchema = new mongoose.Schema({
-  numero_de_factura: { type: Number, /* required: true, */ unique: true },
-  empresa: { type: String, /* required: true, */ },
+  numero_de_factura: { type: Number,  unique: true },
+  empresa: { type: String },
   fecha_de_factura: { type: Date, default: Date.now },
-  vencimiento: { type: String, enum: ['Al contado', '30 días fecha factura', '60 días fecha factura'], /* required: true */ },
+  vencimiento: { type: String, enum: ['Al contado', '30 días fecha factura', '60 días fecha factura'] },
   importe_IVA: { type: Number },
   total_factura: { type: Number },
   estado_factura: { type: String, default: 'En tramite' }, 
