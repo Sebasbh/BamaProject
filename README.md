@@ -1,8 +1,8 @@
-## Billing - BAMA - Project Description:
+# Billing - BAMA - Project Description:
 
 Our project is based on billing, associated with a company named BAMA. Its objective is to allow the registration and control of the company's billing. The project enables the creation of invoices related to their corresponding orders and delivery notes (albaranes). Additionally, it facilitates the management of invoices, providing information about due dates, outstanding invoices, and the total billed per month.
 
-## Project Functions
+# Project Functions
 
 # Create Customer
 Allows registering new customers with the following data:
