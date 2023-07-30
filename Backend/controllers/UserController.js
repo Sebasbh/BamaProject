@@ -65,7 +65,7 @@ export async function registrarUsuario(req, res) {
     if (usuarioExistente) {
       return res.status(400).json({ mensaje: 'El correo electrónico ya está en uso.' });
     }
-o
+
     const usuario = new Usuario({
       email,
       password,

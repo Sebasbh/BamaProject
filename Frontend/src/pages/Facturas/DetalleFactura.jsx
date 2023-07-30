@@ -265,8 +265,6 @@ const DetalleFactura = () => {
                                 <p>Empresa: {factura.empresa}</p>
                                 <p>Fecha de factura: {factura.fecha_de_factura}</p>
                                 <p>Vencimiento: {factura.vencimiento}</p>
-                                <p>Base imponible: {factura.base_imponible}</p>
-                                <p>Tipo de IVA: {factura.tipo_de_IVA}</p>
                                 <p>Importe de IVA: {factura.importe_IVA}</p>
                                 <p>Total factura: {factura.total_factura}</p>
                                 <p>
